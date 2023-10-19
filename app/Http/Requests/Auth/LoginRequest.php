@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'mgr_gtpusers_email' => ['required', 'string', 'email'],
-            'mgr_gtpusers_password' => ['required', 'string'],
+            'password' => ['required', 'string'],
         ];
     }
 
@@ -42,7 +42,7 @@ class LoginRequest extends FormRequest
 
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::attempt($this->only('mgr_gtpusers_email', 'mgr_gtpusers_password'), $this->boolean('remember'))) {
+        if (!Auth::attempt($this->only('mgr_gtpusers_email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

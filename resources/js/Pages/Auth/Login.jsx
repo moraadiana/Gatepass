@@ -59,7 +59,7 @@ export default function Login() {
                     help={errors.mgr_gtpusers_email}
                 />
                 <ProFormText.Password
-                    name="mgr_gtpusers_password"
+                    name="password"
                     label="Password"
                     fieldProps={{
                         size: "large",

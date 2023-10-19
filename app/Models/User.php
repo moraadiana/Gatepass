@@ -16,6 +16,11 @@ class User extends Authenticatable
 
     //Primary key
     protected $primaryKey = 'mgr_gtpusers_id';
+
+    public function getAuthPassword()
+    {
+        return $this->mgr_gtpusers_password;
+    }
     /**
      * The attributes that are mass assignable.
      *
