@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Gatepass extends Model
 {
    // use HasFactory;
+   protected $table = 'mgr_gtpgatepass';
+   protected $primaryKey = 'mgr_gtpgatepass_id'; 
+   
     protected $fillable=[
         'mgr_gtpgatepass_name',
         'mgr_gtpgatepass_vehiclereg',
@@ -23,7 +26,6 @@ class Gatepass extends Model
         'mgr_gtpgatepass_createdby'
 
     ];
-    protected $table = 'mgr_gtpgatepass';
-    protected $primaryKey = 'mgr_gtpgatepass_id'; 
+ 
 
 }

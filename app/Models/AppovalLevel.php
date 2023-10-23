@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class AppovalLevel extends Model
 {
     //use HasFactory;
+    protected $table = 'mgr_gtpapprovallevels';
+    protected $primaryKey = 'mgr_gtpapprovallevels_id'; 
+    
     protected $fillable =[
         'mgr_gtpapprovallevels_label',
         'mgr_gtpapprovallevels_approver',
@@ -15,6 +18,5 @@ class AppovalLevel extends Model
         'mgr_gtpapprovallevels_status',
         'mgr_gtpapprovallevels_createddate'
     ];
-    protected $table = 'mgr_gtpapprovallevels';
-    protected $primaryKey = 'mgr_gtpapprovallevels_id';  
+     
 }

@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appoval extends Model
 {
-
+    protected $table = 'mgr_gtpapprovals';
+    protected $primaryKey = 'mgr_gtpapprovals_id';    
+    
     protected $fillable = [
         'mgr_gtpapprovals_status',
         'mgr_gtpapprovals_approvedby',
@@ -16,7 +18,6 @@ class Appoval extends Model
         'mgr_gtpapprovals_gatepass',
         'mgr_gtpapprovals_created by'
     ];
-        protected $table = 'mgr_gtpapprovals';
-        protected $primaryKey = 'mgr_gtpapprovals_id';    
+       
     //use HasFactory;
 }

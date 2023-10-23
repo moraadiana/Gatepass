@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Department extends Model
 {
     //use HasFactory;
+    protected $table = 'mgr_gtpdepartments';
+    protected $primaryKey = 'mgr_gtpdepartments_id'; 
+    
     protected $fillable =[
         'mgr_gtpdepartments_name',
         'mgr_gtpdepartments_status',
@@ -15,7 +18,6 @@ class Department extends Model
 
 
     ];
-    protected $table = 'mgr_gtpdepartments';
-    protected $primaryKey = 'mgr_gtpdepartments_id'; 
+   
 
 }
