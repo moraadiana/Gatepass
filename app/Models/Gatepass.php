@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Gatepass extends Model
 {
    // use HasFactory;
    protected $table = 'mgr_gtpgatepass';
    protected $primaryKey = 'mgr_gtpgatepass_id'; 
-   
+
     protected $fillable=[
         'mgr_gtpgatepass_name',
         'mgr_gtpgatepass_vehiclereg',
@@ -26,6 +28,29 @@ class Gatepass extends Model
         'mgr_gtpgatepass_createdby'
 
     ];
- 
+    // has many approvals,items
+   public function approvals():Hasmany
+    {
+        return $this->hasMany(Approval::class,'mgr_gtpapprovals_gatepass');
+    }
+    public function items():Hasmany
+    {
+        return $this->hasMany(item::class,'mgr_gtpitems_gatepass');
+    }
+    //belongs to uom
+    public function uom(): BelongsTo
+    {
+        return $this->belongsTo(Uom::class);
+    }
+    public function departments(): BelongsTo
+    {
+        return $this->belongsTo(Departments::class);
+    }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+    
 }
+

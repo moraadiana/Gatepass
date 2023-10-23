@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -55,4 +57,39 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'mgr_gtpusers_password' => 'hashed',
     ];
+
+    public function gatepass():Hasmany
+    {
+        return $this->hasMany(Gatepass::class,'mgr_gtpgatepass_createdby');
+    }
+
+    public function approvals():Hasmany
+    {
+        return $this->hasMany(Approval::class,'mgr_gtpapprovals_createdby');
+    }
+
+    public function uoms():Hasmany
+    {
+        return $this->hasMany(Uom::class,'mgr_gtpuoms_createdby');
+    }
+
+    public function items():Hasmany
+    {
+        return $this->hasMany(Item::class,'mgr_gtpitems_createdby');
+    }
+
+    public function approvallevels():Hasmany
+    {
+        return $this->hasMany(ApprovalLevel::class,'mgr_gtpapprovallevels_approver');
+    }
+
+    public function userroles(): BelongsTo
+    {
+        return $this->belongsTo(UserRole::class);
+    }
+    public function departments(): BelongsTo
+    {
+        return $this->belongsTo(Department::class);
+    }
 }
+

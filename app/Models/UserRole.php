@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Role extends Model
 {
@@ -17,5 +19,10 @@ class Role extends Model
         'mgr_gtpuserroles_createdby'
 
     ];
+
+    public function users():Hasmany
+    {
+        return $this->hasMany(User::class,'mgr_gtpusers_roles');
+    }
    
 }
