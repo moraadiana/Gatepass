@@ -9,11 +9,13 @@ class Department extends Model
 {
     //use HasFactory;
     protected $fillable =[
-        'name',
-        'status',
-        'company',
-        
+        'mgr_gtpdepartments_name',
+        'mgr_gtpdepartments_status',
+        'mgr_gtpdepartments_company',
+
 
     ];
+    protected $table = 'mgr_gtpdepartments';
+    protected $primaryKey = 'mgr_gtpdepartments_id'; 
 
 }

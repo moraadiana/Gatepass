@@ -9,8 +9,9 @@ class Company extends Model
 {
     //use HasFactory;
     protected $fillable =[
-        'name',
-        'status'
+        'mgr_gtpcompanies_name',
+        'mgr_gtpcompanies_status'
     ];
-
+    protected $table = 'mgr_gtpcompanies';
+    protected $primaryKey = 'mgr_gtpcompanies_id'; 
 }

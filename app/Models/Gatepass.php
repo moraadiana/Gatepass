@@ -9,18 +9,21 @@ class Gatepass extends Model
 {
    // use HasFactory;
     protected $fillable=[
-        'name',
-        'vehicle registration',
-        'auxilary document',
-        'destination',
-        'purpose',
-        'status',
-        'created date',
-        'department',
-        'source location',
-        'destination location',
-        'uom',
-        'created by'
+        'mgr_gtpgatepass_name',
+        'mgr_gtpgatepass_vehiclereg',
+        'mgr_gtpgatepass_auxilarydoc',
+        'mgr_gtpgatepass_destination',
+        'mgr_gtpgatepass_purpose',
+        'mgr_gtpgatepass_status',
+        'mgr_gtpgatepass_createddate',
+        'mgr_gtpgatepass_department',
+        'mgr_gtpgatepass_sourcelocation',
+        'mgr_gtpgatepass_destinationlocation',
+        'mgr_gtpgatepass_uom',
+        'mgr_gtpgatepass_createdby'
 
     ];
+    protected $table = 'mgr_gtpgatepass';
+    protected $primaryKey = 'mgr_gtpgatepass_id'; 
+
 }

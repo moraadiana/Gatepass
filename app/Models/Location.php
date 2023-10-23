@@ -9,8 +9,10 @@ class Location extends Model
 {
    // use HasFactory;
    protected $fillable = [
-    'name',
-    'statu',
-    'company'
+    'mgr_gtplocations_name',
+    'mgr_gtplocations_status',
+    'mgr_gtplocations_company'
    ];
+    protected $table = 'mgr_gtplocations';
+    protected $primaryKey = 'mgr_gtplocations_id'; 
 }

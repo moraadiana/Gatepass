@@ -9,15 +9,17 @@ class Item extends Model
 {
     //use HasFactory;
     protected $fillable=[
-        'description',
-        'code',
-        'quantity',
-        'uom',
-        'status',
-        'created dated',
-        'gatepass',
-        'created by'
+        'mgr_gtpitems_description',
+        'mgr_gtpitems_code',
+        'mgr_gtpitems_quantity',
+        'mgr_gtpitems_uom',
+        'mgr_gtpitems_status',
+        'mgr_gtpitems_createddated',
+        'mgr_gtpitems_gatepass',
+        'mgr_gtpitems_createdby'
 
 
     ];
+    protected $table = 'mgr_gtpitems';
+    protected $primaryKey = 'mgr_gtpitems_id'; 
 }
