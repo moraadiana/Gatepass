@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppovalLevel extends Model
 {
-    use HasFactory;
+    //use HasFactory;
+    protected $fillable =[
+        'label',
+        'approver',
+        'sequenceid',
+        'status',
+        'created date'
+    ];
 }

@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appoval extends Model
 {
-    use HasFactory;
+
+    protected $fillable = [
+        'status',
+        'approvedby',
+        'approveddate',
+        'approvallevel',
+        'gatepass',
+        'created by'
+    ];
+    //use HasFactory;
 }
