@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    use HasFactory;
+    //use HasFactory;
+    protected $fillable =[
+        'name',
+        'status',
+        'created date',
+        'created by'
+
+    ];
 }
