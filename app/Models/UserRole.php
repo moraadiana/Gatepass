@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     //use HasFactory;
+    protected $table = 'mgr_gtpuserroles';
+    protected $primaryKey = 'mgr_gtpuserroles_id'; 
     protected $fillable =[
         'mgr_gtpuserroles_name',
         'mgr_gtpuserroles_status',
@@ -15,6 +17,5 @@ class Role extends Model
         'mgr_gtpuserroles_createdby'
 
     ];
-    protected $table = 'mgr_gtpuserroles';
-    protected $primaryKey = 'mgr_gtpuserroles_id'; 
+   
 }

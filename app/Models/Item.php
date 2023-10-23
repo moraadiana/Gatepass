@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     //use HasFactory;
+    protected $table = 'mgr_gtpitems';
+    protected $primaryKey = 'mgr_gtpitems_id';
+    
     protected $fillable=[
         'mgr_gtpitems_description',
         'mgr_gtpitems_code',
@@ -20,6 +23,5 @@ class Item extends Model
 
 
     ];
-    protected $table = 'mgr_gtpitems';
-    protected $primaryKey = 'mgr_gtpitems_id'; 
+     
 }
