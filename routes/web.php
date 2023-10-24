@@ -42,25 +42,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/approval/{mgr_gtpapprovals_id}', [ApprovalController::class, 'show']);
+Route::resource('gatepass', GatepassController::class);
 
-Route::get('/approvallevel/{mgr_gtpapprovallevels_id}', [ApprovalLevelController::class, 'show']);
-
-Route::get('/company/{mgr_gtpcompanies_id}', [CompanyController::class, 'show']);
-
-Route::get('/department/{mgr_gtpdepartments_id}', [DepartmentController::class, 'show']);
-
-Route::get('/gatepass/{mgr_gtpgatepass_id}', [GatepassController::class, 'show']);
-
-Route::get('/item/{mgr_gtpitems_id}', [ItemController::class, 'show']);
-
-Route::get('/location/{mgr_gtplocations_id}', [LocationController::class, 'show']);
-
-Route::get('/uom/{mgr_gtpuoms_id}', [UomController::class, 'show']);
-
-Route::get('/userrole/{mgr_gtpuserroles_id}', [UserRoleController::class, 'show']);
 
 
 require __DIR__ . '/auth.php';
 //require __DIR__.'/../vendor/autoload.php';
-

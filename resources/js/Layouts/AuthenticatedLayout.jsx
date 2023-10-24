@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Link } from "@inertiajs/react";
 import { ProLayout } from "@ant-design/pro-components";
 import { Dropdown } from "antd";
-import { LogoutOutlined, DashboardFilled } from "@ant-design/icons";
+import {
+    LogoutOutlined,
+    DashboardFilled,
+    FileDoneOutlined,
+} from "@ant-design/icons";
 
 export default function Authenticated({ user, header, children }) {
     return (
@@ -44,7 +48,23 @@ export default function Authenticated({ user, header, children }) {
                     name: "Dashboard",
                     icon: <DashboardFilled />,
                 },
+                {
+                    path: "/gatepasses",
+                    name: "Gatepass",
+                    icon: <FileDoneOutlined />,
+                    children: [
+                        {
+                            path: route("gatepass.index"),
+                            name: "All Gatepass",
+                        },
+                        {
+                            path: route("gatepass.create"),
+                            name: "Create Gatepass",
+                        },
+                    ],
+                },
             ]}
+            menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}
         >
             {children}
         </ProLayout>

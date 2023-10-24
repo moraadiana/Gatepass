@@ -2,17 +2,81 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Department;
 use App\Models\Gatepass;
-use Illuminate\View\View;
+use App\Models\Location;
+use App\Models\Uom;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class GatepassController extends Controller
 {
-    //
-    public function show(string $mgr_gtpgatepass_id): View
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        return view('gatepass.profile', [
-            'gatepass' => Gatepass::findOrFail($mgr_gtpgatepass_id)
-        ]);
+        return Inertia::render(
+            'Gatepass/Index',
+            [
+                'gatepasses' => Gatepass::all()
+            ]
+        );
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return Inertia::render(
+            'Gatepass/Create',
+            [
+                'departments' => Department::all(),
+                'uoms' => Uom::all(),
+                'locations' => Location::all()
+            ]
+
+        );
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        Gatepass::create($request->all());
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }
