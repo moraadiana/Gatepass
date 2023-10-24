@@ -12,7 +12,7 @@ class UserRoleController extends Controller
     public function show(string $mgr_gtpuserroles_id): View
     {
         return view('userrole.profile', [
-            'userrole' => UserRole::findOrFail($mgr_gtpuserroles_id)
+            'userrole'=>UserRole::findOrFail($mgr_gtpuserroles_id)
         ]);
     }
 }

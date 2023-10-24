@@ -1,6 +1,14 @@
 <?php
 
 use App\Http\Controllers\ApprovalController;
+use App\Http\Controllers\ApprovalLevelController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\GatepassController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\UomController;
+use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -54,5 +62,5 @@ Route::get('/userrole/{mgr_gtpuserroles_id}', [UserRoleController::class, 'show'
 
 
 require __DIR__ . '/auth.php';
-require __DIR__.'/../vendor/autoload.php';
+//require __DIR__.'/../vendor/autoload.php';
 
