@@ -63,6 +63,16 @@ export default function Authenticated({ user, header, children }) {
                         },
                     ],
                 },
+                {
+                    path:"/approvals",
+                    name: "Approval",
+                    children:[
+                        {
+                            path: route("approval.index"),
+                            name: "Approvals"
+                        }
+                    ]
+                },
             ]}
             menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}
         >
