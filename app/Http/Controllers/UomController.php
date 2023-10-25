@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Uom;
 
 class UomController extends Controller
 {
@@ -12,6 +13,7 @@ class UomController extends Controller
     public function index()
     {
         //
+        return inertia::render('UOMs');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\UserRole;
 
 class UserRoleController extends Controller
 {
@@ -12,6 +13,7 @@ class UserRoleController extends Controller
     public function index()
     {
         //
+        return inertia::render('User Roles');
     }
 
     /**

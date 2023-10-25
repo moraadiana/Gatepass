@@ -5,11 +5,11 @@ import { Head } from "@inertiajs/react";
 export default function Index({ auth, approvallevels }) {
     return (
         <>
-            <Head title="Approval levels" />
+            <Head title="Companies" />
             <Authenticated user={auth.user}>
                 <PageContainer
                     header={{
-                        title: "Gatepass Approval levels",
+                        title: "Companies",
                         onBack: () => window.history.back(),
                     }}
                 >
