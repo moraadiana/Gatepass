@@ -13,6 +13,23 @@ export default function Index({ auth, approvallevels }) {
                         onBack: () => window.history.back(),
                     }}
                 >
+                    <ProTable
+                        headerTitle="Company"
+                        dataSource={companies}
+                        columns={[
+                            {
+                                title: "Name",
+                                dataIndex: "mgr_gtpcompanies_name",
+                            },
+                            {
+                                title: "Status",
+                                dataIndex: "mgr_gtpcompanies_status",
+                                hideInSearch: true,
+                            },
+                           
+                        ]}
+                        rowKey="mgr_gtpcompanies_id"
+                    />
                 
                 </PageContainer>
             </Authenticated>
