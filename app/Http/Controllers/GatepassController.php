@@ -69,17 +69,34 @@ class GatepassController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Gatepass $gatepass)
     {
-        //
+        return Inertia::render(
+            'Gatepass/Edit',
+            [
+                'gatepass' => $gatepass,
+                'departments' => Department::all(),
+                'uoms' => Uom::all(),
+                'locations' => Location::all()
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Gatepass $gatepass)
     {
-        //
+        //dd($request->all());
+        
+       /* $request->merge([
+            'mgr_gtpgatepass_createdby' => auth()->user()->mgr_gtpusers_id
+        ]);
+
+        //Update the resource with new data from request*/
+        $gatepass->update($request->input('values'));
+
+        return redirect()->route('gatepass.index')->with('success', 'Gatepass updated successfully!');
     }
 
     /**

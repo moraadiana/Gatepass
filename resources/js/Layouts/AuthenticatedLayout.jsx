@@ -34,7 +34,7 @@ export default function Authenticated({ user, header, children }) {
             avatarProps={{
                 src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
                 size: "small",
-                title: user.mgr_gtpusers_fname,
+                title: user?.mgr_gtpusers_fname,
                 render: (props, dom) => {
                     return (
                         <Dropdown
@@ -79,6 +79,7 @@ export default function Authenticated({ user, header, children }) {
                             path: route("gatepass.create"),
                             name: "Create Gatepass",
                         },
+                       
                     ],
                 },
                 {
