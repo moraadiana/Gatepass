@@ -32,13 +32,12 @@ export default function Index({ auth, gatepasses }) {
                             },
                             {
                                 title: "Source Location",
-                                dataIndex: ["location","mgr_gtpgatepass_sourcelocation"],
+                                dataIndex: ["source_location","mgr_gtpgatepass_sourcelocation"],
                                 hideInSearch: true,
                             },
                             {
                                 title: "Destination Location",
-                                dataIndex:
-                                    "mgr_gtpgatepass_destinationlocation",
+                                dataIndex:["destination_location","mgr_gtplocations_name"],
                                 hideInSearch: true,
                             },
                             {

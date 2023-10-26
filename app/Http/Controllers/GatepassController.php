@@ -16,7 +16,7 @@ class GatepassController extends Controller
      */
     public function index()
     {
-        $gatepass = Gatepass::with('user', 'uom', 'department', 'location')->get();
+        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')->get();
         return Inertia::render(
             'Gatepass/Index',
             [

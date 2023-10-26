@@ -52,11 +52,11 @@ class Gatepass extends Model
     {
         return $this->belongsTo(User::class, 'mgr_gtpgatepass_createdby');
     }
-    public function location(): BelongsTo
+    public function source_location(): BelongsTo
     {
         return $this->belongsTo(Location::class, 'mgr_gtpgatepass_sourcelocation');
     }
-    public function location1(): BelongsTo
+    public function destination_location(): BelongsTo
     {
         return $this->belongsTo(Location::class, 'mgr_gtpgatepass_destinationlocation');
     }
