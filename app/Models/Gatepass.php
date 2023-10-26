@@ -20,7 +20,6 @@ class Gatepass extends Model
         'mgr_gtpgatepass_destination',
         'mgr_gtpgatepass_purpose',
         'mgr_gtpgatepass_status',
-        'mgr_gtpgatepass_createddate',
         'mgr_gtpgatepass_department',
         'mgr_gtpgatepass_sourcelocation',
         'mgr_gtpgatepass_destinationlocation',
@@ -40,17 +39,25 @@ class Gatepass extends Model
     //belongs to uom
     public function uom(): BelongsTo
     {
-        return $this->belongsTo(Uom::class);
+        return $this->belongsTo(Uom::class, 'mgr_gtpgatepass_uom');
     }
-    public function departments(): BelongsTo
+    public function department(): BelongsTo
     {
-        return $this->belongsTo(Departments::class);
+        return $this->belongsTo(Department::class, 'mgr_gtpgatepass_department');
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'mgr_gtpgatepass_createdby');
     }
-    
+    public function location(): BelongsTo
+    {
+        return $this->belongsTo(Location::class, 'mgr_gtpgatepass_sourcelocation');
+    }
+    public function location1(): BelongsTo
+    {
+        return $this->belongsTo(Location::class, 'mgr_gtpgatepass_destinationlocation');
+    }
+
 }
 

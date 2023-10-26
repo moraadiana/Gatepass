@@ -2,14 +2,14 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageContainer } from "@ant-design/pro-components";
 import { Head } from "@inertiajs/react";
 
-export default function Index({ auth, approvallevels }) {
+export default function Index({ auth, approvals }) {
     return (
         <>
-            <Head title="Approval levels" />
+            <Head title="Add Approval" />
             <Authenticated user={auth.user}>
                 <PageContainer
                     header={{
-                        title: "Gatepass Approval levels",
+                        title: "Add Approvals",
                         onBack: () => window.history.back(),
                     }}
                 >

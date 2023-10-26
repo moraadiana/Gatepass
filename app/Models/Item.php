@@ -27,11 +27,11 @@ class Item extends Model
      
     public function gatepass(): BelongsTo
     {
-        return $this->belongsTo(Gatepass::class);
+        return $this->belongsTo(Gatepass::class, 'mgr_gtpitems_gatepass');
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'mgr_gtpitems_createdby');
     }
 }

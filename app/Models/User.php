@@ -85,11 +85,11 @@ class User extends Authenticatable
 
     public function userroles(): BelongsTo
     {
-        return $this->belongsTo(UserRole::class);
+        return $this->belongsTo(UserRole::class, 'mgr_gtpusers_role');
     }
     public function departments(): BelongsTo
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class, 'mgr_gtpusers_department');
     }
 }
 

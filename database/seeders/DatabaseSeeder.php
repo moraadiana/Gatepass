@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -15,13 +16,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\User::factory(10)->create();
+        $this->call([
+            UserSeeder::class,
+            CompanySeeder::class,
+            DepartmentSeeder::class,
+            LocationSeeder::class,
+            UomSeeder::class,
 
-        User::factory()->create([
-            'mgr_gtpusers_fname' => 'Diana',
-            'mgr_gtpusers_lname' => 'Moraa',
-            'mgr_gtpusers_sname' => 'M',
-            'mgr_gtpusers_email' => 'diana.moraa@grainbulk.com',
-            'mgr_gtpusers_password' => bcrypt('password'),
         ]);
     }
 }

@@ -24,7 +24,11 @@ export default function Create({ auth, departments, locations, uoms }) {
                     <ProCard>
                         <ProForm
                             onFinish={async (values) => {
-                               router.post(route("gatepass.store"), values);
+                                router.post(route("gatepass.store"), {
+                                    ...values,
+                                    mgr_gtpgatepass_createdby:
+                                        auth.user.mgr_gtpusers_id,
+                                });
                             }}
                         >
                             <ProForm.Group>
@@ -42,30 +46,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     placeholder="Vehicle Reg"
                                     rules={[{ required: true }]}
                                 />
-                                <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpgatepass_auxilarydoc"
-                                    label="Auxilary Doc"
-                                    placeholder="Auxilary Doc"
-                                    rules={[{ required: true }]}
-                                />
-                            </ProForm.Group>
-                            <ProForm.Group>
-                                <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpgatepass_destination"
-                                    label="Destination"
-                                    placeholder="Destination"
-                                    rules={[{ required: true }]}
-                                />
-                                <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpgatepass_purpose"
-                                    label="Purpose"
-                                    placeholder="Purpose"
-                                    rules={[{ required: true }]}
-                                />
-                                <ProFormSelect
+                                 <ProFormSelect
                                     width="sm"
                                     name="mgr_gtpgatepass_department"
                                     label="Department"
@@ -78,6 +59,53 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         };
                                     })}
                                 />
+                               
+                                
+                            </ProForm.Group>
+                            <ProForm.Group>
+                            <ProFormText
+                                    width="sm"
+                                    name="mgr_gtpgatepass_auxilarydoc"
+                                    label="Auxilary Doc"
+                                    placeholder="Auxilary Doc"
+                                    rules={[{ required: true }]}
+                                />
+                                <ProFormText
+                                    width="sm"
+                                    name="mgr_gtpgatepass_description"
+                                    label="Description"
+                                    placeholder="Description"
+                                    rules={[{ required: true }]}
+                                />
+                                <ProFormText
+                                    width="sm"
+                                    name="mgr_gtpgatepass_quantity"
+                                    label="Quantity"
+                                    placeholder="Quantity"
+                                    rules={[{ required: true }]}
+                                />
+                                 <ProFormSelect
+                                    width="sm"
+                                    name="mgr_gtpgatepass_uom"
+                                    label="UOM"
+                                    placeholder="UOM"
+                                    rules={[{ required: true }]}
+                                    options={uoms.map((uom) => {
+                                        return {
+                                            label: uom.mgr_gtpuoms_name,
+                                            value: uom.mgr_gtpuoms_id,
+                                        };
+                                    })}
+                                />
+                               
+                                <ProFormText
+                                    width="sm"
+                                    name="mgr_gtpgatepass_purpose"
+                                    label="Purpose"
+                                    placeholder="Purpose"
+                                    rules={[{ required: true }]}
+                                />
+                               
                             </ProForm.Group>
                             <ProForm.Group>
                                 <ProFormSelect
@@ -106,19 +134,14 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         };
                                     })}
                                 />
-                                <ProFormSelect
+                                 <ProFormText
                                     width="sm"
-                                    name="mgr_gtpgatepass_uom"
-                                    label="UOM"
-                                    placeholder="UOM"
+                                    name="mgr_gtpgatepass_destination"
+                                    label="Destination"
+                                    placeholder="Specific Destination"
                                     rules={[{ required: true }]}
-                                    options={uoms.map((uom) => {
-                                        return {
-                                            label: uom.mgr_gtpuoms_name,
-                                            value: uom.mgr_gtpuoms_id,
-                                        };
-                                    })}
                                 />
+                               
                             </ProForm.Group>
                         </ProForm>
                     </ProCard>

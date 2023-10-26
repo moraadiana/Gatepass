@@ -23,19 +23,19 @@ class Approval extends Model
     //approval level belongs to a gatepass and approval level
     public function gatepass(): BelongsTo
     {
-        return $this->belongsTo(Gatepass::class);
+        return $this->belongsTo(Gatepass::class, 'mgr_gtpapprovals_gatepass');
     }
     public function approvallevel(): BelongsTo
     {
-        return $this->belongsTo(ApprovalLevel::class);
+        return $this->belongsTo(ApprovalLevel::class, 'mgr_gtpapprovals_approvallevel');
     }
     public function departments(): BelongsTo
     {
-        return $this->belongsTo(Departments::class);
+        return $this->belongsTo(Departments::class, 'mgr_gtpapprovals_gatepass');
     }
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'mgr_gtpapprovals_createdby');
     }
     //use HasFactory;
 }

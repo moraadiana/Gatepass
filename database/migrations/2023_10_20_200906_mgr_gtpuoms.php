@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('mgr_gtpuoms', function (Blueprint $table) {
             $table->id('mgr_gtpuoms_id');
             $table->string('mgr_gtpuoms_name');
-	        $table->string('mgr_gtpuoms_createddate');
             $table->boolean('mgr_gtpuoms_status')->default(1); 
             $table->unsignedBigInteger('mgr_gtpuoms_createdby');
     	    $table->foreign('mgr_gtpuoms_createdby')->references	('mgr_gtpusers_id')->on('mgr_gtpusers');

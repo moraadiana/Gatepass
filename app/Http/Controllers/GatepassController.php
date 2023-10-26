@@ -16,10 +16,11 @@ class GatepassController extends Controller
      */
     public function index()
     {
+        $gatepass = Gatepass::with('user', 'uom', 'department', 'location')->get();
         return Inertia::render(
             'Gatepass/Index',
             [
-                'gatepasses' => Gatepass::all()
+                'gatepasses' => $gatepass
             ]
         );
     }
@@ -45,7 +46,10 @@ class GatepassController extends Controller
      */
     public function store(Request $request)
     {
+        $gatepassData = $request->all();
         Gatepass::create($request->all());
+        return redirect()->route('gatepass.index')
+            ->with('success', 'Gatepass created successfully!');
     }
 
     /**
@@ -53,7 +57,13 @@ class GatepassController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $gatepass = Gatepass::with('user', 'uom', 'department', 'location')->find($id);
+        return Inertia::render(
+            'Gatepass/Show',
+            [
+                'gatepass' => $gatepass
+            ]
+        );
     }
 
     /**

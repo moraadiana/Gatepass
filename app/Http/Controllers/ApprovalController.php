@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Approval;
+use Inertia\Inertia;
 
 class ApprovalController extends Controller
 {
@@ -27,6 +28,12 @@ class ApprovalController extends Controller
     public function create()
     {
         //
+        return Inertia::render(
+            'Approval/Create',
+            [
+                'approvals' => Approval::all()
+            ]
+        );
     }
 
     /**

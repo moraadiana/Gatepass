@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "@inertiajs/react";
+import { useEffect, useState } from "react";
+import { Link, usePage } from "@inertiajs/react";
 import { ProLayout } from "@ant-design/pro-components";
 import { Dropdown } from "antd";
 import {
@@ -7,8 +7,26 @@ import {
     DashboardFilled,
     FileDoneOutlined,
 } from "@ant-design/icons";
-
+import { notification } from "antd";
 export default function Authenticated({ user, header, children }) {
+    const { flash } = usePage().props;
+    useEffect(() => {
+        if (flash.success) {
+            notification.success({
+                message: "Success",
+                description: flash.success,
+                duration: 5,
+                placement: "top",
+            });
+        }
+        if (flash.error) {
+            notification.error({
+                message: "Error",
+                description: flash.error,
+                duration: 5,
+            });
+        }
+    }, [flash]);
     return (
         <ProLayout
             layout="mix"
@@ -64,14 +82,14 @@ export default function Authenticated({ user, header, children }) {
                     ],
                 },
                 {
-                    path:"/approvals",
+                    path: "/approvals",
                     name: "Approval",
-                    children:[
+                    children: [
                         {
                             path: route("approval.index"),
-                            name: "Approvals"
-                        }
-                    ]
+                            name: "Approvals",
+                        },
+                    ],
                 },
             ]}
             menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}

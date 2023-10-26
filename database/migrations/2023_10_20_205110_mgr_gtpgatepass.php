@@ -14,23 +14,24 @@ return new class extends Migration
         Schema::create('mgr_gtpgatepass', function (Blueprint $table) {
             $table->id('mgr_gtpgatepass_id');
             $table->string('mgr_gtpgatepass_name');
+            $table->string('mgr_gtpgatepass_description');
+            $table->string('mgr_gtpgatepass_quantity');
             $table->string('mgr_gtpgatepass_vehiclereg');
             $table->string('mgr_gtpgatepass_auxilarydoc');
             $table->string('mgr_gtpgatepass_destination');
             $table->string('mgr_gtpgatepass_purpose');
-            $table->string('mgr_gtpgatepass_createddate');
             $table->boolean('mgr_gtpgatepass_status')->default(1);
             $table->unsignedBigInteger('mgr_gtpgatepass_department');
-    	    $table->foreign('mgr_gtpgatepass_department')->references('mgr_gtpdepartments_id')->on('mgr_gtpdepartments');
+            $table->foreign('mgr_gtpgatepass_department')->references('mgr_gtpdepartments_id')->on('mgr_gtpdepartments');
             $table->unsignedBigInteger('mgr_gtpgatepass_sourcelocation');
-            $table->foreign('mgr_gtpgatepass_sourcelocation')->references	('mgr_gtplocations_id')->on('mgr_gtplocations');
+            $table->foreign('mgr_gtpgatepass_sourcelocation')->references('mgr_gtplocations_id')->on('mgr_gtplocations');
             $table->unsignedBigInteger('mgr_gtpgatepass_destinationlocation');
-            $table->foreign('mgr_gtpgatepass_destinationlocation')->references	('mgr_gtplocations_id')->on('mgr_gtplocations');
+            $table->foreign('mgr_gtpgatepass_destinationlocation')->references('mgr_gtplocations_id')->on('mgr_gtplocations');
             $table->unsignedBigInteger('mgr_gtpgatepass_uom');
-            $table->foreign('mgr_gtpgatepass_uom')->references	('mgr_gtpuoms_id')->on('mgr_gtpuoms');
+            $table->foreign('mgr_gtpgatepass_uom')->references('mgr_gtpuoms_id')->on('mgr_gtpuoms');
             $table->unsignedBigInteger('mgr_gtpgatepass_createdby');
             $table->foreign('mgr_gtpgatepass_createdby')->references('mgr_gtpusers_id')->on('mgr_gtpusers');
-            $table->timestamps();            
+            $table->timestamps();
         });
         //
     }
@@ -41,6 +42,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('mgr_gtpgatepass');
-
     }
 };
