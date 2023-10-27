@@ -9,7 +9,7 @@ import {
 import { Head, router } from "@inertiajs/react";
 
 export default function Create({ auth, departments, locations, uoms }) {
-    console.log(departments);
+    //console.log(gatepass);
     return (
         <>
             <Head title="Create Gatepass" />
@@ -30,6 +30,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         auth.user.mgr_gtpusers_id,
                                 });
                             }}
+                           
                         >
                             <ProForm.Group>
                                 <ProFormText
@@ -46,7 +47,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     placeholder="Vehicle Reg"
                                     rules={[{ required: true }]}
                                 />
-                                 <ProFormSelect
+                                <ProFormSelect
                                     width="sm"
                                     name="mgr_gtpgatepass_department"
                                     label="Department"
@@ -59,11 +60,9 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         };
                                     })}
                                 />
-                               
-                                
                             </ProForm.Group>
                             <ProForm.Group>
-                            <ProFormText
+                                <ProFormText
                                     width="sm"
                                     name="mgr_gtpgatepass_auxilarydoc"
                                     label="Auxilary Doc"
@@ -84,7 +83,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     placeholder="Quantity"
                                     rules={[{ required: true }]}
                                 />
-                                 <ProFormSelect
+                                <ProFormSelect
                                     width="sm"
                                     name="mgr_gtpgatepass_uom"
                                     label="UOM"
@@ -97,7 +96,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         };
                                     })}
                                 />
-                               
+
                                 <ProFormText
                                     width="sm"
                                     name="mgr_gtpgatepass_purpose"
@@ -105,7 +104,6 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     placeholder="Purpose"
                                     rules={[{ required: true }]}
                                 />
-                               
                             </ProForm.Group>
                             <ProForm.Group>
                                 <ProFormSelect
@@ -134,14 +132,13 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         };
                                     })}
                                 />
-                                 <ProFormText
+                                <ProFormText
                                     width="sm"
                                     name="mgr_gtpgatepass_destination"
                                     label="Destination"
                                     placeholder="Specific Destination"
                                     rules={[{ required: true }]}
                                 />
-                               
                             </ProForm.Group>
                         </ProForm>
                     </ProCard>

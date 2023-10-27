@@ -17,7 +17,9 @@ class ApprovalController extends Controller
         return Inertia::render(
             'Approval/Index',
             [
-                'approvals' => Approval::all()
+                //'approvals' => Approval::all()
+                'approvals' => Approval::with('user', 'uom', 'department', 'source_location', 'destination_location')->get()
+                
             ]
         );
     }

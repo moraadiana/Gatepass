@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approval;
 use Illuminate\Http\Request;
 use App\Models\ApprovalLevel;
+use App\Models\Gatepass;
+use Inertia\Inertia;
 
 class ApprovalLevelController extends Controller
 {
@@ -16,7 +19,7 @@ class ApprovalLevelController extends Controller
         return Inertia::render(
             'ApprovalLevel/Index',
             [
-                'approvals' => Approval::all()
+                'approvals' => ApprovalLevel::all()
             ]
         );
     }

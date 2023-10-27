@@ -57,7 +57,7 @@ class GatepassController extends Controller
      */
     public function show(string $id)
     {
-        $gatepass = Gatepass::with('user', 'uom', 'department', 'location')->find($id);
+        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')->find($id);
         return Inertia::render(
             'Gatepass/Show',
             [

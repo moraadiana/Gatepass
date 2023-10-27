@@ -32,7 +32,7 @@ export default function Index({ auth, gatepasses }) {
                             },
                             {
                                 title: "Source Location",
-                                dataIndex: ["source_location","mgr_gtpgatepass_sourcelocation"],
+                                dataIndex: ["source_location", "mgr_gtplocations_name"],
                                 hideInSearch: true,
                             },
                             {
@@ -60,6 +60,19 @@ export default function Index({ auth, gatepasses }) {
                                         )}
                                     >
                                         View Details
+                                    </Link>
+                                ),
+                            },
+                            {
+                                title: "Actions",
+                                render: (_, record) => (
+                                    <Link
+                                        href={route(
+                                            "gatepass.edit",
+                                            record.mgr_gtpgatepass_id
+                                        )}
+                                    >
+                                        Edit
                                     </Link>
                                 ),
                             },
