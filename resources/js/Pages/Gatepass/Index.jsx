@@ -115,23 +115,13 @@ export default function Index({ auth, gatepasses }) {
                                     </Link>
                                 ),
                             },
-                            //add a button to submit a gatepass record for approval and send an email to approver
-                            {
-                                render: (_, record) => (
-                                    //submit record for approval on button click
+                            //create button to submit a gatepass request
+                            
 
-                                    <button
-                                        onClick={() => {
-                                            
-                                            // send email notificatio
-                                            
 
-                                        }}
-                                    >
-                                        Submit
-                                    </button>
-                                ),
-                            },
+
+
+                            
                         ]}
                         rowKey="mgr_gtpgatepass_id"
                       

@@ -1,79 +1,52 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { Head } from "@inertiajs/react";
+//create a function to fetch all gatepasses
 
 export default function Index({ auth, approvals }) {
-    console.log(approvals);
     return (
-        <>
+        <Authenticated user={auth.user}>
             <Head title="Approvals" />
-            <Authenticated user={auth.user}>
-                <PageContainer
-                    header={{
-                        title: "Gatepass Approvals",
-                        onBack: () => window.history.back(),
-                    }}
-                >
-                    <ProTable
-                    // all created gatepasses from gatepass.index page
-                        headerTitle="Gatepass"
-                        rowKey="mgr_gtpgatepass_id"
-                        
+            <PageContainer
+                header={{
+                    title: "Approvals",
+                    onBack: () => window.history.back(),
+                }}
+            >
+                <ProTable
+                    headerTitle="Approvals"
+                    dataSource={approvals}
+                    columns={[
+                        {
+                            title: "Name",
+                            dataIndex: "mgr_gtpgatepass_name",
+                            key: "mgr_gtpgatepass_name",
+                        },
+                        {
+                            title: "Vehicle Reg",
+                            dataIndex: "mgr_gtpgatepass_vehiclereg",
+                            key: "mgr_gtpgatepass_vehiclereg",
+                        },
+                        {
+                            title: "Company",
+                            dataIndex: ["company", "mgr_gtpcompanies_name"],
+                            key: "mgr_gtpgatepass_company",
+                        },
+                        {
+                            title: "Department",
+                            dataIndex: [
+                                "department",
+                                "mgr_gtpgatepass_department",
+                            ],
+                            key: "mgr_gtpgatepass_department",
+                        }
+
+                    ]}
+                    
 
 
-                        dataSource={approvals}
-                        columns={[  
-                            {
-                                queryField: "mgr_gtpgatepass_name", 
-                                dataIndex: "mgr_gtpgatepass_name",
-                                title: "Title",
-                                
-                            },
-                            {
-                                queryField: "mgr_gtpgatepass_department", 
-                                dataIndex: "mgr_gtpgatepass_department",
-                                title: "Department",
-                            },
-                            {
-                                queryField: "mgr_gtpgatepass_destination", 
-                                dataIndex: "mgr_gtpgatepass_destination",
-                                title: "Destination",
-                            },
-                            {
-                                queryField: "mgr_gtpgatepass_purpose", 
-                                dataIndex: "mgr_gtpgatepass_purpose",
-                                title: "Purpose",
-                            },
-                            {
-                                queryField: "mgr_gtpgatepass_description", 
-                                dataIndex: "mgr_gtpgatepass_description",
-                                title: "Description",
-                            },
-                            {
-                                queryField: "mgr_gtpgatepass_quantity", 
-                                dataIndex: "mgr_gtpgatepass_quantity",
-                                title: "Quantity",
-                            },
-                            {
-                                queryField: "mgr_gtpgatepass_auxilarydoc", 
-                                dataIndex: "mgr_gtpgatepass_auxilarydoc",
-                                title: "Auxilary Doc",
-                            },
-                            {
-                                queryField: "mgr_gtpgatepass_createdby", 
-                                dataIndex: "mgr_gtpgatepass_createdby",
-                                title: "Created By",
-                            },
-                            
-
-
-                        ]}
-                
-                        
-                        />
-                
-                </PageContainer>
-            </Authenticated>
-        </>
+                />
+            </PageContainer>
+        </Authenticated>
     );
-}
+                }

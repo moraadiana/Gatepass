@@ -57,7 +57,7 @@ class GatepassController extends Controller
      */
     public function show(string $id)
     {
-        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location','company')->find($id);
+        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company')->find($id);
         return Inertia::render(
             'Gatepass/Show',
             [
@@ -110,17 +110,21 @@ class GatepassController extends Controller
     public function submitForApproval(Gatepass $gatepass)
 
     {
-        $gatepass = Gatepass::find($gatepass);
+        //dd(auth()->user()-> mgr_gtpusers_id);
+        //$gatepass = Gatepass::find($gatepass);
         //create an approval record for the gatepass
+
+
         $gatepass->approvals()->create([
-            'mgr_gtpapprovals_approver' => auth()->user()->id,
-            'mgr_gtpapprovals_approved_by' => auth()->user()->id,
-            'mgr_gtpapprovals_approved_at' => now(),
-            'mgr_gtpapprovals_approved_date' => now(),
-            'mgr_gtpapprovals_status' => 'pending',
-            'mgr_gtpapprovals_approvallevel',
-            'mgr_gtpapprovals_gatepass',
-            'mgr_gtpapprovals_createdby' => auth()->user()->id
+
+            'mgr_gtpapprovals_approver' => auth()->user()-> mgr_gtpusers_id,
+            'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_id,
+            'mgr_gtpapprovals_approvedat' => now(),
+            'mgr_gtpapprovals_approveddate' => now(),
+            'mgr_gtpapprovals_status' => 1,
+            'mgr_gtpapprovals_approvallevel'=> 1,
+            'mgr_gtpapprovals_gatepass' => $gatepass->id,
+            'mgr_gtpapprovals_createdby' => 1
         ]);
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
     }

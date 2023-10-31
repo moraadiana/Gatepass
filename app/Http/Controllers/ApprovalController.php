@@ -15,7 +15,14 @@ class ApprovalController extends Controller
     public function index()
     {
         //
-        $approval = Approval::with('user', 'uom', 'department', 'source_location', 'destination_location')->get();
+        // $approval = Approval->get();
+        // return Inertia::render(
+        //     'Approval/Index',
+        //     [
+        //         'approvals' => $approval
+        //     ]
+        // );
+        $approval = Approval::with('gatepass')->get();
         return Inertia::render(
             'Approval/Index',
             [
