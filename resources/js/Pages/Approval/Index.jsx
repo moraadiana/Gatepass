@@ -16,6 +16,11 @@ export default function Index({ auth, approvals }) {
                 >
                     <ProTable
                     // all created gatepasses from gatepass.index page
+                        headerTitle="Gatepass"
+                        rowKey="mgr_gtpgatepass_id"
+                        
+
+
                         dataSource={approvals}
                         columns={[  
                             {
@@ -39,6 +44,27 @@ export default function Index({ auth, approvals }) {
                                 dataIndex: "mgr_gtpgatepass_purpose",
                                 title: "Purpose",
                             },
+                            {
+                                queryField: "mgr_gtpgatepass_description", 
+                                dataIndex: "mgr_gtpgatepass_description",
+                                title: "Description",
+                            },
+                            {
+                                queryField: "mgr_gtpgatepass_quantity", 
+                                dataIndex: "mgr_gtpgatepass_quantity",
+                                title: "Quantity",
+                            },
+                            {
+                                queryField: "mgr_gtpgatepass_auxilarydoc", 
+                                dataIndex: "mgr_gtpgatepass_auxilarydoc",
+                                title: "Auxilary Doc",
+                            },
+                            {
+                                queryField: "mgr_gtpgatepass_createdby", 
+                                dataIndex: "mgr_gtpgatepass_createdby",
+                                title: "Created By",
+                            },
+                            
 
 
                         ]}

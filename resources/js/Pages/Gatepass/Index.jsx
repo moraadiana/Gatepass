@@ -19,9 +19,23 @@ export default function Index({ auth, gatepasses }) {
                         dataSource={gatepasses}
                         columns={[
                             {
-                                title: "Title",
+                                title: "Name",
                                 dataIndex: "mgr_gtpgatepass_name",
                             },
+                            {
+                                title: "Vehicle Reg",
+                                dataIndex: "mgr_gtpgatepass_vehiclereg",
+                            },
+                            // {
+                            //     title: "Company",
+                            //     dataIndex: [
+                            //         "company",
+                            //         "mgr_gtpgatepass_company",
+
+                            //     ],
+                            //     hideInSearch: true,
+
+                            // },
                             {
                                 title: "Department",
                                 dataIndex: [
@@ -31,20 +45,45 @@ export default function Index({ auth, gatepasses }) {
                                 hideInSearch: true,
                             },
                             {
-                                title: "Source Location",
-                                dataIndex: ["source_location", "mgr_gtplocations_name"],
+                                title: "Item(s) Descripton",
+                                dataIndex: "mgr_gtpgatepass_description",
                                 hideInSearch: true,
                             },
                             {
-                                title: "Destination Location",
-                                dataIndex:["destination_location","mgr_gtplocations_name"],
+                                title: " Quantity",
+                                dataIndex: "mgr_gtpgatepass_quantity",
                                 hideInSearch: true,
+                            },
+                            {
+                                title: "UOM",
+                                dataIndex: "mgr_gtpgatepass_uom",
+                            },
+                            {
+                                title: "Auxilary Document",
+                                dataIndex: "mgr_gtpgatepass_auxilarydoc",
                             },
                             {
                                 title: "Purpose",
                                 dataIndex: "mgr_gtpgatepass_purpose",
                                 hideInSearch: true,
                             },
+                            {
+                                title: "Source Location",
+                                dataIndex: [
+                                    "source_location",
+                                    "mgr_gtplocations_name",
+                                ],
+                                hideInSearch: true,
+                            },
+                            {
+                                title: "Destination Location",
+                                dataIndex: [
+                                    "destination_location",
+                                    "mgr_gtplocations_name",
+                                ],
+                                hideInSearch: true,
+                            },
+
                             {
                                 title: "Destination",
                                 dataIndex: "mgr_gtpgatepass_destination",
@@ -76,8 +115,26 @@ export default function Index({ auth, gatepasses }) {
                                     </Link>
                                 ),
                             },
+                            //add a button to submit a gatepass record for approval and send an email to approver
+                            {
+                                render: (_, record) => (
+                                    //submit record for approval on button click
+
+                                    <button
+                                        onClick={() => {
+                                            
+                                            // send email notificatio
+                                            
+
+                                        }}
+                                    >
+                                        Submit
+                                    </button>
+                                ),
+                            },
                         ]}
                         rowKey="mgr_gtpgatepass_id"
+                      
                     />
                 </PageContainer>
             </Authenticated>

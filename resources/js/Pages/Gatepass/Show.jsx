@@ -22,14 +22,19 @@ export default function Show({ auth, gatepass }) {
                     column={2}
                     columns={[
                         {
-                            title: "Created By",
-                            dataIndex: ["user", "mgr_gtpusers_fname"],
-                            key: "mgr_gtpgatepass_createdby",
-                        },
-                        {
-                            title: "title",
+                            title: "Name",
                             dataIndex: "mgr_gtpgatepass_name",
                             key: "mgr_gtpgatepass_name",
+                        },
+                        {
+                            title: "Vehicle Reg",
+                            dataIndex: "mgr_gtpgatepass_vehiclereg",
+                            key: "mgr_gtpgatepass_vehiclereg",
+                        },
+                        {
+                            title: "Company",
+                            dataIndex: ["company", "mgr_gtpcompanies_name"],
+                            key: "mgr_gtpgatepass_company",
                         },
                         {
                             title: "Department",
@@ -40,12 +45,7 @@ export default function Show({ auth, gatepass }) {
                             key: "mgr_gtpgatepass_department",
                         },
                         {
-                            title: "Auxilary Doc",
-                            dataIndex: "mgr_gtpgatepass_auxilarydoc",
-                            key: "mgr_gtpgatepass_auxilarydoc",
-                        },
-                        {
-                            title: "Description",
+                            title: "Item(s) Description",
                             dataIndex: "mgr_gtpgatepass_description",
                             key: "mgr_gtpgatepass_description",
                         },
@@ -61,10 +61,11 @@ export default function Show({ auth, gatepass }) {
                             key: "mgr_gtpgatepass_uom",
                         },
                         {
-                            title: "Purpose",
-                            dataIndex: "mgr_gtpgatepass_purpose",
-                            key: "mgr_gtpgatepass_purpose",
+                            title: "Auxilary Doc",
+                            dataIndex: "mgr_gtpgatepass_auxilarydoc",
+                            key: "mgr_gtpgatepass_auxilarydoc",
                         },
+
                         {
                             title: "Source Location",
                             dataIndex: [
@@ -80,6 +81,23 @@ export default function Show({ auth, gatepass }) {
                                 "mgr_gtplocations_name",
                             ],
                             hideInSearch: true,
+                        },
+                        {
+                            title: "Purpose",
+                            dataIndex: "mgr_gtpgatepass_purpose",
+                            key: "mgr_gtpgatepass_purpose",
+                        },
+                       
+
+                        // {
+                        //     title: "Created By",
+                        //     dataIndex: ["user", "mgr_gtpusers_fname"],
+                        //     key: "mgr_gtpgatepass_createdby",
+                        // },
+                        {
+                            title: "Destination",
+                            dataIndex: "mgr_gtpgatepass_destination",
+                            key: "mgr_gtpgatepass_destination",
                         },
                     ]}
                 />

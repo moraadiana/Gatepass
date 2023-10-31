@@ -57,7 +57,7 @@ class GatepassController extends Controller
      */
     public function show(string $id)
     {
-        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')->find($id);
+        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location','company')->find($id);
         return Inertia::render(
             'Gatepass/Show',
             [
@@ -88,8 +88,8 @@ class GatepassController extends Controller
     public function update(Request $request, Gatepass $gatepass)
     {
         //dd($request->all());
-        
-       /* $request->merge([
+
+        /* $request->merge([
             'mgr_gtpgatepass_createdby' => auth()->user()->mgr_gtpusers_id
         ]);
 
@@ -105,5 +105,23 @@ class GatepassController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function submitForApproval(Gatepass $gatepass)
+
+    {
+        $gatepass = Gatepass::find($gatepass);
+        //create an approval record for the gatepass
+        $gatepass->approvals()->create([
+            'mgr_gtpapprovals_approver' => auth()->user()->id,
+            'mgr_gtpapprovals_approved_by' => auth()->user()->id,
+            'mgr_gtpapprovals_approved_at' => now(),
+            'mgr_gtpapprovals_approved_date' => now(),
+            'mgr_gtpapprovals_status' => 'pending',
+            'mgr_gtpapprovals_approvallevel',
+            'mgr_gtpapprovals_gatepass',
+            'mgr_gtpapprovals_createdby' => auth()->user()->id
+        ]);
+        return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
     }
 }

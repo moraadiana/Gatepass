@@ -10,6 +10,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\UomController;
 use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Gatepass;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -59,6 +60,8 @@ Route::resource('location', LocationController::class);
 Route::resource('uom', UomController::class);
 
 Route::resource('userrole', UserRoleController::class);
+
+Route::post('/gatepass/{gatepass}/submit-for-approval', [GatepassController::class, 'submitForApproval'])->name('gatepass.submitForApproval');
 
 require __DIR__ . '/auth.php';
 //require __DIR__.'/../vendor/autoload.php';

@@ -11,20 +11,21 @@ class Company extends Model
 {
     //use HasFactory;
     protected $table = 'mgr_gtpcompanies';
-    protected $primaryKey = 'mgr_gtpcompanies_id'; 
+    protected $primaryKey = 'mgr_gtpcompanies_id';
 
-    protected $fillable =[
+    protected $fillable = [
         'mgr_gtpcompanies_name',
         'mgr_gtpcompanies_status'
     ];
-    
-    public function departments():Hasmany
-    {
-        return $this->hasMany(Department::class,'mgr_gtpdepartments_company');
-    }
 
-    public function locations():Hasmany
+    public function departments(): Hasmany
     {
-        return $this->hasMany(Location::class,'mgr_gtpdepartments_company');
+        return $this->hasMany(Department::class, 'mgr_gtpdepartments_company');
+    }
+    //create a relatioship with gatepass
+
+    public function locations(): Hasmany
+    {
+        return $this->hasMany(Location::class, 'mgr_gtpdepartments_company');
     }
 }

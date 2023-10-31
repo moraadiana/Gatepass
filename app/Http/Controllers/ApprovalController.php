@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Approval;
+use Illuminate\Routing\Route;
 use Inertia\Inertia;
 
 class ApprovalController extends Controller
@@ -14,12 +15,11 @@ class ApprovalController extends Controller
     public function index()
     {
         //
+        $approval = Approval::with('user', 'uom', 'department', 'source_location', 'destination_location')->get();
         return Inertia::render(
             'Approval/Index',
             [
-                //'approvals' => Approval::all()
-                'approvals' => Approval::with('user', 'uom', 'department', 'source_location', 'destination_location')->get()
-                
+                'approvals' => $approval
             ]
         );
     }
@@ -51,7 +51,6 @@ class ApprovalController extends Controller
      */
     public function show(string $id)
     {
-        //
     }
 
     /**
