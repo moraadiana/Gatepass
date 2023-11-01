@@ -12,17 +12,20 @@ class ApprovalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Approval $approval)
     {
-        //
-        // $approval = Approval->get();
+        // $approval = Approval::with('gatepass')->get();
         // return Inertia::render(
         //     'Approval/Index',
+
+
         //     [
         //         'approvals' => $approval
         //     ]
-        // );
-        $approval = Approval::with('gatepass')->get();
+        //dd($approval);
+        $approval = Approval::with('approvallevel')
+        ->where('mgr_gtpapprovals_status', 1)
+        ->get();
         return Inertia::render(
             'Approval/Index',
             [

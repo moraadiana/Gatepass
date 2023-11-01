@@ -4,6 +4,8 @@ import { Head } from "@inertiajs/react";
 //create a function to fetch all gatepasses
 
 export default function Index({ auth, approvals }) {
+    console.log(approvals);
+    
     return (
         <Authenticated user={auth.user}>
             <Head title="Approvals" />
@@ -13,40 +15,37 @@ export default function Index({ auth, approvals }) {
                     onBack: () => window.history.back(),
                 }}
             >
+                
                 <ProTable
                     headerTitle="Approvals"
                     dataSource={approvals}
                     columns={[
                         {
-                            title: "Name",
-                            dataIndex: "mgr_gtpgatepass_name",
-                            key: "mgr_gtpgatepass_name",
+                            title: "Status",
+                            dataIndex: "mgr_gtpapprovals_status",
+                            
                         },
                         {
-                            title: "Vehicle Reg",
-                            dataIndex: "mgr_gtpgatepass_vehiclereg",
-                            key: "mgr_gtpgatepass_vehiclereg",
+                            title: "Approval level",
+                            dataIndex: ["approvallevel", "mgr_gtpapprovals_approvallevel"],
+                          
                         },
                         {
-                            title: "Company",
-                            dataIndex: ["company", "mgr_gtpcompanies_name"],
-                            key: "mgr_gtpgatepass_company",
+                            title: "gatepass",
+                            dataIndex: "mgr_gtpapprovals_gatepass",
                         },
-                        {
-                            title: "Department",
-                            dataIndex: [
-                                "department",
-                                "mgr_gtpgatepass_department",
-                            ],
-                            key: "mgr_gtpgatepass_department",
-                        }
-
+                        //create a link to view created gatepass
+                        
                     ]}
+
+
+
+
                     
-
-
+                        
+                    rowKey="mgr_gtpapprovals_id"
                 />
             </PageContainer>
         </Authenticated>
     );
-                }
+}
