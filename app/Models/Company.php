@@ -26,6 +26,6 @@ class Company extends Model
 
     public function locations(): Hasmany
     {
-        return $this->hasMany(Location::class, 'mgr_gtpdepartments_company');
+        return $this->hasMany(Location::class, 'mgr_gtplocations_company');
     }
 }

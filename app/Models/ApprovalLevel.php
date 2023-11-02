@@ -26,8 +26,8 @@ class ApprovalLevel extends Model
    {
        return $this->hasMany(Approval::class,'mgr_gtpapprovals_approvallevel');
    }
-   public function user(): BelongsTo
-   {
-       return $this->belongsTo(User::class, 'mgr_gtpapprovallevels_approver');
-   }
+//    public function user(): BelongsTo
+//    {
+//        return $this->belongsTo(User::class, 'mgr_gtpapprovallevels_approver');
+//    }
 }

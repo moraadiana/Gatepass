@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Approval;
+use App\Models\ApprovalLevel;
+use App\Models\Gatepass;
 use Illuminate\Routing\Route;
 use Inertia\Inertia;
+use Psy\Readline\Hoa\Console;
 
 class ApprovalController extends Controller
 {
@@ -23,9 +26,11 @@ class ApprovalController extends Controller
         //         'approvals' => $approval
         //     ]
         //dd($approval);
-        $approval = Approval::with('approvallevel')
-        ->where('mgr_gtpapprovals_status', 1)
-        ->get();
+        $approvallevel = auth()->user()->approvallevel->mgr_gtpapprovallevels_status;
+
+        $approval = Approval::with('gatepass.department', 'gatepass.source_location', 'gatepass.destination_location', 'gatepass.uom')
+            ->where('mgr_gtpapprovals_status', $approvallevel)
+            ->get();
         return Inertia::render(
             'Approval/Index',
             [
@@ -53,7 +58,20 @@ class ApprovalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //update the gatepass status to the level of the next approver
+        $gatepassId = $request->input('gatepass_id');
+        $approvalId = $request->input('approval_id');
+        // $gatepass = Gatepass::where('mgr_gtpgatepass_id', $gatepassId)->first();
+        // $gatepass->update(["mgr_gtpgatepass_status" => 1]);
+
+        
+        $approval = Approval::where('mgr_gtpapprovals_id', $approvalId)->first();
+        dd($approval);
+        $approval->update(["mgr_gtpapprovals_approvallevel" => 2]);
+        
+
+
+        return redirect()->route('approval.store')->with('success', 'Approval created successfully!');
     }
 
     /**
@@ -62,6 +80,7 @@ class ApprovalController extends Controller
     public function show(string $id)
     {
     }
+
 
     /**
      * Show the form for editing the specified resource.

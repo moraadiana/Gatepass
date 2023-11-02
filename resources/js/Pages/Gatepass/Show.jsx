@@ -7,12 +7,14 @@ import {
     ProTable,
     ProForm,
     ProDescriptions,
+    ModalForm,
+    ProFormTextArea,
 } from "@ant-design/pro-components";
-import { Button, Popconfirm } from "antd";
+import { Button, Popconfirm, Space } from "antd";
 import { router } from "@inertiajs/react";
 
-export default function Show({ auth, gatepass }) {
-    console.log(gatepass);
+export default function Show({ auth, gatepass, user, approval }) {
+    console.log(approval);
     //route(gatepass.mgr_gtpgatepass_id)
     return (
         <>
@@ -24,18 +26,89 @@ export default function Show({ auth, gatepass }) {
                         onBack: () => window.history.back(),
                     }}
                     extra={
-                        <Popconfirm
-                            title="Are you sure you want to approve this Gatepass?"
-                            onConfirm={async () => {
-                                console.log(gatepass.mgr_gtpgatepass_id);
-                                 router.post(
-                                    
-                                    await route("gatepass.submitForApproval", gatepass.mgr_gtpgatepass_id)
-                                );
-                            }}
-                        >
-                            <Button type="primary">Submit for Approval</Button>
-                        </Popconfirm>
+                        <Space>
+                            <Popconfirm
+                                title="Are you sure you want to submit this Gatepass?"
+                                onConfirm={async () => {
+                                    console.log(gatepass.mgr_gtpgatepass_id);
+                                    router.post(
+                                        await route(
+                                            "gatepass.submitForApproval",
+                                            gatepass.mgr_gtpgatepass_id
+                                        )
+                                    );
+                                }}
+                            >
+                                <Button type="primary">
+                                    Submit for Approval
+                                </Button>
+                            </Popconfirm>
+                            {/* <Popconfirm
+                                title="Are you sure you want to approve this Gatepass?"
+                                onConfirm={async () => {
+                                    console.log(gatepass.mgr_gtpgatepass_id);
+                                    router.post(route("approval.store"),
+                                        {
+                                            gatepass_id: gatepass.mgr_gtpgatepass_id,
+                                            
+                                        }
+
+                                    );
+                                }}
+                            >
+                               
+                            </Popconfirm> */}
+                            {user.role.mgr_gtpuserroles_name == "User" && (
+                                <Space>
+                                    <ModalForm
+                                        title="Approve Gatepass"
+                                        width={400}
+                                        trigger={
+                                            <Button type="primary">
+                                                Approve
+                                            </Button>
+                                        }
+                                        onFinish={async (values) => {
+                                            router.post(
+                                                route("approval.store"),
+                                                {
+                                                    ...values,
+
+                                                    approval_id:
+                                                        approval.mgr_gtpapprovals_id,
+                                                        
+
+                                                    // gatepass_id:
+                                                    //     gatepass.mgr_gtpgatepass_id,
+                                                }
+                                                
+                                            );
+                                            console.log(approval);
+                                        }}
+                                    >
+                                        <ProFormTextArea
+                                            name="comment"
+                                            label="Comment"
+                                        />
+                                    </ModalForm>
+                                    <ModalForm
+                                        title="Approve Gatepass"
+                                        width={400}
+                                        trigger={
+                                            <Button type="primary" danger>
+                                                Reject
+                                            </Button>
+                                        }
+                                        onFinish={async (values) => {}}
+                                    >
+                                        <ProFormTextArea
+                                            name="comment"
+                                            label="Comment"
+                                        />
+                                    </ModalForm>
+                                </Space>
+                            )}
+                        </Space>
                     }
                 >
                     <ProDescriptions

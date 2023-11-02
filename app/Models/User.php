@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -58,32 +59,32 @@ class User extends Authenticatable
         'mgr_gtpusers_password' => 'hashed',
     ];
 
-    public function gatepass():Hasmany
+    public function gatepass(): Hasmany
     {
-        return $this->hasMany(Gatepass::class,'mgr_gtpgatepass_createdby');
+        return $this->hasMany(Gatepass::class, 'mgr_gtpgatepass_createdby');
     }
 
-    public function approvals():Hasmany
+    public function approvals(): Hasmany
     {
-        return $this->hasMany(Approval::class,'mgr_gtpapprovals_createdby');
+        return $this->hasMany(Approval::class, 'mgr_gtpapprovals_createdby');
     }
 
-    public function uoms():Hasmany
+    public function uoms(): Hasmany
     {
-        return $this->hasMany(Uom::class,'mgr_gtpuoms_createdby');
+        return $this->hasMany(Uom::class, 'mgr_gtpuoms_createdby');
     }
 
-    public function items():Hasmany
+    public function items(): Hasmany
     {
-        return $this->hasMany(Item::class,'mgr_gtpitems_createdby');
+        return $this->hasMany(Item::class, 'mgr_gtpitems_createdby');
     }
 
-    public function approvallevels():Hasmany
+    public function approvallevel(): HasOne
     {
-        return $this->hasMany(ApprovalLevel::class,'mgr_gtpapprovallevels_approver');
+        return $this->hasOne(ApprovalLevel::class, 'mgr_gtpapprovallevels_approver');
     }
 
-    public function userroles(): BelongsTo
+    public function role(): BelongsTo
     {
         return $this->belongsTo(UserRole::class, 'mgr_gtpusers_role');
     }
@@ -92,4 +93,3 @@ class User extends Authenticatable
         return $this->belongsTo(Department::class, 'mgr_gtpusers_department');
     }
 }
-

@@ -7,22 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Role extends Model
+class UserRole extends Model
 {
     //use HasFactory;
     protected $table = 'mgr_gtpuserroles';
-    protected $primaryKey = 'mgr_gtpuserroles_id'; 
-    protected $fillable =[
+    protected $primaryKey = 'mgr_gtpuserroles_id';
+    protected $fillable = [
         'mgr_gtpuserroles_name',
         'mgr_gtpuserroles_status',
-        'mgr_gtpuserroles_createddate',
-        'mgr_gtpuserroles_createdby'
 
     ];
 
-    public function users():Hasmany
+    public function users(): Hasmany
     {
-        return $this->hasMany(User::class,'mgr_gtpusers_roles');
+        return $this->hasMany(User::class, 'mgr_gtpusers_roles');
     }
-   
 }

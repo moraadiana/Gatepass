@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             'mgr_gtpusers_lname' => 'Moraa',
             'mgr_gtpusers_sname' => 'M',
             'mgr_gtpusers_email' => 'diana.moraa@grainbulk.com',
+            'mgr_gtpusers_role' => 1,
             'mgr_gtpusers_password' => bcrypt('password'),
         ]);
     }

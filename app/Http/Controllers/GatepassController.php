@@ -7,6 +7,7 @@ use App\Models\Gatepass;
 use App\Models\Location;
 use App\Models\Uom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class GatepassController extends Controller
@@ -58,10 +59,12 @@ class GatepassController extends Controller
     public function show(string $id)
     {
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company')->find($id);
+        $currentUser = Auth::user()->load('role');
         return Inertia::render(
             'Gatepass/Show',
             [
-                'gatepass' => $gatepass
+                'gatepass' => $gatepass,
+                'user' => $currentUser
             ]
         );
     }
@@ -117,12 +120,12 @@ class GatepassController extends Controller
 
         $gatepass->approvals()->create([
 
-            'mgr_gtpapprovals_approver' => auth()->user()-> mgr_gtpusers_id,
+            'mgr_gtpapprovals_approver' => auth()->user()->mgr_gtpusers_id,
             'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_id,
             'mgr_gtpapprovals_approvedat' => now(),
             'mgr_gtpapprovals_approveddate' => now(),
             'mgr_gtpapprovals_status' => 1,
-            'mgr_gtpapprovals_approvallevel'=> 1,
+            'mgr_gtpapprovals_approvallevel' => 1,
             'mgr_gtpapprovals_gatepass' => $gatepass->id,
             'mgr_gtpapprovals_createdby' => 1
         ]);

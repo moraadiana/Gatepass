@@ -15,11 +15,11 @@ return new class extends Migration
         Schema::create('mgr_gtpapprovallevels', function (Blueprint $table) {
             $table->id('mgr_gtpapprovallevels_id');
             $table->string('mgr_gtpapprovallevels_label');
-	        $table->string('mgr_gtpapprovallevels_sequenceid');
-            $table->boolean('mgr_gtpapprovallevels_status')->default(1); 
-	        $table->string('mgr_gtpapprovallevels_createddate');
-            $table->unsignedBigInteger('mgr_gtpapprovallevels_appover');
-    	    $table->foreign('mgr_gtpapprovallevels_appover')->references	('mgr_gtpusers_id')->on('mgr_gtpusers');
+            $table->string('mgr_gtpapprovallevels_sequenceid');
+            $table->boolean('mgr_gtpapprovallevels_status')->default(1);
+            $table->string('mgr_gtpapprovallevels_createddate');
+            $table->unsignedBigInteger('mgr_gtpapprovallevels_approver');
+            $table->foreign('mgr_gtpapprovallevels_approver')->references('mgr_gtpusers_id')->on('mgr_gtpusers'); 
             $table->timestamps();
         });
     }
