@@ -60,11 +60,13 @@ class GatepassController extends Controller
     {
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company')->find($id);
         $currentUser = Auth::user()->load('role');
+        $approval = $gatepass->approvals()->first();
         return Inertia::render(
             'Gatepass/Show',
             [
                 'gatepass' => $gatepass,
-                'user' => $currentUser
+                'user' => $currentUser,
+                'approval' => $approval
             ]
         );
     }

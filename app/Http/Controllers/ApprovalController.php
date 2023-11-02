@@ -64,11 +64,11 @@ class ApprovalController extends Controller
         // $gatepass = Gatepass::where('mgr_gtpgatepass_id', $gatepassId)->first();
         // $gatepass->update(["mgr_gtpgatepass_status" => 1]);
 
-        
+
         $approval = Approval::where('mgr_gtpapprovals_id', $approvalId)->first();
-        dd($approval);
+
         $approval->update(["mgr_gtpapprovals_approvallevel" => 2]);
-        
+        //dd($approval);
 
 
         return redirect()->route('approval.store')->with('success', 'Approval created successfully!');

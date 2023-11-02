@@ -76,12 +76,10 @@ export default function Show({ auth, gatepass, user, approval }) {
 
                                                     approval_id:
                                                         approval.mgr_gtpapprovals_id,
-                                                        
 
                                                     // gatepass_id:
                                                     //     gatepass.mgr_gtpgatepass_id,
                                                 }
-                                                
                                             );
                                             console.log(approval);
                                         }}
