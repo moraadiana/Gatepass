@@ -61,47 +61,17 @@ class ApprovalController extends Controller
         //update the gatepass status to the level of the next approver
         $gatepassId = $request->input('gatepass_id');
         $gatepass = Gatepass::where('mgr_gtpgatepass_id', $gatepassId)->first();
-
         $approvalId = $request->input('approval_id');
         $approval = Approval::where('mgr_gtpapprovals_id', $approvalId)->first();
 
-        if ($approval->count() == 1) {
-            //on approval do
-            $approval->update(["mgr_gtpapprovals_approvallevel" => 2]);
-            $gatepass->update(["mgr_gtpgatepass_status" => 2]);
+        $approval->update(["mgr_gtpapprovals_approvallevel" => 2]);
+        $gatepass->update(["mgr_gtpgatepass_status" => 2]);
+        //dd($approval);
 
-            return redirect()->route('approval.store')->with('success', 'Approval created successfully!');
-        }
-        //if gatepass is rejected by the last approver set gatepass status to 3
-
-        else {
-            //on reject do
-
-            //$gatepass->update(["mgr_gtpgatepass_status" => 3]);
-
-            return redirect()->route('approval.store')->with('danger', 'Gatepass Rejected!');
-        }
+        return redirect()->route('approval.store')->with('success', 'Approval created successfully!');
+        
+        
     }
-
-
-    //         dd($approval);
-    //         $approval->update(["mgr_gtpapprovals_approvallevel" => null]);
-    //         $gatepass->update(["mgr_gtpgatepass_status" => 3]);
-
-
-    //         return redirect()->route('approval.store')->with('danger', 'Gatepass Rejected!');
-    //     }
-
-    //$gatepass->update(["mgr_gtpgatepass_status" => 2]);
-    //dd($approval);
-
-
-
-    // $gatepassrejected = Gatepass::where('mgr_gtpgatepass_id', $gatepassId)->first();
-    // $gatepassrejected->update(["mgr_gtpgatepass_status" => 3]);
-
-
-
 
     /**
      * Display the specified resource.

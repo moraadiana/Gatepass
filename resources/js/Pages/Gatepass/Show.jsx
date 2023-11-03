@@ -98,21 +98,8 @@ export default function Show({ auth, gatepass, user, approval, rejected }) {
                                             </Button>
                                         }
                                         onFinish={async (values) => {
-                                            router.post(
-                                                route("approval.store"),
-                                                {
-                                                    ...values,
-
-                                        
-
-                                                    approval_id:
-                                                        approval.mgr_gtpapprovals_id,
-
-                                                    gatepass_id:
-                                                        gatepass.mgr_gtpgatepass_id,
-                                                }
-                                            );
-                                            console.log(rejected);
+                                          
+                                            
                                         }}
                                     >
                                         <ProFormTextArea
