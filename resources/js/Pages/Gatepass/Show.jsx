@@ -13,8 +13,8 @@ import {
 import { Button, Popconfirm, Space } from "antd";
 import { router } from "@inertiajs/react";
 
-export default function Show({ auth, gatepass, user, approval }) {
-    console.log(approval);
+export default function Show({ auth, gatepass, user, approval, rejected }) {
+    console.log(rejected);
     //route(gatepass.mgr_gtpgatepass_id)
     return (
         <>
@@ -77,11 +77,11 @@ export default function Show({ auth, gatepass, user, approval }) {
                                                     approval_id:
                                                         approval.mgr_gtpapprovals_id,
 
-                                                    // gatepass_id:
-                                                    //     gatepass.mgr_gtpgatepass_id,
+                                                    gatepass_id:
+                                                        gatepass.mgr_gtpgatepass_id,
                                                 }
                                             );
-                                            console.log(approval);
+                                            // console.log(approval);
                                         }}
                                     >
                                         <ProFormTextArea
@@ -97,7 +97,23 @@ export default function Show({ auth, gatepass, user, approval }) {
                                                 Reject
                                             </Button>
                                         }
-                                        onFinish={async (values) => {}}
+                                        onFinish={async (values) => {
+                                            router.post(
+                                                route("approval.store"),
+                                                {
+                                                    ...values,
+
+                                        
+
+                                                    approval_id:
+                                                        approval.mgr_gtpapprovals_id,
+
+                                                    gatepass_id:
+                                                        gatepass.mgr_gtpgatepass_id,
+                                                }
+                                            );
+                                            console.log(rejected);
+                                        }}
                                     >
                                         <ProFormTextArea
                                             name="comment"
