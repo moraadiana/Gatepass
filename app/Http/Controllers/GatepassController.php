@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApprovalLevel;
 use App\Models\Department;
 use App\Models\Gatepass;
 use App\Models\Location;
@@ -119,17 +120,20 @@ class GatepassController extends Controller
         //$gatepass = Gatepass::find($gatepass);
         //create an approval record for the gatepass
 
-
+        $approvallevel= ApprovalLevel::where('mgr_gtpapprovallevels_id', 2)->first();
         $gatepass->approvals()->create([
 
-            'mgr_gtpapprovals_approver' => auth()->user()->mgr_gtpusers_id,
-            'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_id,
-            'mgr_gtpapprovals_approvedat' => now(),
+           
+            'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
             'mgr_gtpapprovals_approveddate' => now(),
             'mgr_gtpapprovals_status' => 1,
-            'mgr_gtpapprovals_approvallevel' => 1,
+            'mgr_gtpapprovals_approvallevel' => $approvallevel->mgr_gtpapprovallevels_label,
+
+
+
+            //'mgr_gtpapprovals_approvallevel' => 2,
             'mgr_gtpapprovals_gatepass' => $gatepass->id,
-            'mgr_gtpapprovals_createdby' => 1
+            'mgr_gtpapprovals_createdby' => auth()->user()->mgr_gtpusers_id
         ]);
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
     }
