@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\UserRole;
+use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,9 +13,14 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-
-        UserRole::create([
-            'mgr_gtpuserroles_name' => 'User'
+        //
+        Role::create([
+            'mgr_gtproles_name' => 'GBHL-ICT Approver',
+            'mgr_gtproles_status' => 1
+        ]);
+        Role::create([
+            'mgr_gtproles_name' => 'GBHL-HSE Approver',
+            'mgr_gtproles_status' => 1
         ]);
     }
 }

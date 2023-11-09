@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         //
-        Schema::create('mgr_gtpuserroles', function (Blueprint $table) {
-            $table->id('mgr_gtpuserroles_id');
-            $table->string('mgr_gtpuserroles_name');
-            $table->boolean('mgr_gtpuserroles_status')->default(1);
+        Schema::create('mgr_gtproles', function (Blueprint $table) {
+            $table->id('mgr_gtproles_id');
+            $table->string('mgr_gtproles_name');
+            $table->boolean('mgr_gtproles_status')->default(1);
             $table->timestamps();
         });
     }
@@ -26,6 +26,5 @@ return new class extends Migration
     public function down(): void
     {
         //
-        Schema::dropIfExists('mgr_gtpuserroles');
     }
 };

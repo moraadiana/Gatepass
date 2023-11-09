@@ -11,23 +11,25 @@ class ApprovalLevel extends Model
 {
     //use HasFactory;
     protected $table = 'mgr_gtpapprovallevels';
-    protected $primaryKey = 'mgr_gtpapprovallevels_id'; 
-    
-    protected $fillable =[
+    protected $primaryKey = 'mgr_gtpapprovallevels_id';
+
+    protected $fillable = [
         'mgr_gtpapprovallevels_label',
-        'mgr_gtpapprovallevels_approver',
-        'mgr_gtpapprovallevels_sequenceid',
+        'mgr_gtpapprovallevels_userrole',
+        'mgr_gtpapprovallevels_sequence',
         'mgr_gtpapprovallevels_status',
-        'mgr_gtpapprovallevels_createddate'
+        'mgr_gtpapprovallevels_createddate',
+        'mgr_gtpapprovallevels_department',
+        'mgr_gtpapprovallevels_company'
     ];
-     
-      // has many approvals,items
-   public function approvals():Hasmany
-   {
-       return $this->hasMany(Approval::class,'mgr_gtpapprovals_approvallevel');
-   }
-//    public function user(): BelongsTo
-//    {
-//        return $this->belongsTo(User::class, 'mgr_gtpapprovallevels_approver');
-//    }
+
+    // has many approvals,items
+    public function approvals(): Hasmany
+    {
+        return $this->hasMany(Approval::class, 'mgr_gtpapprovals_approvallevel');
+    }
+    public function users(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'mgr_gtpapprovallevels_approver');
+    }
 }

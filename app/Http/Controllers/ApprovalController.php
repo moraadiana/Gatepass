@@ -61,82 +61,15 @@ class ApprovalController extends Controller
     public function store(Request $request)
 
     {
-        // $gatepassId = $request->input('gatepass_id');
-        // $gatepass = Gatepass::where('mgr_gtpgatepass_id', $gatepassId)->first();
-        // $approvalId = $request->input('approval_id');
-        // $approval = Approval::where('mgr_gtpapprovals_id', $approvalId)->first();
-
-        // //if approve button is clicked update gatepass status to approved
-        // if ($request->input('approve')) {
-        //     $gatepass->update([
-        //         'mgr_gtpgatepass_status' => 2,
-        //         // 'mgr_gtpgatepass_approvedby' => auth()->user()->mgr_gtpusers_fname,
-        //     ]);
-        //     $approval->update([
-        //         'mgr_gtpapprovals_status' => 1,
-        //         'mgr_gtpapprovals_approvallevel' => 2,
-        //         'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
-        //     ]);
-        //     return redirect()->route('approval.store')->with('success', 'Approved successfully!');
-        // }
-        // //if reject button is clicked update gatepass status to rejected
-        // elseif ($request->input('reject')) {
-        //     $gatepass->update([
-        //         'mgr_gtpgatepass_status' => 3,
-        //         //'mgr_gtpgatepass_approvedby' => auth()->user()->mgr_gtpusers_fname,
-        //     ]);
-        //     $approval->update([
-        //         'mgr_gtpapprovals_status' => 0,
-        //         'mgr_gtpapprovals_approvallevel' => 1,
-        //         'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
-        //     ]);
-        //     return redirect()->route('approval.store')->with('success', 'Rejected successfully!');
-        // }
-    
-    try {
-        // Validate user inputs
-        $gatepassId = $request->input('gatepass_id');
-        $approvalId = $request->input('approval_id');
-
-        // Find the gatepass and approval by their IDs
-        $gatepass = Gatepass::where('mgr_gtpgatepass_id', $gatepassId)->firstOrFail();
-        $approval = Approval::where('mgr_gtpapprovals_id', $approvalId)->firstOrFail();
-
-        // Check if approve button is clicked
-        if ($request->input('approve')) {
-            // Update gatepass status to pending approval at second level(security)
-            $gatepass->update([
-                'mgr_gtpgatepass_status' => 2,
-            ]);
-
-            // Update approval status and details
-            $approval->update([
-                'mgr_gtpapprovals_status' => 1,
-                'mgr_gtpapprovals_approvallevel' => 2,
-                'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
-            ]);
-
-            return redirect()->route('approval.store')->with('success', 'Approved successfully!');
-        } elseif ($request->input('reject')) {
-            // Update gatepass status to rejected
-            $gatepass->update([
-                'mgr_gtpgatepass_status' => 3,
-            ]);
-
-            // Update approval status and details
-            $approval->update([
-                'mgr_gtpapprovals_status' => 0,
-                'mgr_gtpapprovals_approvallevel' => 1,
-                'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
-            ]);
-
-            return redirect()->route('approval.store')->with('success', 'Rejected successfully!');
-        }
-    } catch (\Exception $e) {
-        // Handle any exceptions (e.g., database query failures)
-        return redirect()->route('approval.store')->with('error', 'Error processing request. Please try again.');
+        $gatepass->approvals()->create([
+            'mgr_gtpapprovals_approvedby' => $approvallevel->mgr_gtpapprovallevels_approver,
+            'mgr_gtpapprovals_approveddate' => now(),
+            'mgr_gtpapprovals_status' => 2,
+            'mgr_gtpapprovals_approvallevel' => $approvallevel->mgr_gtpapprovallevels_id,
+            'mgr_gtpapprovals_gatepass' => $gatepass->mgr_gtpgatepass_id,
+            'mgr_gtpapprovals_createdby' => auth()->user()->mgr_gtpusers_id
+        ]);
     }
-}
 
     public function show(string $id)
     {

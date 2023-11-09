@@ -58,7 +58,7 @@ export default function Show({ auth, gatepass, user, approval }) {
                             >
                                
                             </Popconfirm> */}
-                            {user.role.mgr_gtpuserroles_name == "User" && (
+                            {user.roles.mgr_gtpuserroles_name == "User" && (
                                 <Space>
                                     <ModalForm
                                         title="Approve Gatepass"

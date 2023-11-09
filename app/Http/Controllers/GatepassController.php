@@ -6,6 +6,7 @@ use App\Models\ApprovalLevel;
 use App\Models\Department;
 use App\Models\Gatepass;
 use App\Models\Location;
+use App\Models\Role;
 use App\Models\Uom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,7 +61,7 @@ class GatepassController extends Controller
     public function show(string $id)
     {
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company')->find($id);
-        $currentUser = Auth::user()->load('role');
+        $currentUser = Auth::user()->load('roles');
         $approval = $gatepass->approvals()->first();
         return Inertia::render(
             'Gatepass/Show',
@@ -115,23 +116,15 @@ class GatepassController extends Controller
 
     public function submitForApproval(Gatepass $gatepass)
 
-    {                                                               
-        //dd(auth()->user()-> mgr_gtpusers_id);
-        //$gatepass = Gatepass::find($gatepass);
-        //create an approval record for the gatepass
-
-        $approvallevel= ApprovalLevel::where('mgr_gtpapprovallevels_id', 1)->first();
-        $gatepass->approvals()->create([
-
-           
-            'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
-            'mgr_gtpapprovals_approveddate' => now(),
-            'mgr_gtpapprovals_status' => 1,
-            'mgr_gtpapprovals_approvallevel' =>1,
-            //'mgr_gtpapprovals_approvallevel' => 2,
-            'mgr_gtpapprovals_gatepass' => $gatepass->id,
-            'mgr_gtpapprovals_createdby' => auth()->user()->mgr_gtpusers_id
-        ]);
+    {
+        $gatepassDepartment = $gatepass->mgr_gtpgatepass_department;
+        $approvallevel = ApprovalLevel::where('mgr_gtpapprovallevels_department', $gatepassDepartment)->where('mgr_gtpapprovallevels_sequence', 10)->first();
+        //Notify approver 
+        $approvalRole = $approvallevel->mgr_gtpapprovallevels_approver;
+        $userRole = Role::where('mgr_gtproles_id', $approvalRole)->first();
+        $approvers = $userRole->users->pluck('mgr_gtpusers_email');
+        //dd($approvers);
+        
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
     }
 }
