@@ -13,8 +13,8 @@ import {
 import { Button, Popconfirm, Space } from "antd";
 import { router } from "@inertiajs/react";
 
-export default function Show({ auth, gatepass, user, approval, rejected }) {
-    console.log(rejected);
+export default function Show({ auth, gatepass, user, approval }) {
+   // console.log(approval);
     //route(gatepass.mgr_gtpgatepass_id)
     return (
         <>
@@ -30,7 +30,7 @@ export default function Show({ auth, gatepass, user, approval, rejected }) {
                             <Popconfirm
                                 title="Are you sure you want to submit this Gatepass?"
                                 onConfirm={async () => {
-                                    console.log(gatepass.mgr_gtpgatepass_id);
+                                    //console.log(gatepass.mgr_gtpgatepass_id);
                                     router.post(
                                         await route(
                                             "gatepass.submitForApproval",
@@ -98,8 +98,19 @@ export default function Show({ auth, gatepass, user, approval, rejected }) {
                                             </Button>
                                         }
                                         onFinish={async (values) => {
-                                          
-                                            
+                                            console.log(
+                                               approval
+                                            );
+                                            router.post(
+                                                route("approval.store"),
+                                                {
+                                                    ...values,
+                                                    approval_id:
+                                                        approval.mgr_gtpapprovals_id,
+                                                    gatepass_id:
+                                                        gatepass.mgr_gtpgatepass_id,
+                                                }
+                                            );
                                         }}
                                     >
                                         <ProFormTextArea

@@ -61,31 +61,83 @@ class ApprovalController extends Controller
     public function store(Request $request)
 
     {
-  
-   // Update gatepass status to the level of the next approver
-   $gatepassId = $request->input('gatepass_id');
-   $gatepass = Gatepass:: where('mgr_gtpgatepass_id', $gatepassId)->first();
-   $gatepass ->update([
-    'mgr_gtpgatepass_status' => 2,
-    'mgr_gtpgatepass_approvedby' => auth()->user()->mgr_gtpusers_fname,
+        // $gatepassId = $request->input('gatepass_id');
+        // $gatepass = Gatepass::where('mgr_gtpgatepass_id', $gatepassId)->first();
+        // $approvalId = $request->input('approval_id');
+        // $approval = Approval::where('mgr_gtpapprovals_id', $approvalId)->first();
+
+        // //if approve button is clicked update gatepass status to approved
+        // if ($request->input('approve')) {
+        //     $gatepass->update([
+        //         'mgr_gtpgatepass_status' => 2,
+        //         // 'mgr_gtpgatepass_approvedby' => auth()->user()->mgr_gtpusers_fname,
+        //     ]);
+        //     $approval->update([
+        //         'mgr_gtpapprovals_status' => 1,
+        //         'mgr_gtpapprovals_approvallevel' => 2,
+        //         'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
+        //     ]);
+        //     return redirect()->route('approval.store')->with('success', 'Approved successfully!');
+        // }
+        // //if reject button is clicked update gatepass status to rejected
+        // elseif ($request->input('reject')) {
+        //     $gatepass->update([
+        //         'mgr_gtpgatepass_status' => 3,
+        //         //'mgr_gtpgatepass_approvedby' => auth()->user()->mgr_gtpusers_fname,
+        //     ]);
+        //     $approval->update([
+        //         'mgr_gtpapprovals_status' => 0,
+        //         'mgr_gtpapprovals_approvallevel' => 1,
+        //         'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
+        //     ]);
+        //     return redirect()->route('approval.store')->with('success', 'Rejected successfully!');
+        // }
     
-   ]);
-   $approvalId = $request->input('approval_id');
-   $approval = Approval:: where('mgr_gtpapprovals_id', $approvalId)->first();
-   $approval ->update([
-    'mgr_gtpapprovals_status' => 1,
-    'mgr_gtpapprovals_approvallevel' => 2,
-    'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
+    try {
+        // Validate user inputs
+        $gatepassId = $request->input('gatepass_id');
+        $approvalId = $request->input('approval_id');
 
-   ]);
+        // Find the gatepass and approval by their IDs
+        $gatepass = Gatepass::where('mgr_gtpgatepass_id', $gatepassId)->firstOrFail();
+        $approval = Approval::where('mgr_gtpapprovals_id', $approvalId)->firstOrFail();
 
+        // Check if approve button is clicked
+        if ($request->input('approve')) {
+            // Update gatepass status to pending approval at second level(security)
+            $gatepass->update([
+                'mgr_gtpgatepass_status' => 2,
+            ]);
 
-        return redirect()->route('approval.store')->with('success', 'Approval created successfully!');
+            // Update approval status and details
+            $approval->update([
+                'mgr_gtpapprovals_status' => 1,
+                'mgr_gtpapprovals_approvallevel' => 2,
+                'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
+            ]);
+
+            return redirect()->route('approval.store')->with('success', 'Approved successfully!');
+        } elseif ($request->input('reject')) {
+            // Update gatepass status to rejected
+            $gatepass->update([
+                'mgr_gtpgatepass_status' => 3,
+            ]);
+
+            // Update approval status and details
+            $approval->update([
+                'mgr_gtpapprovals_status' => 0,
+                'mgr_gtpapprovals_approvallevel' => 1,
+                'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
+            ]);
+
+            return redirect()->route('approval.store')->with('success', 'Rejected successfully!');
+        }
+    } catch (\Exception $e) {
+        // Handle any exceptions (e.g., database query failures)
+        return redirect()->route('approval.store')->with('error', 'Error processing request. Please try again.');
     }
+}
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
     }

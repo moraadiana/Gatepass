@@ -53,7 +53,7 @@ Route::resource('company', CompanyController::class);
 
 Route::resource('department', DepartmentController::class);
 
-Route::resource('item',ItemController::class);
+Route::resource('item', ItemController::class);
 
 Route::resource('location', LocationController::class);
 
@@ -62,6 +62,7 @@ Route::resource('uom', UomController::class);
 Route::resource('userrole', UserRoleController::class);
 
 Route::post('/gatepass/{gatepass}/submit-for-approval', [GatepassController::class, 'submitForApproval'])->name('gatepass.submitForApproval');
+
 
 require __DIR__ . '/auth.php';
 //require __DIR__.'/../vendor/autoload.php';

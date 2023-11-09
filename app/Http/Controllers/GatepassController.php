@@ -115,22 +115,19 @@ class GatepassController extends Controller
 
     public function submitForApproval(Gatepass $gatepass)
 
-    {
+    {                                                               
         //dd(auth()->user()-> mgr_gtpusers_id);
         //$gatepass = Gatepass::find($gatepass);
         //create an approval record for the gatepass
 
-        $approvallevel= ApprovalLevel::where('mgr_gtpapprovallevels_id', 2)->first();
+        $approvallevel= ApprovalLevel::where('mgr_gtpapprovallevels_id', 1)->first();
         $gatepass->approvals()->create([
 
            
             'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_fname,
             'mgr_gtpapprovals_approveddate' => now(),
             'mgr_gtpapprovals_status' => 1,
-            'mgr_gtpapprovals_approvallevel' => $approvallevel->mgr_gtpapprovallevels_label,
-
-
-
+            'mgr_gtpapprovals_approvallevel' =>1,
             //'mgr_gtpapprovals_approvallevel' => 2,
             'mgr_gtpapprovals_gatepass' => $gatepass->id,
             'mgr_gtpapprovals_createdby' => auth()->user()->mgr_gtpusers_id
