@@ -10,7 +10,11 @@ use App\Models\Role;
 use App\Models\Uom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\submitForApproval;
 use Inertia\Inertia;
+
+use function PHPSTORM_META\map;
 
 class GatepassController extends Controller
 {
@@ -123,8 +127,9 @@ class GatepassController extends Controller
         $approvalRole = $approvallevel->mgr_gtpapprovallevels_approver;
         $userRole = Role::where('mgr_gtproles_id', $approvalRole)->first();
         $approvers = $userRole->users->pluck('mgr_gtpusers_email');
-        //dd($approvers);
-        
+      //send email to approvers
+      Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
+
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
     }
 }
