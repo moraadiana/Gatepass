@@ -29,7 +29,7 @@ class Approval extends Model
     {
         return $this->belongsTo(ApprovalLevel::class, 'mgr_gtpapprovals_approvallevel');
     }
-    public function departments(): BelongsTo
+    public function department(): BelongsTo
     {
         return $this->belongsTo(Departments::class, 'mgr_gtpapprovals_gatepass');
     }

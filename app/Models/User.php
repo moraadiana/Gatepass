@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
@@ -85,12 +86,19 @@ class User extends Authenticatable
         return $this->hasOne(ApprovalLevel::class, 'mgr_gtpapprovallevels_approver');
     }
 
-    public function roles(): BelongsToMany
+    // public function userroles(): HasMany
+    // {
+    //     return $this->hasMany(UserRole::class, 'mgr_gtpuserroles_user');
+    // }
+    //hasMany roles
+    public function role(): HasOne
     {
-        return $this->belongsToMany(Role::class, 'mgr_gtpuserroles', 'mgr_gtpuserroles_user', 'mgr_gtpuserroles_role');
+        return $this->hasOne(UserRole::class, 'mgr_gtpuserroles_user');
     }
-    public function departments(): BelongsTo
+    public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class, 'mgr_gtpusers_department');
     }
+
+    
 }

@@ -16,7 +16,7 @@ class UserRoleSedeer extends Seeder
         //
         UserRole::create([
             'mgr_gtpuserroles_role' => 1,
-            'mgr_gtpuserroles_user' => 1,
+            'mgr_gtpuserroles_user' => 2,
         ]);
     }
 }

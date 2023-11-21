@@ -3,8 +3,8 @@ import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { Head, Link } from "@inertiajs/react";
 //create a function to fetch all gatepasses
 
-export default function Index({ auth, approvals }) {
-    console.log(approvals);
+export default function Index({ auth, gatepasses, approvals }) {
+    console.log(gatepasses);
 
     return (
         <Authenticated user={auth.user}>
@@ -17,7 +17,7 @@ export default function Index({ auth, approvals }) {
             >
                 <ProTable
                     headerTitle="Submitted Gatepass"
-                    dataSource={approvals}
+                    dataSource={gatepasses}
                     columns={[
                         {
                             title: "Gatepass",

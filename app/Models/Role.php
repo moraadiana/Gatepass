@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Role extends Model
@@ -17,8 +18,9 @@ class Role extends Model
         'mgr_gtproles_status',
     ];
 
-    public function users(): BelongsToMany
+    public function users(): HasMany
     {
-        return $this->belongsToMany(User::class, 'mgr_gtpuserroles', 'mgr_gtpuserroles_role', 'mgr_gtpuserroles_user');
+        return $this->hasMany(UserRole::class);
     }
+    
 }

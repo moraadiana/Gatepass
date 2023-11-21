@@ -17,14 +17,14 @@ class UomSeeder extends Seeder
 
             [
                 'mgr_gtpuoms_name' => 'PC(s)',
-                'mgr_gtpuoms_createdby' => 1
+                'mgr_gtpuoms_createdby' => 2
             ],
 
         );
         Uom::create(
             [
                 'mgr_gtpuoms_name' => 'Roll(s)',
-                'mgr_gtpuoms_createdby' => 1
+                'mgr_gtpuoms_createdby' => 2
             ]
         );
     }

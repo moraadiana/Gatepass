@@ -17,14 +17,17 @@ class UserSeeder extends Seeder
             'mgr_gtpusers_fname' => 'Diana',
             'mgr_gtpusers_lname' => 'Moraa',
             'mgr_gtpusers_sname' => 'M',
+            'mgr_gtpusers_department' => 2,
             'mgr_gtpusers_email' => 'diana.moraa@grainbulk.com',
             'mgr_gtpusers_password' => bcrypt('password'),
+
         ]);
 
         User::create([
             'mgr_gtpusers_fname' => 'Manasse',
             'mgr_gtpusers_lname' => 'Gitau',
             'mgr_gtpusers_sname' => 'r',
+            'mgr_gtpusers_department' => 2,
             'mgr_gtpusers_email' => 'gitau.manasse@grainbulk.com',
             'mgr_gtpusers_password' => bcrypt('password'),
         ]);

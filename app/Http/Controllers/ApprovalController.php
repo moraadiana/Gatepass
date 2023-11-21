@@ -16,26 +16,35 @@ class ApprovalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Approval $approval)
+    public function index()
     {
-        // $approval = Approval::with('gatepass')->get();
-        // return Inertia::render(
-        //     'Approval/Index',
 
 
-        //     [
-        //         'approvals' => $approval
-        //     ]
-        //dd($approval);
-        $approvallevel = auth()->user()->approvallevel->mgr_gtpapprovallevels_status;
+        //fetch role of current user
+        $user = User::with('role')->with('department')->find(auth()->user()->mgr_gtpusers_id);
+        //dd($user->department);
+        if ($user->role->mgr_gtpuserroles_role == 1) {
+            //show all submitted gatepasses wwere status is 1
+            $gatepasses = Gatepass::where('mgr_gtpgatepass_status', 1)->get();
+        }
 
-        $approval = Approval::with('gatepass.department', 'gatepass.source_location', 'gatepass.destination_location', 'gatepass.uom')
-            ->where('mgr_gtpapprovals_status', $approvallevel)
-            ->get();
+
+        $approvals = Approval::with('gatepass')->get();
+        $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')->where('mgr_gtpgatepass_status', 1)->get();
+        //dd($gatepasses);
+
+        //fetch gatepass where status is 1 and role is manager
+        //  $approvallevels = ApprovalLevel::with('approver')->get();
+
+
+
+
+
         return Inertia::render(
             'Approval/Index',
             [
-                'approvals' => $approval
+                'gatepasses' => $gatepasses,
+                'approvals' => $approvals
             ]
         );
     }
@@ -58,7 +67,7 @@ class ApprovalController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request)
+    public function store(Gatepass $gatepass, ApprovalLevel $approvallevel)
 
     {
         $gatepass->approvals()->create([

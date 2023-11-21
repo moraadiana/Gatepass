@@ -65,7 +65,7 @@ class GatepassController extends Controller
     public function show(string $id)
     {
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company')->find($id);
-        $currentUser = Auth::user()->load('roles');
+        $currentUser = Auth::user()->load('role');
         $approval = $gatepass->approvals()->first();
         return Inertia::render(
             'Gatepass/Show',
@@ -98,12 +98,6 @@ class GatepassController extends Controller
      */
     public function update(Request $request, Gatepass $gatepass)
     {
-        //dd($request->all());
-
-        /* $request->merge([
-            'mgr_gtpgatepass_createdby' => auth()->user()->mgr_gtpusers_id
-        ]);
-
         //Update the resource with new data from request*/
         $gatepass->update($request->input('values'));
 
