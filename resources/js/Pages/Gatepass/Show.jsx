@@ -43,22 +43,8 @@ export default function Show({ auth, gatepass, user, approval }) {
                                     Submit for Approval
                                 </Button>
                             </Popconfirm>
-                            {/* <Popconfirm
-                                title="Are you sure you want to approve this Gatepass?"
-                                onConfirm={async () => {
-                                    console.log(gatepass.mgr_gtpgatepass_id);
-                                    router.post(route("approval.store"),
-                                        {
-                                            gatepass_id: gatepass.mgr_gtpgatepass_id,
-                                            
-                                        }
-
-                                    );
-                                }}
-                            >
-                               
-                            </Popconfirm> */}
-                            {user.roles.mgr_gtpuserroles_name == "User" && (
+                           
+                            {(
                                 <Space>
                                     <ModalForm
                                         title="Approve Gatepass"
@@ -70,16 +56,19 @@ export default function Show({ auth, gatepass, user, approval }) {
                                         }
                                         onFinish={async (values) => {
                                             router.post(
-                                                route("approval.store"),
+                                             await route(
+                                                 "approval.update", approval.mgr_gtpapprovals_id
+                                            
+                                             ),
                                                 {
                                                     ...values,
-
                                                     approval_id:
                                                         approval.mgr_gtpapprovals_id,
-
                                                     gatepass_id:
                                                         gatepass.mgr_gtpgatepass_id,
                                                 }
+                                                
+
                                             );
                                             // console.log(approval);
                                         }}
@@ -90,7 +79,7 @@ export default function Show({ auth, gatepass, user, approval }) {
                                         />
                                     </ModalForm>
                                     <ModalForm
-                                        title="Approve Gatepass"
+                                        title="Reject Gatepass"
                                         width={400}
                                         trigger={
                                             <Button type="primary" danger>
@@ -138,11 +127,12 @@ export default function Show({ auth, gatepass, user, approval }) {
                                 dataIndex: "mgr_gtpgatepass_vehiclereg",
                                 key: "mgr_gtpgatepass_vehiclereg",
                             },
-                            {
-                                title: "Company",
-                                dataIndex: ["company", "mgr_gtpcompanies_name"],
-                                key: "mgr_gtpgatepass_company",
-                            },
+                            // {
+                            //     title: "Company",
+                            //     dataIndex: ["company", "mgr_gtpcompanies_name"],
+                            //     key: "mgr_gtpgatepass_company",
+                            // },
+                           
                             {
                                 title: "Department",
                                 dataIndex: [

@@ -37,6 +37,7 @@ export default function Index({ auth, gatepasses }) {
 
                             // },
                             {
+                                
                                 title: "Department",
                                 dataIndex: [
                                     "department",

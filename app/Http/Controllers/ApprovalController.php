@@ -25,26 +25,17 @@ class ApprovalController extends Controller
         //dd($user->department);
         if ($user->role->mgr_gtpuserroles_role == 1) {
             //show all submitted gatepasses wwere status is 1
-            $gatepasses = Gatepass::where('mgr_gtpgatepass_status', 1)->get();
-        }
-
-
-        $approvals = Approval::with('gatepass')->get();
-        $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')->where('mgr_gtpgatepass_status', 1)->get();
+            $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
+                -> where('mgr_gtpgatepass_status', 1)->get();
+            
+            }
         //dd($gatepasses);
-
-        //fetch gatepass where status is 1 and role is manager
-        //  $approvallevels = ApprovalLevel::with('approver')->get();
-
-
-
-
 
         return Inertia::render(
             'Approval/Index',
             [
                 'gatepasses' => $gatepasses,
-                'approvals' => $approvals
+                //'approvals' => $approvals
             ]
         );
     }
@@ -98,8 +89,20 @@ class ApprovalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
+        //on clicking approve button create approval recod
+        $approval = new Approval();
+        $approval->approved_by = auth()->user()->id;
+        $approval->approved_date = now();
+        $approval->status = 2;
+        $approval->approval_level = 1; // Replace with the appropriate approval level
+        $approval->gatepass_id = $id;
+        $approval->created_by = auth()->user()->id;
+        $approval->save();
+
+        // Rest of the code...
+
+        }
+    
 
     /**
      * Remove the specified resource from storage.

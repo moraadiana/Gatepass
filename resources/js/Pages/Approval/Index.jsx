@@ -20,54 +20,46 @@ export default function Index({ auth, gatepasses, approvals }) {
                     dataSource={gatepasses}
                     columns={[
                         {
-                            title: "Gatepass",
-                            dataIndex: ["gatepass", "mgr_gtpgatepass_name"],
+                            title: "Name",
+                            dataIndex: "mgr_gtpgatepass_name",
                         },
                         {
                             title: "Vehicle Reg",
-                            dataIndex: [
-                                "gatepass",
-                                "mgr_gtpgatepass_vehiclereg",
-                            ],
+                            dataIndex: "mgr_gtpgatepass_vehiclereg",
                         },
                         {
                             title: "Department",
                             dataIndex: [
-                                "gatepass",
                                 "department",
-                                "mgr_gtpdepartments_name",
-                            ],
+                                    "mgr_gtpdepartments_name",],
+                            hideInSearch: true,
                         },
                         {
                             title: "Item(s) Description",
-                            dataIndex: [
-                                "gatepass",
-                                "mgr_gtpgatepass_description",
-                            ],
+                            dataIndex: "mgr_gtpgatepass_description",
+                            hideInSearch: true,
                         },
                         {
                             title: "Quantity",
-                            dataIndex: ["gatepass", "mgr_gtpgatepass_quantity"],
+                            dataIndex: [ "mgr_gtpgatepass_quantity"],
                         },
                         {
                             title: "UOM",
-                            dataIndex: ["gatepass", "uom", "mgr_gtpuoms_name"],
+                            dataIndex: ["mgr_gtpgatepass_uom"],
                         },
                         {
                             title: "Auxilary Document",
                             dataIndex: [
-                                "gatepass",
                                 "mgr_gtpgatepass_auxilarydoc",
                             ],
                         },
                         {
                             title: "Purpose",
-                            dataIndex: ["gatepass", "mgr_gtpgatepass_purpose"],
+                            dataIndex: [ "mgr_gtpgatepass_purpose"],
                         },
                         {
                             title: "Source Location",
                             dataIndex: [
-                                "gatepass",
                                 "source_location",
                                 "mgr_gtplocations_name",
                             ],
@@ -75,7 +67,7 @@ export default function Index({ auth, gatepasses, approvals }) {
                         {
                             title: "Destination Location",
                             dataIndex: [
-                                "gatepass",
+                            
                                 "destination_location",
                                 "mgr_gtplocations_name",
                             ],
@@ -83,25 +75,23 @@ export default function Index({ auth, gatepasses, approvals }) {
                         {
                             title: "Destination",
                             dataIndex: [
-                                "gatepass",
                                 "mgr_gtpgatepass_destination",
                             ],
                         },
                         {
                             title: "Actions",
-                            // create a link to go to gatepass.show
                             render: (_, record) => (
                                 <Link
                                     href={route(
                                         "gatepass.show",
-                                        record.gatepass.mgr_gtpgatepass_id
+                                        record.mgr_gtpgatepass_id
                                     )}
                                 >
-                                    View
+                                    View Details
                                 </Link>
                             ),
                         },
-
+                       
                         //create a link to view created gatepass
                     ]}
                     rowKey="mgr_gtpapprovals_id"

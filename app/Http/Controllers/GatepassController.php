@@ -23,7 +23,7 @@ class GatepassController extends Controller
      */
     public function index()
     {
-        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')->get();
+        $gatepass = Gatepass::with('user', 'uom','company', 'department', 'source_location', 'destination_location')->get();
         return Inertia::render(
             'Gatepass/Index',
             [
@@ -119,8 +119,11 @@ class GatepassController extends Controller
         $approvallevel = ApprovalLevel::where('mgr_gtpapprovallevels_department', $gatepassDepartment)->where('mgr_gtpapprovallevels_sequence', 10)->first();
         //Notify approver 
         $approvalRole = $approvallevel->mgr_gtpapprovallevels_approver;
-        $userRole = Role::where('mgr_gtproles_id', $approvalRole)->first();
-        $approvers = $userRole->users->pluck('mgr_gtpusers_email');
+        $userRole = Role::where('mgr_gtpuserroles_id', $approvalRole)->first();
+        //get approver
+       //$approver = $userRole->User->pluck('mgr_gtpusers_email');
+        //dd($approver);
+        //$approvers = $userRole->users->pluck('mgr_gtpusers_email');
       //send email to approvers
       Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
 
