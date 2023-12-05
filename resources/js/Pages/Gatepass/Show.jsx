@@ -14,7 +14,7 @@ import { Button, Popconfirm, Space } from "antd";
 import { router } from "@inertiajs/react";
 
 export default function Show({ auth, gatepass, user, approval }) {
-   // console.log(approval);
+    // console.log(approval);
     //route(gatepass.mgr_gtpgatepass_id)
     return (
         <>
@@ -43,8 +43,8 @@ export default function Show({ auth, gatepass, user, approval }) {
                                     Submit for Approval
                                 </Button>
                             </Popconfirm>
-                           
-                            {(
+
+                            {
                                 <Space>
                                     <ModalForm
                                         title="Approve Gatepass"
@@ -54,23 +54,21 @@ export default function Show({ auth, gatepass, user, approval }) {
                                                 Approve
                                             </Button>
                                         }
+                                        //on clicking approve button store the data
                                         onFinish={async (values) => {
                                             router.post(
-                                             await route(
-                                                 "approval.update", approval.mgr_gtpapprovals_id
-                                            
-                                             ),
+                                                route(
+                                                    "gatepass.approval.store",
+                                                    gatepass.mgr_gtpgatepass_id
+                                                ),
                                                 {
                                                     ...values,
-                                                    approval_id:
-                                                        approval.mgr_gtpapprovals_id,
                                                     gatepass_id:
                                                         gatepass.mgr_gtpgatepass_id,
                                                 }
-                                                
-
                                             );
-                                            // console.log(approval);
+                                            // close modal form
+
                                         }}
                                     >
                                         <ProFormTextArea
@@ -87,9 +85,7 @@ export default function Show({ auth, gatepass, user, approval }) {
                                             </Button>
                                         }
                                         onFinish={async (values) => {
-                                            console.log(
-                                               approval
-                                            );
+                                            console.log(approval);
                                             router.post(
                                                 route("approval.store"),
                                                 {
@@ -99,6 +95,7 @@ export default function Show({ auth, gatepass, user, approval }) {
                                                     gatepass_id:
                                                         gatepass.mgr_gtpgatepass_id,
                                                 }
+                                               
                                             );
                                         }}
                                     >
@@ -108,7 +105,7 @@ export default function Show({ auth, gatepass, user, approval }) {
                                         />
                                     </ModalForm>
                                 </Space>
-                            )}
+                            }
                         </Space>
                     }
                 >
@@ -132,7 +129,7 @@ export default function Show({ auth, gatepass, user, approval }) {
                             //     dataIndex: ["company", "mgr_gtpcompanies_name"],
                             //     key: "mgr_gtpgatepass_company",
                             // },
-                           
+
                             {
                                 title: "Department",
                                 dataIndex: [

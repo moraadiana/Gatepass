@@ -29,7 +29,6 @@ return new class extends Migration
             // )
             // ->onUpdate('cascade');
             $table->boolean('mgr_gtpusers_status')->default(1);
-            $table->string('mgr_gtpusers_createdby')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

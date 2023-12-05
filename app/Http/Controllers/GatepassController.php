@@ -117,14 +117,7 @@ class GatepassController extends Controller
     {
         $gatepassDepartment = $gatepass->mgr_gtpgatepass_department;
         $approvallevel = ApprovalLevel::where('mgr_gtpapprovallevels_department', $gatepassDepartment)->where('mgr_gtpapprovallevels_sequence', 10)->first();
-        //Notify approver 
-        $approvalRole = $approvallevel->mgr_gtpapprovallevels_approver;
-        $userRole = Role::where('mgr_gtpuserroles_id', $approvalRole)->first();
-        //get approver
-       //$approver = $userRole->User->pluck('mgr_gtpusers_email');
-        //dd($approver);
-        //$approvers = $userRole->users->pluck('mgr_gtpusers_email');
-      //send email to approvers
+     
       Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
 
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');

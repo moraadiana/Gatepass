@@ -88,8 +88,9 @@ export default function Authenticated({ user, header, children }) {
                     children: [
                         {
                             path: route("approval.index"),
-                            name: "Approvals",
+                            name: "Department Approval",
                         },
+                        
                     ],
                 },
             ]}

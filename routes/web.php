@@ -45,7 +45,9 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('gatepass', GatepassController::class);
 
-Route::resource('approval', ApprovalController::class);
+Route::get('/approval',[ApprovalController::class, 'index'])->name('approval.index');
+
+Route::resource('gatepass.approval', ApprovalController::class);
 
 Route::resource('approvallevel', ApprovalLevelController::class);
 

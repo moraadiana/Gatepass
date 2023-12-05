@@ -58,22 +58,34 @@ class ApprovalController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Gatepass $gatepass, ApprovalLevel $approvallevel)
-
+    public function store(Request $request, Gatepass $gatepass)
+   
     {
-        $gatepass->approvals()->create([
-            'mgr_gtpapprovals_approvedby' => $approvallevel->mgr_gtpapprovallevels_approver,
+        //dd($gatepass);
+        // create approval record in the approvals table
+        //$gatepass= Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company') ->find($request->input('mgr_gtpgatepass_id'));
+       // $approval = $gatepass->approvals()->first();
+
+        Approval::create([
+            'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_id,
             'mgr_gtpapprovals_approveddate' => now(),
-            'mgr_gtpapprovals_status' => 2,
-            'mgr_gtpapprovals_approvallevel' => $approvallevel->mgr_gtpapprovallevels_id,
+            'mgr_gtpapprovals_status' => 1,
+            'mgr_gtpapprovals_approvallevel' => 1,
             'mgr_gtpapprovals_gatepass' => $gatepass->mgr_gtpgatepass_id,
-            'mgr_gtpapprovals_createdby' => auth()->user()->mgr_gtpusers_id
+
         ]);
     }
 
     public function show(string $id)
+    
     {
+      
+    
+        
     }
+
+
+    
 
 
     /**
@@ -89,15 +101,14 @@ class ApprovalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //on clicking approve button create approval recod
-        $approval = new Approval();
-        $approval->approved_by = auth()->user()->id;
-        $approval->approved_date = now();
-        $approval->status = 2;
-        $approval->approval_level = 1; // Replace with the appropriate approval level
-        $approval->gatepass_id = $id;
-        $approval->created_by = auth()->user()->id;
-        $approval->save();
+        //on clicking approve button update gatepass status to 2
+        $gatepass = Gatepass::find($request->input('mgr_gtpgatepass_id'));
+        $gatepass->update([
+            'mgr_gtpgatepass_status' => 2
+        ]);
+
+
+        // dd ($approval);
 
         // Rest of the code...
 
