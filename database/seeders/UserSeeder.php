@@ -31,5 +31,14 @@ class UserSeeder extends Seeder
             'mgr_gtpusers_email' => 'gitau.manasse@grainbulk.com',
             'mgr_gtpusers_password' => bcrypt('password'),
         ]);
+
+        User::create([
+            'mgr_gtpusers_fname' => 'Amina',
+            'mgr_gtpusers_lname' => 'Birgen',
+            'mgr_gtpusers_sname' => 'r',
+            'mgr_gtpusers_department' => 2,
+            'mgr_gtpusers_email' => 'amina.birgen@grainbulk.com',
+            'mgr_gtpusers_password' => bcrypt('password'),
+        ]);
     }
 }

@@ -22,14 +22,21 @@ class ApprovalController extends Controller
 
         //fetch role of current user
         $user = User::with('role')->with('department')->find(auth()->user()->mgr_gtpusers_id);
-        //dd($user->department);
         if ($user->role->mgr_gtpuserroles_role == 1) {
-            //show all submitted gatepasses wwere status is 1
+            //show all submitted gatepasses where status is 1
             $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
                 -> where('mgr_gtpgatepass_status', 1)->get();
+            $approvals = Approval::all();
             
             }
-        //dd($gatepasses);
+
+        else if ($user->role->mgr_gtpuserroles_role == 2) {
+            //show all submitted gatepasses where status is 1
+            $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
+                -> where('mgr_gtpgatepass_status', 2)->get();
+            $approvals = Approval::all();
+            
+        }
 
         return Inertia::render(
             'Approval/Index',
@@ -74,6 +81,11 @@ class ApprovalController extends Controller
             'mgr_gtpapprovals_gatepass' => $gatepass->mgr_gtpgatepass_id,
 
         ]);
+        //on clicking approve button update gatepass status to 2
+        $gatepass->update([
+            'mgr_gtpgatepass_status' => 2
+        ]);
+        return redirect()->route('approval.index')->with('success', 'Gatepass approved successfully!');
     }
 
     public function show(string $id)
@@ -102,15 +114,11 @@ class ApprovalController extends Controller
     public function update(Request $request, string $id)
     {
         //on clicking approve button update gatepass status to 2
-        $gatepass = Gatepass::find($request->input('mgr_gtpgatepass_id'));
-        $gatepass->update([
-            'mgr_gtpgatepass_status' => 2
-        ]);
+        // $gatepass = Gatepass::find($request->input('mgr_gtpgatepass_id'));
+        // $gatepass->update([
+        //     'mgr_gtpgatepass_status' => 2
+        // ]);
 
-
-        // dd ($approval);
-
-        // Rest of the code...
 
         }
     

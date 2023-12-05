@@ -23,6 +23,9 @@ class GatepassController extends Controller
      */
     public function index()
     {
+        $user = User::with('role')->with('department')->find(auth()->user()->mgr_gtpusers_id);
+        if ($user->role->mgr_gtpuserroles_role == 3)
+        {
         $gatepass = Gatepass::with('user', 'uom','company', 'department', 'source_location', 'destination_location')->get();
         return Inertia::render(
             'Gatepass/Index',
@@ -30,6 +33,7 @@ class GatepassController extends Controller
                 'gatepasses' => $gatepass
             ]
         );
+    }
     }
 
     /**
@@ -119,6 +123,16 @@ class GatepassController extends Controller
         $approvallevel = ApprovalLevel::where('mgr_gtpapprovallevels_department', $gatepassDepartment)->where('mgr_gtpapprovallevels_sequence', 10)->first();
      
       Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
+
+        Approval::create([
+            'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_id,
+            'mgr_gtpapprovals_approveddate' => now(),
+            'mgr_gtpapprovals_status' => 1,
+            'mgr_gtpapprovals_approvallevel' => 1,
+            'mgr_gtpapprovals_gatepass' => $gatepass->mgr_gtpgatepass_id,
+
+        ]);
+     
 
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
     }
