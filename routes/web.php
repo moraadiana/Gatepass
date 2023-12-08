@@ -47,6 +47,8 @@ Route::resource('gatepass', GatepassController::class);
 
 Route::get('/approval',[ApprovalController::class, 'index'])->name('approval.index');
 
+//Route::get('/gatepass/approval',[ApprovalController::class, 'show'])->name('approval.show');
+
 Route::resource('gatepass.approval', ApprovalController::class);
 
 Route::resource('approvallevel', ApprovalLevelController::class);

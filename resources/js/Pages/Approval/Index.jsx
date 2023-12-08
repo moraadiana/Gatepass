@@ -4,7 +4,7 @@ import { Head, Link } from "@inertiajs/react";
 //create a function to fetch all gatepasses
 
 export default function Index({ auth, gatepasses, approvals }) {
-    console.log(gatepasses);
+    ;
 
     return (
         <Authenticated user={auth.user}>

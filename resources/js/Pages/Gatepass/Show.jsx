@@ -87,7 +87,7 @@ export default function Show({ auth, gatepass, user, approval }) {
                                         onFinish={async (values) => {
                                             console.log(approval);
                                             router.post(
-                                                route("approval.store"),
+                                                route("gatepass.approval.store"),
                                                 {
                                                     ...values,
                                                     approval_id:

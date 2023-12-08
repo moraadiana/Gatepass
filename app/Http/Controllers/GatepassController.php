@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ApprovalLevel;
+use App\Models\Approval;
 use App\Models\Department;
 use App\Models\Gatepass;
 use App\Models\Location;
@@ -23,17 +24,14 @@ class GatepassController extends Controller
      */
     public function index()
     {
-        $user = User::with('role')->with('department')->find(auth()->user()->mgr_gtpusers_id);
-        if ($user->role->mgr_gtpuserroles_role == 3)
-        {
-        $gatepass = Gatepass::with('user', 'uom','company', 'department', 'source_location', 'destination_location')->get();
+        $gatepass = Gatepass::with('user', 'uom','company', 'department', 'source_location', 'destination_location')->where('mgr_gtpgatepass_status', 0)->get();
         return Inertia::render(
             'Gatepass/Index',
             [
                 'gatepasses' => $gatepass
             ]
         );
-    }
+    
     }
 
     /**
@@ -105,6 +103,8 @@ class GatepassController extends Controller
         //Update the resource with new data from request*/
         $gatepass->update($request->input('values'));
 
+        //update the gatepass status to 1
+
         return redirect()->route('gatepass.index')->with('success', 'Gatepass updated successfully!');
     }
 
@@ -121,9 +121,8 @@ class GatepassController extends Controller
     {
         $gatepassDepartment = $gatepass->mgr_gtpgatepass_department;
         $approvallevel = ApprovalLevel::where('mgr_gtpapprovallevels_department', $gatepassDepartment)->where('mgr_gtpapprovallevels_sequence', 10)->first();
-     
-      Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
 
+        // create approval record on submit
         Approval::create([
             'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_id,
             'mgr_gtpapprovals_approveddate' => now(),
@@ -132,7 +131,15 @@ class GatepassController extends Controller
             'mgr_gtpapprovals_gatepass' => $gatepass->mgr_gtpgatepass_id,
 
         ]);
+        //on clicking approve button update gatepass status to 2
+        $gatepass->update([
+            'mgr_gtpgatepass_status' => 1
+        ]);
+       
+
      
+     // Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
+
 
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
     }

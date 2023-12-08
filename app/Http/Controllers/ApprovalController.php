@@ -18,19 +18,19 @@ class ApprovalController extends Controller
      */
     public function index()
     {
-
-
-        //fetch role of current user
+        
         $user = User::with('role')->with('department')->find(auth()->user()->mgr_gtpusers_id);
+        $gatepasses = [];
+        $approvals = Approval::all();
         if ($user->role->mgr_gtpuserroles_role == 1) {
             //show all submitted gatepasses where status is 1
             $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
                 -> where('mgr_gtpgatepass_status', 1)->get();
-            $approvals = Approval::all();
+            //$approvals = Approval::all();
             
             }
 
-        else if ($user->role->mgr_gtpuserroles_role == 2) {
+        else if ($user->role->mgr_gtpuserroles_role == 3) {
             //show all submitted gatepasses where status is 1
             $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
                 -> where('mgr_gtpgatepass_status', 2)->get();
@@ -42,9 +42,10 @@ class ApprovalController extends Controller
             'Approval/Index',
             [
                 'gatepasses' => $gatepasses,
-                //'approvals' => $approvals
+                'approvals' => $approvals
             ]
         );
+
     }
 
     /**
@@ -68,16 +69,14 @@ class ApprovalController extends Controller
     public function store(Request $request, Gatepass $gatepass)
    
     {
-        //dd($gatepass);
-        // create approval record in the approvals table
-        //$gatepass= Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company') ->find($request->input('mgr_gtpgatepass_id'));
-       // $approval = $gatepass->approvals()->first();
 
+        $user = User::with('role')->with('department')->find(auth()->user()->mgr_gtpusers_id);
+        if ($user->role->mgr_gtpuserroles_role == 1){
         Approval::create([
             'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_id,
             'mgr_gtpapprovals_approveddate' => now(),
             'mgr_gtpapprovals_status' => 1,
-            'mgr_gtpapprovals_approvallevel' => 1,
+            'mgr_gtpapprovals_approvallevel' => 2,
             'mgr_gtpapprovals_gatepass' => $gatepass->mgr_gtpgatepass_id,
 
         ]);
@@ -85,20 +84,41 @@ class ApprovalController extends Controller
         $gatepass->update([
             'mgr_gtpgatepass_status' => 2
         ]);
+    }
+    elseif ($user->role->mgr_gtpuserroles_role == 3)
+    {
+        Approval::create([
+            'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_id,
+            'mgr_gtpapprovals_approveddate' => now(),
+            'mgr_gtpapprovals_status' => 1,
+            'mgr_gtpapprovals_approvallevel' => 2,
+            'mgr_gtpapprovals_gatepass' => $gatepass->mgr_gtpgatepass_id,
+
+        ]);
+        //on clicking approve button update gatepass status to 2
+        $gatepass->update([
+            'mgr_gtpgatepass_status' => 3
+        ]);
+    }
         return redirect()->route('approval.index')->with('success', 'Gatepass approved successfully!');
     }
 
-    public function show(string $id)
+    public function show(Gatepass $gatepass, Approval $approval)    
     
     {
+      //show gatepass details where status is 3
+      $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')->where('mgr_gtpgatepass_id', $id)->first();
+      $currentUser = Auth::user()->load('role');
       
-    
-        
+      return Inertia::render(
+        'Approval/Show',
+        [
+            'gatepass' => $gatepass,
+            'approval' => $approval
+        ]
+        );
+      
     }
-
-
-    
-
 
     /**
      * Show the form for editing the specified resource.
@@ -113,12 +133,7 @@ class ApprovalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //on clicking approve button update gatepass status to 2
-        // $gatepass = Gatepass::find($request->input('mgr_gtpgatepass_id'));
-        // $gatepass->update([
-        //     'mgr_gtpgatepass_status' => 2
-        // ]);
-
+       
 
         }
     

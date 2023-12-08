@@ -90,8 +90,13 @@ export default function Authenticated({ user, header, children }) {
                             path: route("approval.index"),
                             name: "Gatepass Approval",
                         },
-                        
+                        // {
+                        //     path: route("gatepass.approval.show"),
+                        //     name: "Approved Gatepass",
+                        // }
+                     
                     ],
+
                 },
             ]}
             menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}
