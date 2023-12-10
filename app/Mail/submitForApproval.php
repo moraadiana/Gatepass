@@ -16,10 +16,10 @@ class submitForApproval extends Mailable
     /**
      * Create a new message instance.
      */
-    public function build()
+   public function build()
     {
         return $this->from ('diana.moraa@grainbulk.com')
-        ->subject('Gatepass Request')
+        ->subject('Gatepass Approval Request')
         ->view('emails.submitForApproval');
          
     }

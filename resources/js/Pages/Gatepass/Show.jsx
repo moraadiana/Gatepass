@@ -59,12 +59,15 @@ export default function Show({ auth, gatepass, user, approval }) {
                                             router.post(
                                                 route(
                                                     "gatepass.approval.store",
-                                                    gatepass.mgr_gtpgatepass_id
+                                                    gatepass.mgr_gtpgatepass_id,
+                                                    
+                                                    
                                                 ),
                                                 {
                                                     ...values,
                                                     gatepass_id:
                                                         gatepass.mgr_gtpgatepass_id,
+                                                        action: "approve",
                                                 }
                                             );
                                             // close modal form
@@ -85,17 +88,19 @@ export default function Show({ auth, gatepass, user, approval }) {
                                             </Button>
                                         }
                                         onFinish={async (values) => {
-                                            console.log(approval);
                                             router.post(
-                                                route("gatepass.approval.store"),
+                                                route(
+                                                    "gatepass.approval.store",
+                                                    gatepass.mgr_gtpgatepass_id,
+                                                    
+                                                    
+                                                ),
                                                 {
                                                     ...values,
-                                                    approval_id:
-                                                        approval.mgr_gtpapprovals_id,
                                                     gatepass_id:
                                                         gatepass.mgr_gtpgatepass_id,
+                                                        action: "reject",
                                                 }
-                                               
                                             );
                                         }}
                                     >

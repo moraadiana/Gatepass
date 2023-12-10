@@ -59,6 +59,10 @@ class GatepassController extends Controller
         Gatepass::create($request->all());
         return redirect()->route('gatepass.index')
             ->with('success', 'Gatepass created successfully!');
+
+            // store item details in mgr_gtpitems tableD
+            //Item::store($gatepassData);
+
     }
 
     /**
@@ -131,14 +135,14 @@ class GatepassController extends Controller
             'mgr_gtpapprovals_gatepass' => $gatepass->mgr_gtpgatepass_id,
 
         ]);
-        //on clicking approve button update gatepass status to 2
+        //update gatepass status to 1
         $gatepass->update([
             'mgr_gtpgatepass_status' => 1
         ]);
        
 
-     
-     // Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
+
+    Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
 
 
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
