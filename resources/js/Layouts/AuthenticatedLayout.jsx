@@ -79,6 +79,7 @@ export default function Authenticated({ user, header, children }) {
                             path: route("gatepass.create"),
                             name: "Create Gatepass",
                         },
+                        
                        
                     ],
                 },
@@ -96,7 +97,21 @@ export default function Authenticated({ user, header, children }) {
                         // }
                      
                     ],
+                },
+                {
+                    path: "/companies",
+                    name: "Companies",
+                    children: [
+                        {
+                            path: route("company.index"),
+                            name: "All Companies",
+                        },
+                        {
+                            path: route("company.create"),
+                            name: "Create Company",
+                        }
 
+                    ],
                 },
             ]}
             menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}

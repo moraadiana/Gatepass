@@ -9,18 +9,15 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class GatepassApproved extends Mailable
+class GatepassRejected extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
     public function build()
     {
         return $this->from ('diana.moraa@grainbulk.com')
-        ->subject('Gatepass Approved')
-        ->view('emails.GatepassApproved');
+        ->subject('Gatepass Rejected')
+        ->view('emails.GatepassRejected');
          
     }
 }

@@ -13,6 +13,7 @@ use Psy\Readline\Hoa\Console;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\GatepassApproved;
 use App\Mail\submitForApproval;
+use App\Mail\GatepassRejected;
 
 class ApprovalController extends Controller
 {
@@ -93,7 +94,7 @@ class ApprovalController extends Controller
             $gatepass->update([
                 'mgr_gtpgatepass_status' => 2
             ]);
-            //send email to users where role is 3
+            //send email to users where role is 3(security approvers)
             Mail::to('diana.moraa@grainbulk.com')->send(new GatepassApproved);
             
 
@@ -116,7 +117,7 @@ class ApprovalController extends Controller
             $gatepass->update([
                 'mgr_gtpgatepass_status' => 3
             ]);
-            
+            //send email to user when gatepass is approved
             Mail::to('diana.moraa@grainbulk.com')->send(new GatepassApproved);
            return redirect()->route('approval.index')->with('success', 'Gatepass approved successfully!');
            
@@ -138,7 +139,9 @@ elseif ($request->input('action') === 'reject')
                 $gatepass->update([
                     'mgr_gtpgatepass_status' => 4
                 ]);
-              dd($gatepass);
+              //send email to user when gatepass is rejected
+                Mail::to('diana.moraa@grainbulk.com')->send(new GatepassRejected);
+
                 return redirect()->route('approval.index')->with('success', 'Gatepass rejected successfully!');
             }
             elseif ($user->role->mgr_gtpuserroles_role == 3)
@@ -155,7 +158,9 @@ elseif ($request->input('action') === 'reject')
                 $gatepass->update([
                     'mgr_gtpgatepass_status' => 4
                 ]);
-               // dd($gatepass);
+
+               //send email to user when gatepass is rejected
+                Mail::to('diana.moraa@grainbulk.com')->send(new GatepassRejected);
                 return redirect()->route('approval.index')->with('success', 'Gatepass rejected successfully!');
             }
     }
@@ -163,20 +168,15 @@ elseif ($request->input('action') === 'reject')
 }
    
 
-    public function show(Gatepass $gatepass, Approval $approval)    
+    public function show( $gatepass, $approval)    
     
     {
-      //show gatepass details where status is 3
-    //   $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')->where('mgr_gtpgatepass_id', $id)->first();
-    //   $currentUser = Auth::user()->load('role');
-      
-    //   return Inertia::render(
-    //     'Approval/Show',
-    //     [
-    //         'gatepass' => $gatepass,
-    //         'approval' => $approval
-    //     ]
-    //     );
+     //show all gatepass where status is 
+     $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')->
+     where('mgr_gtpapprovals_id', $approval->id)
+                              ->where('mgr_gtpapprovals_status', 1)
+                              ->get();
+dd($gatepass);
       
     }
 

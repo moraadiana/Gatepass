@@ -13,7 +13,15 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        //  
+        $company = Company::all();
+
+        //dd($company);
+        return Inertia::render('Companies/Index', [
+            'companies' => $company,
+        ]);
+
+
      
     }
 
@@ -22,7 +30,9 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        //create new company
+
+        return Inertia::render('Company/Create');
     }
 
     /**

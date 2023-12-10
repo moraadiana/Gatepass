@@ -26,16 +26,7 @@ export default function Index({ auth, gatepasses }) {
                                 title: "Vehicle Reg",
                                 dataIndex: "mgr_gtpgatepass_vehiclereg",
                             },
-                            // {
-                            //     title: "Company",
-                            //     dataIndex: [
-                            //         "company",
-                            //         "mgr_gtpgatepass_company",
-
-                            //     ],
-                            //     hideInSearch: true,
-
-                            // },
+                          
                             {
                                 
                                 title: "Department",

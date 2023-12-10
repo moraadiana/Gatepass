@@ -2,7 +2,7 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
 import { Head, Link } from "@inertiajs/react";
 
-export default function show({ auth, gatepasses }) {
+export default function show({ auth, gatepass, approvals }) {
     
     return (
         <>
