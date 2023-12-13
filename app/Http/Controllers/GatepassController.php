@@ -72,6 +72,7 @@ class GatepassController extends Controller
     {
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company')->find($id);
         $currentUser = Auth::user()->load('role');
+       
         $approval = $gatepass->approvals()->first();
         return Inertia::render(
             'Gatepass/Show',
@@ -123,6 +124,8 @@ class GatepassController extends Controller
     public function submitForApproval(Gatepass $gatepass)
 
     {
+        // submit for approval button be available for the user who created the gatepass
+        
         $gatepassDepartment = $gatepass->mgr_gtpgatepass_department;
         $approvallevel = ApprovalLevel::where('mgr_gtpapprovallevels_department', $gatepassDepartment)->where('mgr_gtpapprovallevels_sequence', 10)->first();
 

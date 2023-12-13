@@ -1,0 +1,57 @@
+import Authenticated from "@/Layouts/AuthenticatedLayout";
+import { PageContainer,
+    ProCard,
+    ProTable,
+    ProForm,
+    ProDescriptions,
+    ModalForm,
+    ProFormTextArea, 
+} from "@ant-design/pro-components";
+import { Head, Link ,router} from "@inertiajs/react";
+
+import { Space, Button } from 'antd';
+
+ 
+
+export default function Index({ auth, companies }) {
+    
+    return (
+        <>
+            <Head title="Companies" />
+            <Authenticated user={auth.user}>
+                <PageContainer
+                    header={{
+                        title: "Companies",
+                        onBack: () => window.history.back(),
+                    }}
+
+                    extra={
+                        <Space>
+
+                        <Button type="primary" onClick={() => router.get(route("company.create"))}>
+                              Create
+                        </Button>
+
+                          </Space>  
+                    }
+                >
+                    <ProTable
+                        headerTitle="Companies"
+                        dataSource={companies}
+                        columns={[
+                            {
+                                title: "Name",
+                                dataIndex: "mgr_gtpcompanies_name",
+                            },
+                            {
+                                title: "Status",
+                                dataIndex: "mgr_gtpcompanies_status",
+                            }
+                        ]}
+                        rowKey="mgr_gtpcompanies_id"
+                    />
+                </PageContainer>
+            </Authenticated>
+        </>
+    );
+}

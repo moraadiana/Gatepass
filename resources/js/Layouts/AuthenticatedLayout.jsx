@@ -106,13 +106,23 @@ export default function Authenticated({ user, header, children }) {
                             path: route("company.index"),
                             name: "All Companies",
                         },
-                        {
-                            path: route("company.create"),
-                            name: "Create Company",
-                        }
+                        // {
+                        //     path: route("company.create"),
+                        //     name: "Create Company",
+                        // }
 
                     ],
                 },
+                {
+                    path: "/departments",
+                    name: "Departments",
+                    children: [
+                        {
+                            path: route("department.index"),
+                            name: "All Departments",
+                        },
+                    ]
+                }
             ]}
             menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}
         >

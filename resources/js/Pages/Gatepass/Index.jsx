@@ -77,7 +77,7 @@ export default function Index({ auth, gatepasses }) {
                             },
 
                             {
-                                title: "Destination",
+                                title: "Specific Destination",
                                 dataIndex: "mgr_gtpgatepass_destination",
                                 hideInSearch: true,
                             },

@@ -5,9 +5,11 @@ import { PageContainer,
     ProForm,
     ProDescriptions,
     ModalForm,
+    ProFormText,
     ProFormTextArea, 
 } from "@ant-design/pro-components";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
+
 
 import { Space, Button } from 'antd';
 
@@ -15,7 +17,7 @@ export default function Create({ auth, companies }) {
 
     return (
         <>
- <Head title="Create Gatepass" />
+ <Head title="Create Company" />
 
 <Authenticated user={auth.user}>
     <PageContainer
@@ -27,6 +29,7 @@ export default function Create({ auth, companies }) {
     >
         <ProCard>
             <ProForm
+            
                 onFinish={async (values) => {
                     router.post(route("company.store"), {
                         ...values,
@@ -44,13 +47,13 @@ export default function Create({ auth, companies }) {
                         placeholder="Name"
                         rules={[{ required: true }]}
                     />  
-                    <ProFormText
+                    {/* <ProFormText
                         width="sm"
-                        name="mgr_gtpcompanies_address"
+                        name="mgr_gtpcompanies_a"
                         label="Address"
                         placeholder="Address"
                         rules={[{ required: true }]}
-                    />
+                    /> */}
                     </ProForm.Group>
                     </ProForm>
                     </ProCard>

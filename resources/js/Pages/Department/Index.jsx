@@ -7,48 +7,52 @@ import { PageContainer,
     ModalForm,
     ProFormTextArea, 
 } from "@ant-design/pro-components";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link ,router} from "@inertiajs/react";
 
 import { Space, Button } from 'antd';
 
  
 
-export default function Index({ auth, companies }) {
+export default function Index({ auth, departments }) {
     
     return (
         <>
-            <Head title="Companies" />
+            <Head title="Departments" />
             <Authenticated user={auth.user}>
                 <PageContainer
                     header={{
-                        title: "Companies",
+                        title: "Departments",
                         onBack: () => window.history.back(),
                     }}
 
                     extra={
                         <Space>
-                          
-                          <Link href={route("company.create")}>
-                             <a>Create</a>
-                        </Link>
+
+                        <Button type="primary" onClick={() => router.get(route("department.create"))}>
+                              Create
+                        </Button>
 
                           </Space>  
                     }
                 >
                     <ProTable
-                        headerTitle="Companies"
-                        dataSource={companies}
+                        headerTitle="Departments"
+                        dataSource={departments}
                         columns={[
                             {
                                 title: "Name",
-                                dataIndex: "mgr_gtpcompanies_name",
+                                dataIndex: "mgr_gtpdepartments_name",
                             },
                             {
                                 title: "Status",
-                                dataIndex: "mgr_gtpcompanies_status",
+                                dataIndex: "mgr_gtpdepartments_status",
+                            },
+                            {
+                                title: "Company",
+                                dataIndex:["company","mgr_gtpcompanies_name"],
                             }
                         ]}
-                        rowKey="mgr_gtpcompanies_id"
+                        rowKey="mgr_gtpdepartments_id"
                     />
                 </PageContainer>
             </Authenticated>

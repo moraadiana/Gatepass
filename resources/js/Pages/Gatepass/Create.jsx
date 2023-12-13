@@ -141,7 +141,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                 <ProFormText
                                     width="sm"
                                     name="mgr_gtpgatepass_destination"
-                                    label="Destination"
+                                    label="Specific Destination"
                                     placeholder="Specific Destination"
                                     rules={[{ required: true }]}
                                 />

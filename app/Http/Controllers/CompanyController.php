@@ -17,7 +17,7 @@ class CompanyController extends Controller
         $company = Company::all();
 
         //dd($company);
-        return Inertia::render('Companies/Index', [
+        return Inertia::render('Company/Index', [
             'companies' => $company,
         ]);
 
@@ -30,9 +30,9 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //create new company
+        //create a form for creating a new company
+        return Inertia::render('Company/Create',);
 
-        return Inertia::render('Company/Create');
     }
 
     /**
@@ -40,7 +40,13 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //store a new company
+        Company::create($request->all());
+
+        //return to index with sucess message
+        return redirect()->route('company.index')
+            ->with('success', 'Company created successfully!');
+
     }
 
     /**

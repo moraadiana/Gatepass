@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Department;
+use App\Models\Company;
+use Inertia\Inertia;
 
 class DepartmentController extends Controller
 {
@@ -12,9 +14,18 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //(
-        
+        //show department with its company
+        $department = Department::with('company')->get();
+
+        return Inertia::render(
+            'Department/Index',
+            [
+                'departments' => $department
+            ]
+            );
     }
+        
+    
 
     /**
      * Show the form for creating a new resource.
@@ -22,6 +33,14 @@ class DepartmentController extends Controller
     public function create()
     {
         //
+    return Inertia::render(
+        'Department/Create', 
+        [
+            'companies' => Company::all()
+            
+        ]
+
+    );
     }
 
     /**
@@ -29,7 +48,11 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Department::create($request->all());
+
+        //return to index with success message
+        return redirect()->route('department.index')->with('success', 'Department created successfully!');
+
     }
 
     /**
