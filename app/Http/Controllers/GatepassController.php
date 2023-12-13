@@ -150,4 +150,8 @@ class GatepassController extends Controller
 
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
     }
+
+  // show all approved gatepasses
+
+    
 }

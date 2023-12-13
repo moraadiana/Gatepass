@@ -95,7 +95,7 @@ class ApprovalController extends Controller
                 'mgr_gtpgatepass_status' => 2
             ]);
             //send email to users where role is 3(security approvers)
-            Mail::to('diana.moraa@grainbulk.com')->send(new GatepassApproved);
+            Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
             
 
             //Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);

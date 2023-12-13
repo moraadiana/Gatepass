@@ -8,7 +8,7 @@ import {
     FileDoneOutlined,
 } from "@ant-design/icons";
 import { notification } from "antd";
-export default function Authenticated({ user, header, children }) {
+export default function Authenticated({ user, header, children , gatepass}) {
     const { flash } = usePage().props;
     useEffect(() => {
         if (flash.success) {
@@ -79,10 +79,11 @@ export default function Authenticated({ user, header, children }) {
                             path: route("gatepass.create"),
                             name: "Create Gatepass",
                         },
-                        
                        
+   
                     ],
                 },
+               
                 {
                     path: "/approvals",
                     name: "Approval",
@@ -122,7 +123,8 @@ export default function Authenticated({ user, header, children }) {
                             name: "All Departments",
                         },
                     ]
-                }
+                },
+                
             ]}
             menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}
         >
