@@ -1,20 +1,18 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { PageContainer,
+import {
+    PageContainer,
     ProCard,
     ProTable,
     ProForm,
     ProDescriptions,
     ModalForm,
-    ProFormTextArea, 
+    ProFormTextArea,
 } from "@ant-design/pro-components";
-import { Head, Link ,router} from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 
-import { Space, Button } from 'antd';
-
- 
+import { Space, Button, Tag } from "antd";
 
 export default function Index({ auth, companies }) {
-    
     return (
         <>
             <Head title="Companies" />
@@ -24,15 +22,17 @@ export default function Index({ auth, companies }) {
                         title: "Companies",
                         onBack: () => window.history.back(),
                     }}
-
                     extra={
                         <Space>
-
-                        <Button type="primary" onClick={() => router.get(route("company.create"))}>
-                              Create
-                        </Button>
-
-                          </Space>  
+                            <Button
+                                type="primary"
+                                onClick={() =>
+                                    router.get(route("company.create"))
+                                }
+                            >
+                                Create
+                            </Button>
+                        </Space>
                     }
                 >
                     <ProTable
@@ -46,7 +46,14 @@ export default function Index({ auth, companies }) {
                             {
                                 title: "Status",
                                 dataIndex: "mgr_gtpcompanies_status",
-                            }
+                                render: (text) => {
+                                    if (text === 1) {
+                                        return <Tag color="green">Active</Tag>;
+                                    } else {
+                                        return <Tag color="red">Inactive</Tag>;
+                                    }
+                                },
+                            },
                         ]}
                         rowKey="mgr_gtpcompanies_id"
                     />

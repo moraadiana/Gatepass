@@ -24,14 +24,13 @@ class GatepassController extends Controller
      */
     public function index()
     {
-        $gatepass = Gatepass::with('user', 'uom','company', 'department', 'source_location', 'destination_location')->where('mgr_gtpgatepass_status', 0)->get();
+        $gatepass = Gatepass::with('user', 'uom', 'company', 'department', 'source_location', 'destination_location')->where('mgr_gtpgatepass_status', 0)->get();
         return Inertia::render(
             'Gatepass/Index',
             [
                 'gatepasses' => $gatepass
             ]
         );
-    
     }
 
     /**
@@ -60,8 +59,8 @@ class GatepassController extends Controller
         return redirect()->route('gatepass.index')
             ->with('success', 'Gatepass created successfully!');
 
-            // store item details in mgr_gtpitems tableD
-            //Item::store($gatepassData);
+        // store item details in mgr_gtpitems tableD
+        //Item::store($gatepassData);
 
     }
 
@@ -72,7 +71,7 @@ class GatepassController extends Controller
     {
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company')->find($id);
         $currentUser = Auth::user()->load('role');
-       
+
         $approval = $gatepass->approvals()->first();
         return Inertia::render(
             'Gatepass/Show',
@@ -125,10 +124,10 @@ class GatepassController extends Controller
 
     {
         // submit for approval button be available for the user who created the gatepass
-        
-        $gatepassDepartment = $gatepass->mgr_gtpgatepass_department;
-        $approvallevel = ApprovalLevel::where('mgr_gtpapprovallevels_department', $gatepassDepartment)->where('mgr_gtpapprovallevels_sequence', 10)->first();
 
+        $gatepassDepartment = $gatepass->mgr_gtpgatepass_department;
+        $approvallevel = ApprovalLevel::where('mgr_gtpapprovallevels_department', $gatepassDepartment)->orderBy('mgr_gtpapprovallevels_sequence', 'asc')->first();
+        dd($approvallevel);
         // create approval record on submit
         Approval::create([
             'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_id,
@@ -142,16 +141,16 @@ class GatepassController extends Controller
         $gatepass->update([
             'mgr_gtpgatepass_status' => 1
         ]);
-       
 
 
-    Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
+
+        Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
 
 
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
     }
 
-  // show all approved gatepasses
+    // show all approved gatepasses
 
-    
+
 }
