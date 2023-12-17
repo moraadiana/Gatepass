@@ -54,14 +54,13 @@ export default function Show({ auth, gatepass, user, approval }) {
                                                 Approve
                                             </Button>
                                         }
-                                        //on clicking approve button store the data
+                                        //on clicking approve button store the data and comment in approval
                                         onFinish={async (values) => {
                                             router.post(
                                                 route(
                                                     "gatepass.approval.store",
                                                     gatepass.mgr_gtpgatepass_id,
-                                                    
-                                                    
+                                                  
                                                 ),
                                                 {
                                                     ...values,

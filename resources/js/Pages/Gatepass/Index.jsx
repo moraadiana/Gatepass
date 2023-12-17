@@ -1,6 +1,7 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
 import { Head, Link } from "@inertiajs/react";
+import { Space, Button, Tag } from "antd";
 
 export default function Index({ auth, gatepasses }) {
     console.log(gatepasses);
@@ -80,6 +81,34 @@ export default function Index({ auth, gatepasses }) {
                                 title: "Specific Destination",
                                 dataIndex: "mgr_gtpgatepass_destination",
                                 hideInSearch: true,
+                            },
+                            {
+                                title: "Status",
+                                dataIndex: "mgr_gtpgatepass_status",
+
+                               // if status is 0 show pending 
+                               render: (text) => {
+                                   if (text === 0) {
+                                       return <Tag color="green">Not Submitted</Tag>;
+                                   } 
+                                   else if(text === 1){                                 
+                                       return <Tag color="green">Pending at Department</Tag>;
+                                   }
+                                   else if(text === 2){
+                                        return <Tag color="green">Pending at Security</Tag>;
+                                   }
+                                   else if(text === 3){
+                                        return <Tag color="green">Approved</Tag>;
+                                   }
+                                   else if(text === 4){
+                                    return <Tag color="red">Rejected</Tag>;
+                                   }
+                                   
+
+                               }
+                              
+
+
                             },
                             {
                                 title: "Actions",

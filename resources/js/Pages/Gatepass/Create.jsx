@@ -66,52 +66,6 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         };
                                     })}
                                 />
-                            </ProForm.Group>
-                            <ProForm.Group>
-                                <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpgatepass_description"
-                                    label="Item(s) Description"
-                                    placeholder="Description"
-                                    rules={[{ required: true }]}
-                                />
-                                <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpgatepass_quantity"
-                                    label="Quantity"
-                                    placeholder="Quantity"
-                                    rules={[{ required: true }]}
-                                />
-                                <ProFormSelect
-                                    width="sm"
-                                    name="mgr_gtpgatepass_uom"
-                                    label="UOM"
-                                    placeholder="UOM"
-                                    rules={[{ required: true }]}
-                                    options={uoms.map((uom) => {
-                                        return {
-                                            label: uom.mgr_gtpuoms_name,
-                                            value: uom.mgr_gtpuoms_id,
-                                        };
-                                    })}
-                                />
-                                <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpgatepass_auxilarydoc"
-                                    label="Auxilary Doc"
-                                    placeholder="Auxilary Doc"
-                                    rules={[{ required: true }]}
-                                />
-                            </ProForm.Group>
-                            <ProForm.Group>
-                                <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpgatepass_purpose"
-                                    label="Purpose"
-                                    placeholder="Purpose"
-                                    rules={[{ required: true }]}
-                                />
-
                                 <ProFormSelect
                                     width="sm"
                                     name="mgr_gtpgatepass_sourcelocation"
@@ -146,6 +100,64 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     rules={[{ required: true }]}
                                 />
                             </ProForm.Group>
+                            <ProForm.Group>
+                                <ProFormText
+                                    width="sm"
+                                    name="mgr_gtpgatepass_purpose"
+                                    label="Purpose"
+                                    placeholder="Purpose"
+                                    rules={[{ required: true }]}
+                                />
+
+                                <ProFormText
+                                    width="sm"
+                                    name="mgr_gtpgatepass_auxilarydoc"
+                                    label="Auxilary Doc"
+                                    placeholder="Auxilary Doc"
+                                    rules={[{ required: true }]}
+                                />  
+
+                                
+                            </ProForm.Group>
+
+                            <ProForm.Group>
+                                <ProFormText
+                                    width="sm"
+                                    name="mgr_gtpgatepass_description"
+                                    label="Item(s) Description"
+                                    placeholder="Description"
+                                    rules={[{ required: true }]}
+                                />
+                                {/* <ProFormText
+                                    width="sm"
+                                    name="mgr_gtpitems_code"
+                                    label="Item(s) Code"
+                                    placeholder="Code"
+                                    rules={[{ required: true }]}
+                                /> */}
+                                <ProFormText
+                                    width="sm"
+                                    name="mgr_gtpgatepass_quantity"
+                                    label="Quantity"
+                                    placeholder="Quantity"
+                                    rules={[{ required: true }]}
+                                />
+                                <ProFormSelect
+                                    width="sm"
+                                    name="mgr_gtpgatepass_uom"
+                                    label="UOM"
+                                    placeholder="UOM"
+                                    rules={[{ required: true }]}
+                                    options={uoms.map((uom) => {
+                                        return {
+                                            label: uom.mgr_gtpuoms_name,
+                                            value: uom.mgr_gtpuoms_id,
+                                        };
+                                    })}
+                                />
+                               
+                            </ProForm.Group>
+                            
                         </ProForm>
                     </ProCard>
                 </PageContainer>

@@ -18,7 +18,7 @@ class Approval extends Model
         'mgr_gtpapprovals_approveddate',
         'mgr_gtpapprovals_approvallevel',
         'mgr_gtpapprovals_gatepass',
-        'mgr_gtpapprovals_createdby'
+        'mgr_gtpapprovals_comment',
     ];
     //approval level belongs to a gatepass and approval level
     public function gatepass(): BelongsTo
@@ -31,7 +31,7 @@ class Approval extends Model
     }
     public function department(): BelongsTo
     {
-        return $this->belongsTo(Departments::class, 'mgr_gtpapprovals_gatepass');
+        return $this->belongsTo(Department::class, 'mgr_gtpapprovals_gatepass');
     }
     public function user(): BelongsTo
     {
