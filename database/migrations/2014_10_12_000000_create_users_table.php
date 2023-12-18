@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('mgr_gtpusers_fname');
             $table->string('mgr_gtpusers_lname');
             $table->string('mgr_gtpusers_sname');
+            $table->string('mgr_gtpusers_empno');
             $table->string('mgr_gtpusers_email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('mgr_gtpusers_password');

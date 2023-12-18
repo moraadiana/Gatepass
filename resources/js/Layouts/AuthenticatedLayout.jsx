@@ -124,6 +124,37 @@ export default function Authenticated({ user, header, children , gatepass}) {
                         },
                     ]
                 },
+                {
+                    path: "/users",
+                    name: "Users",
+                    children: [
+                        {
+                            path: route("user.index"),
+                            name: "All Users",
+                        },
+                        {
+                            path: route("user.create"),
+                            name: "Create User",
+                        }
+
+                    ]
+                },
+                {
+                    path: "/roles",
+                    name: "Roles",
+                    children: [
+                        {
+                            path: route("role.index"),
+                            name: "All Roles",
+                        },
+                        
+                        {
+                            path: route("role.create"),
+                            name: "Create Role",
+                        }
+
+                    ]
+                }
                 
             ]}
             menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}

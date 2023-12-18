@@ -35,7 +35,9 @@ class User extends Authenticatable
         'mgr_gtpusers_fname',
         'mgr_gtpusers_lname',
         'mgr_gtpusers_sname',
+        'mgr_gtpusers_empno',
         'mgr_gtpusers_email',
+        'mgr_gtpusers_department',
         'mgr_gtpusers_password',
         'mgr_gtpusers_status',
         'mgr_gtpusers_createdby',
@@ -91,9 +93,9 @@ class User extends Authenticatable
     //     return $this->hasMany(UserRole::class, 'mgr_gtpuserroles_user');
     // }
     //hasMany roles
-    public function role(): HasOne
+    public function roles(): BelongsToMany
     {
-        return $this->hasOne(UserRole::class, 'mgr_gtpuserroles_user');
+        return $this->belongsToMany(Role::class, 'mgr_gtpuserroles', 'mgr_gtpuserroles_user', 'mgr_gtpuserroles_role');
     }
     public function department(): BelongsTo
     {

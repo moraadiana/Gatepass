@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class RoleController extends Controller
 {
@@ -12,6 +14,11 @@ class RoleController extends Controller
     public function index()
     {
         //
+        $role = Role::all();
+
+        return Inertia::render('Role/Index', [
+            'roles' => $role
+        ]);
     }
 
     /**
@@ -19,7 +26,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        //create new role
+        return Inertia::render('Role/Create');
+        
     }
 
     /**

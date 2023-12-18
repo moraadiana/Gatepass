@@ -9,7 +9,7 @@ import {
 import { Head, router } from "@inertiajs/react";
 
 export default function Edit({ auth, gatepass, departments, locations, uoms }) {
-    console.log("Gate Pass", gatepass.mgr_gtpgatepass_id);
+    //console.log("Gate Pass", gatepass.mgr_gtpgatepass_id);
     return (
         <>
             <Head title="Edit Gatepass" />

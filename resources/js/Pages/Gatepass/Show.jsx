@@ -18,7 +18,7 @@ export default function Show({ auth, gatepass, user, approval }) {
     const [loading, setLoading] = useState(false);
     const [approveVisible, setApproveVisible] = useState(false);
     const [rejectVisible, setRejectVisible] = useState(false);
-   
+
     return (
         <>
             <Head title="View Gatepass" />
@@ -60,8 +60,6 @@ export default function Show({ auth, gatepass, user, approval }) {
                                         loading={loading}
                                         open={approveVisible}
                                         onOpenChange={setApproveVisible}
-
-                                        
                                         //on clicking approve button store the data and comment in approval
                                         onFinish={async (values) => {
                                             setLoading(true);
@@ -77,14 +75,18 @@ export default function Show({ auth, gatepass, user, approval }) {
                                                 {
                                                     onSuccess: () => {
                                                         setLoading(false);
-                                                        setApproveVisible(false);
+                                                        setApproveVisible(
+                                                            false
+                                                        );
                                                         message.success(
                                                             "Gatepass approved successfully"
                                                         );
                                                     },
                                                     onError: (errors) => {
                                                         setLoading(false);
-                                                        setApproveVisible(false);
+                                                        setApproveVisible(
+                                                            false
+                                                        );
                                                         message.error(
                                                             "Error approving gatepass"
                                                         );
