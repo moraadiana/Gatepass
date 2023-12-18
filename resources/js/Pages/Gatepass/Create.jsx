@@ -3,8 +3,10 @@ import {
     PageContainer,
     ProCard,
     ProForm,
+    ProFormList,
     ProFormSelect,
     ProFormText,
+    ProList,
 } from "@ant-design/pro-components";
 import { Head, router } from "@inertiajs/react";
 
@@ -115,49 +117,51 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     label="Auxilary Doc"
                                     placeholder="Auxilary Doc"
                                     rules={[{ required: true }]}
-                                />  
-
-                                
+                                />
                             </ProForm.Group>
 
-                            <ProForm.Group>
-                                <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpgatepass_description"
-                                    label="Item(s) Description"
-                                    placeholder="Description"
-                                    rules={[{ required: true }]}
-                                />
-                                {/* <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpitems_code"
-                                    label="Item(s) Code"
-                                    placeholder="Code"
-                                    rules={[{ required: true }]}
-                                /> */}
-                                <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpgatepass_quantity"
-                                    label="Quantity"
-                                    placeholder="Quantity"
-                                    rules={[{ required: true }]}
-                                />
-                                <ProFormSelect
-                                    width="sm"
-                                    name="mgr_gtpgatepass_uom"
-                                    label="UOM"
-                                    placeholder="UOM"
-                                    rules={[{ required: true }]}
-                                    options={uoms.map((uom) => {
-                                        return {
-                                            label: uom.mgr_gtpuoms_name,
-                                            value: uom.mgr_gtpuoms_id,
-                                        };
-                                    })}
-                                />
-                               
-                            </ProForm.Group>
-                            
+                            <ProFormList
+                                name="items"
+                                label="Items"
+                                rules={[{ required: true }]}
+                                min={1}
+                                initialValue={[{}]}
+                            >
+                                <ProForm.Group>
+                                    <ProFormText
+                                        width="sm"
+                                        name="mgr_gtpitems_description"
+                                        label="Item Description"
+                                        placeholder="Item Description"
+                                    />
+                                    <ProFormText
+                                        width="sm"
+                                        name="mgr_gtpitems_code"
+                                        label="Item Code"
+                                        placeholder="Item Code"
+                                    />
+                                    <ProFormText
+                                        width="sm"
+                                        name="mgr_gtpitems_quantity"
+                                        label="Quantity"
+                                        placeholder="Quantity"
+                                        rules={[{ required: true }]}
+                                    />
+                                    <ProFormSelect
+                                        width="xs"
+                                        name="mgr_gtpitems_uom"
+                                        label="UOM"
+                                        placeholder="UOM"
+                                        rules={[{ required: true }]}
+                                        options={uoms.map((uom) => {
+                                            return {
+                                                label: uom.mgr_gtpuoms_name,
+                                                value: uom.mgr_gtpuoms_id,
+                                            };
+                                        })}
+                                    />
+                                </ProForm.Group>
+                            </ProFormList>
                         </ProForm>
                     </ProCard>
                 </PageContainer>

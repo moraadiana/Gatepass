@@ -27,9 +27,8 @@ export default function Index({ auth, gatepasses }) {
                                 title: "Vehicle Reg",
                                 dataIndex: "mgr_gtpgatepass_vehiclereg",
                             },
-                          
+
                             {
-                                
                                 title: "Department",
                                 dataIndex: [
                                     "department",
@@ -37,20 +36,7 @@ export default function Index({ auth, gatepasses }) {
                                 ],
                                 hideInSearch: true,
                             },
-                            {
-                                title: "Item(s) Descripton",
-                                dataIndex: "mgr_gtpgatepass_description",
-                                hideInSearch: true,
-                            },
-                            {
-                                title: " Quantity",
-                                dataIndex: "mgr_gtpgatepass_quantity",
-                                hideInSearch: true,
-                            },
-                            {
-                                title: "UOM",
-                                dataIndex: "mgr_gtpgatepass_uom",
-                            },
+
                             {
                                 title: "Auxilary Document",
                                 dataIndex: "mgr_gtpgatepass_auxilarydoc",
@@ -86,29 +72,20 @@ export default function Index({ auth, gatepasses }) {
                                 title: "Status",
                                 dataIndex: "mgr_gtpgatepass_status",
 
-                               // if status is 0 show pending 
-                               render: (text) => {
-                                   if (text === 0) {
-                                       return <Tag color="green">Not Submitted</Tag>;
-                                   } 
-                                   else if(text === 1){                                 
-                                       return <Tag color="green">Pending at Department</Tag>;
-                                   }
-                                   else if(text === 2){
-                                        return <Tag color="green">Pending at Security</Tag>;
-                                   }
-                                   else if(text === 3){
-                                        return <Tag color="green">Approved</Tag>;
-                                   }
-                                   else if(text === 4){
-                                    return <Tag color="red">Rejected</Tag>;
-                                   }
-                                   
-
-                               }
-                              
-
-
+                                // if status is 0 show pending
+                                render: (text) => {
+                                    if (text === 0) {
+                                        return (
+                                            <Tag color="green">Rejected</Tag>
+                                        );
+                                    } else if (text === 1) {
+                                        return (
+                                            <Tag color="green">Approved</Tag>
+                                        );
+                                    } else if (text === 2) {
+                                        return <Tag color="green">Pending</Tag>;
+                                    }
+                                },
                             },
                             {
                                 title: "Actions",
@@ -137,15 +114,8 @@ export default function Index({ auth, gatepasses }) {
                                 ),
                             },
                             //create button to submit a gatepass request
-                            
-
-
-
-
-                            
                         ]}
                         rowKey="mgr_gtpgatepass_id"
-                      
                     />
                 </PageContainer>
             </Authenticated>

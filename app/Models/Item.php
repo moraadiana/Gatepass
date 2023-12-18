@@ -20,7 +20,6 @@ class Item extends Model
         'mgr_gtpitems_status',
         'mgr_gtpitems_createddated',
         'mgr_gtpitems_gatepass',
-        'mgr_gtpitems_createdby'
 
 
     ];

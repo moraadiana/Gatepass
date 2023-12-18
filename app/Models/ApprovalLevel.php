@@ -19,7 +19,6 @@ class ApprovalLevel extends Model
         'mgr_gtpapprovallevels_sequence',
         'mgr_gtpapprovallevels_status',
         'mgr_gtpapprovallevels_createddate',
-        'mgr_gtpapprovallevels_department',
         'mgr_gtpapprovallevels_company'
     ];
 
@@ -30,6 +29,6 @@ class ApprovalLevel extends Model
     }
     public function role(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'mgr_gtpapprovallevels_approver');
+        return $this->belongsTo(Role::class, 'mgr_gtpapprovallevels_approver');
     }
 }

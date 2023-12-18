@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('mgr_gtpapprovallevels_label');
             $table->string('mgr_gtpapprovallevels_sequence');
             $table->boolean('mgr_gtpapprovallevels_status')->default(1);
-            $table->unsignedBigInteger('mgr_gtpapprovallevels_department');
-            $table->foreign('mgr_gtpapprovallevels_department')->references('mgr_gtpdepartments_id')->on('mgr_gtpdepartments');
             $table->unsignedBigInteger('mgr_gtpapprovallevels_company');
             $table->foreign('mgr_gtpapprovallevels_company')->references('mgr_gtpcompanies_id')->on('mgr_gtpcompanies');
             $table->unsignedBigInteger('mgr_gtpapprovallevels_approver');

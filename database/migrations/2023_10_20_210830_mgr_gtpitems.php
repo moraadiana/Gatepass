@@ -19,14 +19,12 @@ return new class extends Migration
             $table->string('mgr_gtpitems_createddate');
             $table->boolean('mgr_gtpgatepass_status')->default(1);
             $table->unsignedBigInteger('mgr_gtpitems_uom');
-    	    $table->foreign('mgr_gtpitems_uom')->references('mgr_gtpuoms_id')->on('mgr_gtpuoms');
+            $table->foreign('mgr_gtpitems_uom')->references('mgr_gtpuoms_id')->on('mgr_gtpuoms');
             $table->unsignedBigInteger('mgr_gtpitems_gatepass');
-            $table->foreign('mgr_gtpitems_gatepass')->references	('mgr_gtpgatepass_id')->on('mgr_gtpgatepass');
-            $table->unsignedBigInteger('mgr_gtpitems_createdby');
-            $table->foreign('mgr_gtpitems_createdby')->references	('mgr_gtpusers_id')->on('mgr_gtpusers');
-            $table->timestamps();            
-        });
+            $table->foreign('mgr_gtpitems_gatepass')->references('mgr_gtpgatepass_id')->on('mgr_gtpgatepass');
 
+            $table->timestamps();
+        });
     }
 
     /**

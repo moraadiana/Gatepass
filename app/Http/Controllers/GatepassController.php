@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\GatepassApproved;
+use App\Mail\GatepassRejected;
 use App\Models\ApprovalLevel;
 use App\Models\Approval;
 use App\Models\Department;
@@ -14,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\submitForApproval;
+use App\Models\User;
 use Inertia\Inertia;
 
 use function PHPSTORM_META\map;
@@ -64,20 +67,20 @@ class GatepassController extends Controller
     {
         $gatepassData = $request->all();
 
-       // dd($gatepassData);
-        Gatepass::create($request->all());
-        //Item::create($request->all());
 
-        // $gatepass = Gatepass::with('user', 'uom', 'company', 'department', 'source_location', 'destination_location');
-        //     Item::create([
-        //         'mgr_gtpitems_gatepass' =>  $gatepass->mgr_gtpgatepass_id,
-        //         'mgr_gtpitems_description' => $request->input('mgr_gtpitems_description'),
-        //         'mgr_gtpitems_code' => $request->input('mgr_gtpitems_code'),
-        //         'mgr_gtpitems_quantity' => $request->input('mgr_gtpitems_quantity'),
-        //         'mgr_gtpitems_uom' => $request->input('mgr_gtpitems_uom'),
-        //         // Add other fields as needed
-        //     ]);
+        $gatepass = Gatepass::create([
+            'mgr_gtpgatepass_name' => $gatepassData['mgr_gtpgatepass_name'],
+            'mgr_gtpgatepass_vehiclereg' => $gatepassData['mgr_gtpgatepass_vehiclereg'],
+            'mgr_gtpgatepass_auxilarydoc' => $gatepassData['mgr_gtpgatepass_auxilarydoc'],
+            'mgr_gtpgatepass_purpose' => $gatepassData['mgr_gtpgatepass_purpose'],
+            'mgr_gtpgatepass_department' => $gatepassData['mgr_gtpgatepass_department'],
+            'mgr_gtpgatepass_destination' => $gatepassData['mgr_gtpgatepass_destination'],
+            'mgr_gtpgatepass_sourcelocation' => $gatepassData['mgr_gtpgatepass_sourcelocation'],
+            'mgr_gtpgatepass_destinationlocation' => $gatepassData['mgr_gtpgatepass_destinationlocation'],
+            'mgr_gtpgatepass_createdby' => auth()->user()->mgr_gtpusers_id,
 
+        ]);
+        $gatepass->items()->createMany($request->input('items'));
 
 
 
@@ -94,8 +97,9 @@ class GatepassController extends Controller
      */
     public function show(string $id)
     {
-        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company')->find($id);
+        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company', 'items')->find($id);
         $currentUser = Auth::user()->load('role');
+
 
         $approval = $gatepass->approvals()->first();
         return Inertia::render(
@@ -150,30 +154,74 @@ class GatepassController extends Controller
     {
         // submit for approval button be available for the user who created the gatepass
 
-        $gatepassDepartment = $gatepass->mgr_gtpgatepass_department;
-        $firstApprovalLevel = ApprovalLevel::where('mgr_gtpapprovallevels_department', $gatepassDepartment)->orderBy('mgr_gtpapprovallevels_sequence', 'asc')->first();
+        $gatepassCompany = $gatepass->department->company;
+        $firstApprovalLevel = ApprovalLevel::where('mgr_gtpapprovallevels_company', $gatepassCompany->mgr_gtpcompanies_id)
+            ->orderBy('mgr_gtpapprovallevels_sequence', 'asc')->first();
+
+        $approverRole = $firstApprovalLevel->role->users
+            ->where('mgr_gtpusers_department', $gatepass->department->mgr_gtpdepartments_id);
 
         //dd($approvallevel);
         // create approval record on submit
-        Approval::create([
-            'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_id,
+        $gatepass->approvals()->create([
             'mgr_gtpapprovals_approveddate' => now(),
-            'mgr_gtpapprovals_status' => 0,
+            'mgr_gtpapprovals_status' => 2,
             'mgr_gtpapprovals_approvallevel' => $firstApprovalLevel->mgr_gtpapprovallevels_id,
-            'mgr_gtpapprovals_gatepass' => $gatepass->mgr_gtpgatepass_id,
-
         ]);
-        //update gatepass status to 1
+        //update gatepass status to pending
         $gatepass->update([
-            'mgr_gtpgatepass_status' => 1
+            'mgr_gtpgatepass_status' => 2
         ]);
 
-
-
-        Mail::to('diana.moraa@grainbulk.com')->send(new submitForApproval);
-
+        foreach ($approverRole as $approver) {
+            Mail::to($approver->mgr_gtpusers_email)->send(new submitForApproval);
+        }
 
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
+    }
+    public function gatepassApproval(Request $request, Gatepass $gatepass)
+    {
+        $previousApproval = $gatepass->approvals()->where('mgr_gtpapprovals_status', 2)->first();
+
+        $previousApproval->update([
+            'mgr_gtpapprovals_status' => $request->input('status'),
+            'mgr_gtpapprovals_approvedby' => auth()->user()->mgr_gtpusers_id,
+            'mgr_gtpapprovals_comment' => $request->input('comment'),
+            'mgr_gtpapprovals_approveddate' => now(),
+        ]);
+
+        if ($request->input('status') == 1) {
+            $nextApprovalLevel = ApprovalLevel::where('mgr_gtpapprovallevels_company', $gatepass->department->company->mgr_gtpcompanies_id)
+                ->where('mgr_gtpapprovallevels_sequence', '>', $previousApproval->approvallevel->mgr_gtpapprovallevels_sequence)
+                ->orderBy('mgr_gtpapprovallevels_sequence', 'asc')
+                ->first();
+
+            if ($nextApprovalLevel) {
+                $gatepass->approvals()->create([
+                    'mgr_gtpapprovals_approveddate' => now(),
+                    'mgr_gtpapprovals_status' => 2,
+                    'mgr_gtpapprovals_approvallevel' => $nextApprovalLevel->mgr_gtpapprovallevels_id,                
+                ]);
+
+                foreach ($nextApprovalLevel->role->users as $approver) {
+                    Mail::to($approver->mgr_gtpusers_email)->send(new submitForApproval);
+                }
+            } else {
+
+                $gatepass->update([
+                    'mgr_gtpgatepass_status' => 1
+                ]);
+
+                //Notify the requestor that the gatepass has been approved
+                Mail::to($gatepass->user->mgr_gtpusers_email)->send(new GatepassApproved);
+            }
+        } else {
+            $gatepass->update([
+                'mgr_gtpgatepass_status' => 0
+            ]);
+            //Notify the requestor that the gatepass has been rejected
+            Mail::to($gatepass->user->mgr_gtpusers_email)->send(new GatepassRejected);
+        }
     }
 
     // show all approved gatepasses

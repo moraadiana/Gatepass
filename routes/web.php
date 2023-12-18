@@ -41,31 +41,31 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('gatepass', GatepassController::class);
+    Route::post('/gatepass/{gatepass}/submit-for-approval', [GatepassController::class, 'submitForApproval'])->name('gatepass.submitForApproval');
+    Route::post('/gatepass/{gatepass}/gatepassApproval', [GatepassController::class, 'gatepassApproval'])->name('gatepass.gatepassApproval');
+
+
+    Route::get('/approval', [ApprovalController::class, 'index'])->name('approval.index');
+
+    //Route::get('/gatepass/approval',[ApprovalController::class, 'show'])->name('approval.show');
+
+    Route::resource('gatepass.approval', ApprovalController::class);
+
+    Route::resource('approvallevel', ApprovalLevelController::class);
+
+    Route::resource('company', CompanyController::class);
+
+    Route::resource('department', DepartmentController::class);
+
+    Route::resource('item', ItemController::class);
+
+    Route::resource('location', LocationController::class);
+
+    Route::resource('uom', UomController::class);
+
+    Route::resource('userrole', UserRoleController::class);
 });
-
-Route::resource('gatepass', GatepassController::class);
-
-Route::get('/approval',[ApprovalController::class, 'index'])->name('approval.index');
-
-//Route::get('/gatepass/approval',[ApprovalController::class, 'show'])->name('approval.show');
-
-Route::resource('gatepass.approval', ApprovalController::class);
-
-Route::resource('approvallevel', ApprovalLevelController::class);
-
-Route::resource('company', CompanyController::class);
-
-Route::resource('department', DepartmentController::class);
-
-Route::resource('item', ItemController::class);
-
-Route::resource('location', LocationController::class);
-
-Route::resource('uom', UomController::class);
-
-Route::resource('userrole', UserRoleController::class);
-
-Route::post('/gatepass/{gatepass}/submit-for-approval', [GatepassController::class, 'submitForApproval'])->name('gatepass.submitForApproval');
 
 
 require __DIR__ . '/auth.php';

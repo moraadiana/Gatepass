@@ -14,15 +14,14 @@ return new class extends Migration
         //
         Schema::create('mgr_gtpapprovals', function (Blueprint $table) {
             $table->id('mgr_gtpapprovals_id');
-            $table->string('mgr_gtpapprovals_approvedby');
+            $table->string('mgr_gtpapprovals_approvedby')->nullable();
             $table->string('mgr_gtpapprovals_approveddate');
             $table->boolean('mgr_gtpapprovals_status')->default(1);
             $table->unsignedBigInteger('mgr_gtpapprovals_approvallevel');
             $table->foreign('mgr_gtpapprovals_approvallevel')->references('mgr_gtpapprovallevels_id')->on('mgr_gtpapprovallevels');
             $table->unsignedBigInteger('mgr_gtpapprovals_gatepass');
             $table->foreign('mgr_gtpapprovals_gatepass')->references('mgr_gtpgatepass_id')->on('mgr_gtpgatepass');
-            $table->unsignedBigInteger('mgr_gtpapprovals_createdby');
-            $table->foreign('mgr_gtpapprovals_createdby')->references('mgr_gtpusers_id')->on('mgr_gtpusers');
+
             $table->timestamps();
         });
     }

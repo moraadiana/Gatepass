@@ -18,9 +18,8 @@ class Role extends Model
         'mgr_gtproles_status',
     ];
 
-    public function users(): HasMany
+    public function users(): BelongsToMany
     {
-        return $this->hasMany(UserRole::class);
+        return $this->belongsToMany(User::class, 'mgr_gtpuserroles', 'mgr_gtpuserroles_role', 'mgr_gtpuserroles_user');
     }
-    
 }
