@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\GatepassApproved;
 use App\Mail\submitForApproval;
 use App\Mail\GatepassRejected;
+use Illuminate\Support\Facades\Auth;
 
 class ApprovalController extends Controller
 {
@@ -21,31 +22,42 @@ class ApprovalController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
 
-        $user = User::with('role')->with('department')->find(auth()->user()->mgr_gtpusers_id);
-        $gatepasses = [];
+     {
+        //get current user
+        $currentUser = Auth::user();
         $approvals = Approval::all();
-        if ($user->role->mgr_gtpuserroles_role == 1) {
-            //show all submitted gatepasses where status is 1
-            $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
-                ->where('mgr_gtpgatepass_status', 1)->get();
-            //$approvals = Approval::all();
 
-        } else if ($user->role->mgr_gtpuserroles_role == 3) {
-            //show all submitted gatepasses where status is 1
-            $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
-                ->where('mgr_gtpgatepass_status', 2)->get();
-            $approvals = Approval::all();
-        }
+        //fing role of current user 
+        $approverRole = $currentUser->roles->first();
+        //find approvallevel
 
+        //dd($approverRole->mgr_gtproles_name);
+     if ($approverRole->mgr_gtproles_name == 'Department Approver')
+     {
+        //get gatepass where status is 2 and gatepass department is same as that of logged in user 
+        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
+            ->where('mgr_gtpgatepass_status', 2)
+            ->where('mgr_gtpgatepass_department', $currentUser->mgr_gtpusers_department)
+            ->get();
+     }
+     else if ($approverRole->mgr_gtproles_name == 'Security Approver')
+     {
+        //get gatepass where status is 2 and gatepass department is same as that of logged in user 
+        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
+            ->where('mgr_gtpgatepass_status', 2)
+            ->get();
+     }
+   
         return Inertia::render(
             'Approval/Index',
             [
-                'gatepasses' => $gatepasses,
+                'gatepasses' => $gatepass,
                 'approvals' => $approvals
             ]
-        );
+            );
+  
+   
     }
 
     /**
@@ -69,8 +81,6 @@ class ApprovalController extends Controller
     public function store(Request $request, Gatepass $gatepass)
 
     {
-        
-
     }
 
 
@@ -81,7 +91,7 @@ class ApprovalController extends Controller
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')->where('mgr_gtpapprovals_id', $approval->id)
             ->where('mgr_gtpapprovals_status', 1)
             ->get();
-        dd($gatepass);
+      //  dd($gatepass);
     }
 
     /**

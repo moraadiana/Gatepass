@@ -29,13 +29,13 @@ class Approval extends Model
     {
         return $this->belongsTo(ApprovalLevel::class, 'mgr_gtpapprovals_approvallevel');
     }
-    public function department(): BelongsTo
-    {
-        return $this->belongsTo(Department::class, 'mgr_gtpapprovals_gatepass');
-    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'mgr_gtpapprovals_createdby');
+    }
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class, 'mgr_gtpapprovals_department');
     }
     //use HasFactory;
 }

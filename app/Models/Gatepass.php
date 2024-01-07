@@ -47,7 +47,7 @@ class Gatepass extends Model
     // belongs to company
     public function company(): BelongsTo
     {
-        return $this->belongsTo(Company::class, 'mgr_gtpgatepass_createdby');
+        return $this->belongsTo(Company::class, 'mgr_gtpgatepass_company');
     }
 
     public function user(): BelongsTo

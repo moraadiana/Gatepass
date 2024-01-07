@@ -31,27 +31,14 @@ export default function Index({ auth, gatepasses, approvals }) {
                             title: "Department",
                             dataIndex: [
                                 "department",
-                                    "mgr_gtpdepartments_name",],
-                            hideInSearch: true,
-                        },
-                        {
-                            title: "Item(s) Description",
-                            dataIndex: "mgr_gtpgatepass_description",
-                            hideInSearch: true,
-                        },
-                        {
-                            title: "Quantity",
-                            dataIndex: [ "mgr_gtpgatepass_quantity"],
-                        },
-                        {
-                            title: "UOM",
-                            dataIndex: ["mgr_gtpgatepass_uom"],
+                                "mgr_gtpdepartments_name",
+                            ],
                         },
                         {
                             title: "Auxilary Document",
-                            dataIndex: [
+                            dataIndex: 
                                 "mgr_gtpgatepass_auxilarydoc",
-                            ],
+                            
                         },
                         {
                             title: "Purpose",

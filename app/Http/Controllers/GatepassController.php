@@ -98,7 +98,7 @@ class GatepassController extends Controller
     public function show(string $id)
     {
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company', 'items')->find($id);
-        $currentUser = Auth::user()->load('role');
+        $currentUser = Auth::user()->load('roles');
 
 
         $approval = $gatepass->approvals()->first();
@@ -152,8 +152,7 @@ class GatepassController extends Controller
     public function submitForApproval(Gatepass $gatepass)
 
     {
-        // submit for approval button be available for the user who created the gatepass
-
+       
         $gatepassCompany = $gatepass->department->company;
         $firstApprovalLevel = ApprovalLevel::where('mgr_gtpapprovallevels_company', $gatepassCompany->mgr_gtpcompanies_id)
             ->orderBy('mgr_gtpapprovallevels_sequence', 'asc')->first();
@@ -161,7 +160,6 @@ class GatepassController extends Controller
         $approverRole = $firstApprovalLevel->role->users
             ->where('mgr_gtpusers_department', $gatepass->department->mgr_gtpdepartments_id);
 
-        //dd($approvallevel);
         // create approval record on submit
         $gatepass->approvals()->create([
             'mgr_gtpapprovals_approveddate' => now(),
@@ -173,9 +171,9 @@ class GatepassController extends Controller
             'mgr_gtpgatepass_status' => 2
         ]);
 
-        foreach ($approverRole as $approver) {
-            Mail::to($approver->mgr_gtpusers_email)->send(new submitForApproval);
-        }
+        // foreach ($approverRole as $approver) {
+        //     Mail::to($approver->mgr_gtpusers_email)->send(new submitForApproval);
+        // }
 
         return redirect()->route('gatepass.index')->with('success', 'Gatepass submitted for approval!');
     }
@@ -203,9 +201,9 @@ class GatepassController extends Controller
                     'mgr_gtpapprovals_approvallevel' => $nextApprovalLevel->mgr_gtpapprovallevels_id,                
                 ]);
 
-                foreach ($nextApprovalLevel->role->users as $approver) {
-                    Mail::to($approver->mgr_gtpusers_email)->send(new submitForApproval);
-                }
+                // foreach ($nextApprovalLevel->role->users as $approver) {
+                //     Mail::to($approver->mgr_gtpusers_email)->send(new submitForApproval);
+                // }
             } else {
 
                 $gatepass->update([
@@ -213,14 +211,14 @@ class GatepassController extends Controller
                 ]);
 
                 //Notify the requestor that the gatepass has been approved
-                Mail::to($gatepass->user->mgr_gtpusers_email)->send(new GatepassApproved);
+               // Mail::to($gatepass->user->mgr_gtpusers_email)->send(new GatepassApproved);
             }
         } else {
             $gatepass->update([
                 'mgr_gtpgatepass_status' => 0
             ]);
             //Notify the requestor that the gatepass has been rejected
-            Mail::to($gatepass->user->mgr_gtpusers_email)->send(new GatepassRejected);
+            //Mail::to($gatepass->user->mgr_gtpusers_email)->send(new GatepassRejected);
         }
     }
 

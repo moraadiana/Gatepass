@@ -31,5 +31,11 @@ class Department extends Model
     {
         return $this->belongsTo(Company::class, 'mgr_gtpdepartments_company');
     }
+    
+    public function approvals():Hasmany
+    {
+        return $this->hasMany(Approval::class,'mgr_gtpapprovals_department');
+    }
+   
    
 }
