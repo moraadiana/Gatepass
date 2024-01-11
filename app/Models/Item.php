@@ -33,4 +33,9 @@ class Item extends Model
     {
         return $this->belongsTo(User::class, 'mgr_gtpitems_createdby');
     }
+    // has uom 
+    public function uom(): BelongsTo
+    {
+        return $this->belongsTo(Uom::class, 'mgr_gtpitems_uom');
+    }
 }

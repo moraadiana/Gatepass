@@ -7,6 +7,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\GatepassController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\PrintController;
 use App\Http\Controllers\UomController;
 use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\ProfileController;
@@ -46,11 +47,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('gatepass', GatepassController::class);
     Route::post('/gatepass/{gatepass}/submit-for-approval', [GatepassController::class, 'submitForApproval'])->name('gatepass.submitForApproval');
     Route::post('/gatepass/{gatepass}/gatepassApproval', [GatepassController::class, 'gatepassApproval'])->name('gatepass.gatepassApproval');
+    //create route for  printGatepass function
+    Route::get('/gatepass/{gatepass}/print', [GatepassController::class, 'printGatepass'])->name('gatepass.print');
 
 
     Route::get('/approval', [ApprovalController::class, 'index'])->name('approval.index');
 
     //Route::get('/gatepass/approval',[ApprovalController::class, 'show'])->name('approval.show');
+
+    //creates routes in print controller  public function prnpriview()
 
     Route::resource('gatepass.approval', ApprovalController::class);
 

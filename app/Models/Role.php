@@ -22,4 +22,5 @@ class Role extends Model
     {
         return $this->belongsToMany(User::class, 'mgr_gtpuserroles', 'mgr_gtpuserroles_role', 'mgr_gtpuserroles_user');
     }
+    
 }

@@ -15,7 +15,7 @@ class ApprovalLevel extends Model
 
     protected $fillable = [
         'mgr_gtpapprovallevels_label',
-        'mgr_gtpapprovallevels_userrole',
+        'mgr_gtpapprovallevels_approver',
         'mgr_gtpapprovallevels_sequence',
         'mgr_gtpapprovallevels_status',
         'mgr_gtpapprovallevels_createddate',

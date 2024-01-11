@@ -33,7 +33,7 @@ class Gatepass extends Model
     }
     public function items(): Hasmany
     {
-        return $this->hasMany(item::class, 'mgr_gtpitems_gatepass');
+        return $this->hasMany(Item::class, 'mgr_gtpitems_gatepass');
     }
     //belongs to uom
     public function uom(): BelongsTo

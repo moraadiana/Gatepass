@@ -55,7 +55,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     placeholder="Company"
                                     rules={[{ required: true }]}
                                 /> */}
-                                <ProFormSelect
+                                {/* <ProFormSelect
                                     width="sm"
                                     name="mgr_gtpgatepass_department"
                                     label="Department"
@@ -67,7 +67,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                             value: department.mgr_gtpdepartments_id,
                                         };
                                     })}
-                                />
+                                /> */}
                                 <ProFormSelect
                                     width="sm"
                                     name="mgr_gtpgatepass_sourcelocation"

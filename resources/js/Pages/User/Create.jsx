@@ -77,7 +77,7 @@ export default function Create({ auth, departments,roles }) {
                                     width="sm"
                                     fieldProps={{
                                         mode: "multiple",
-                                        labelInValue: true,
+                                        //labelInValue: true,
                                         options: roles.map((role) => {
                                             return {
                                                 label: role.mgr_gtproles_name,

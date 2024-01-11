@@ -27,27 +27,16 @@ class ApprovalController extends Controller
         //get current user
         $currentUser = Auth::user();
         $approvals = Approval::all();
-
-        //fing role of current user 
+        //find role of current user 
         $approverRole = $currentUser->roles->first();
-        //find approvallevel
-
-        //dd($approverRole->mgr_gtproles_name);
-     if ($approverRole->mgr_gtproles_name == 'Department Approver')
-     {
+       
         //get gatepass where status is 2 and gatepass department is same as that of logged in user 
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
-            ->where('mgr_gtpgatepass_status', 2)
-            ->where('mgr_gtpgatepass_department', $currentUser->mgr_gtpusers_department)
+            ->where('mgr_gtpgatepass_status', 2) 
+            ->orderBy('created_at', 'desc')
+            ->take(10)
             ->get();
-     }
-     else if ($approverRole->mgr_gtproles_name == 'Security Approver')
-     {
-        //get gatepass where status is 2 and gatepass department is same as that of logged in user 
-        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
-            ->where('mgr_gtpgatepass_status', 2)
-            ->get();
-     }
+    
    
         return Inertia::render(
             'Approval/Index',
@@ -57,7 +46,6 @@ class ApprovalController extends Controller
             ]
             );
   
-   
     }
 
     /**

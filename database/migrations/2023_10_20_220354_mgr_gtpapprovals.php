@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('mgr_gtpapprovals', function (Blueprint $table) {
             $table->id('mgr_gtpapprovals_id');
             $table->string('mgr_gtpapprovals_approvedby')->nullable();
-            $table->string('mgr_gtpapprovals_approveddate');
+            $table->string('mgr_gtpapprovals_comment')->nullable();
             $table->boolean('mgr_gtpapprovals_status')->default(1);
             $table->unsignedBigInteger('mgr_gtpapprovals_approvallevel');
             $table->foreign('mgr_gtpapprovals_approvallevel')->references('mgr_gtpapprovallevels_id')->on('mgr_gtpapprovallevels');

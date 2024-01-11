@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -49,7 +50,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //store new user in database
-        User::create($request->all());
+        //dd($request->mgr_gtpuserroles_role);
+        $user = User::create($request->all());
+
+
+        $user->roles()->attach($request->mgr_gtpuserroles_role);
+        
+
         return redirect()->route('user.index')
             ->with('success', 'User created successfully!');
     }
@@ -73,6 +80,7 @@ class UserController extends Controller
             [
                 'user' => $user->load('roles', 'department'),
                 'roles' => Role::all(),
+                'userroles' => UserRole::all(),
                 'departments' => Department::all()
 
             ]
@@ -82,10 +90,13 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user, UserRole $userrole)
     {
         //update user in database
         $user->update($request->all());
+
+        //update inputted roles for user in userroles table 
+        $userrole->update($request->all());
 
         // check if password is dirty
         if ($user->isDirty('password')) {

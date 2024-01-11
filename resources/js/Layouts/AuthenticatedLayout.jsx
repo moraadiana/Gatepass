@@ -73,7 +73,7 @@ export default function Authenticated({ user, header, children , gatepass}) {
                     children: [
                         {
                             path: route("gatepass.index"),
-                            name: "All Gatepass",
+                            name: "My Gatepasses",
                         },
                         {
                             path: route("gatepass.create"),
@@ -92,11 +92,7 @@ export default function Authenticated({ user, header, children , gatepass}) {
                             path: route("approval.index"),
                             name: "Gatepass Approval",
                         },
-                        // {
-                        //     path: route("gatepass.approval.show"),
-                        //     name: "Approved Gatepass",
-                        // }
-                     
+                    
                     ],
                 },
                 {

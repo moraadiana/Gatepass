@@ -20,6 +20,10 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "@ant-design/pro-components": "^2.6.31"
+        "@ant-design/pro-components": "^2.6.31",
+        "@fortawesome/free-solid-svg-icons": "^6.5.1",
+        "@fortawesome/react-fontawesome": "^0.2.0",
+        "html2canvas": "^1.4.1",
+        "jspdf": "^2.5.1"
     }
 }

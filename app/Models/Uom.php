@@ -29,4 +29,9 @@ class Uom extends Model
     {
         return $this->belongsTo(User::class, 'mgr_gtpuoms_createdby');
     }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(Item::class, 'mgr_gtpuoms_id');
+    }
 }

@@ -101,6 +101,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Department::class, 'mgr_gtpusers_department');
     }
+    public function userroles(): HasMany
+    {
+        return $this->hasMany(UserRole::class, 'mgr_gtpuserroles_user');
+    }
+ 
 
     
 }

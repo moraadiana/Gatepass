@@ -14,10 +14,10 @@ class RoleController extends Controller
     public function index()
     {
         //
-        $role = Role::all();
+        
 
         return Inertia::render('Role/Index', [
-            'roles' => $role
+            'roles' => Role::all()
         ]);
     }
 
@@ -27,8 +27,11 @@ class RoleController extends Controller
     public function create()
     {
         //create new role
-        return Inertia::render('Role/Create');
-        
+        return Inertia::render('Role/Create', [
+            'roles' => Role::all()
+        ]);
+
+       
     }
 
     /**
@@ -37,6 +40,11 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //
+        Role::create($request->all());
+
+        return redirect()->route('role.index')
+            ->with('success', 'Role created successfully!');
+
     }
 
     /**
@@ -50,17 +58,27 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role)
     {
-        //
+        return Inertia::render('Role/Edit', [
+
+         
+            'roles' => Role::all()
+
+        ]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Role $role)
     {
         //
+        $role->update($request->all());
+
+        return redirect()->route('role.index')
+            ->with('success', 'Role updated successfully!');
     }
 
     /**

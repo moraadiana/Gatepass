@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('mgr_gtpgatepass_auxilarydoc');
             $table->string('mgr_gtpgatepass_destination');
             $table->string('mgr_gtpgatepass_purpose');
-            $table->boolean('mgr_gtpgatepass_status')->default(2);
+            $table->boolean('mgr_gtpgatepass_status')->default(3);
             $table->unsignedBigInteger('mgr_gtpgatepass_department');
             $table->foreign('mgr_gtpgatepass_department')->references('mgr_gtpdepartments_id')->on('mgr_gtpdepartments');
             $table->unsignedBigInteger('mgr_gtpgatepass_sourcelocation');

@@ -54,7 +54,17 @@ export default function Index({ auth, roles }) {
                                         
                                     }
                                     
-                                }
+                                },
+                                //linkn to edit role
+                                {
+                                    title: "Edit",
+                                    dataIndex: "mgr_gtproles_id",
+                                    render: (_, record) => (
+                                        <Link href={route("role.edit", record.mgr_gtproles_id)}>
+                                            Edit
+                                        </Link>
+                                    )
+                                },
                             ]}
                         />
                     </ProCard>

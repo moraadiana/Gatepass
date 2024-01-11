@@ -12,7 +12,7 @@ import {
 import { Head, router } from "@inertiajs/react";
 
 export default function Create({ auth, departments, roles, user }) {
-    console.log(user);
+    console.log(user.roles.mgr_gtproles_id);
     return (
         <>
             <Head title="Edit User" />
@@ -73,7 +73,7 @@ export default function Create({ auth, departments, roles, user }) {
                                     placeholder="Email"
                                     rules={[{ required: true }]}
                                 />
-                                <ProFormSelect
+                                {/* <ProFormSelect
                                     width="sm"
                                     fieldProps={{
                                         mode: "multiple",
@@ -89,8 +89,13 @@ export default function Create({ auth, departments, roles, user }) {
                                     label="Role"
                                     placeholder="Role"
                                     rules={[{ required: true }]}
-                                    initialValue={user.roles}
-                                />
+                                    initialValue={user.roles.map((role) => {
+                                        return {
+                                            value: role.mgr_gtproles_id,
+                                        };
+                                    })
+                                    }
+                                /> */}
 
                                 <ProFormText.Password
                                     width="sm"

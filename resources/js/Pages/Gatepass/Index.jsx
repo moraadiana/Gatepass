@@ -17,7 +17,7 @@ export default function Index({ auth, gatepasses }) {
                 >
                     <ProTable
                         headerTitle="Gatepass"
-                        dataSource={gatepasses}
+                        dataSource={gatepasses.data}
                         columns={[
                             {
                                 title: "Name",
@@ -76,7 +76,7 @@ export default function Index({ auth, gatepasses }) {
                                 render: (text) => {
                                     if (text === 0) {
                                         return (
-                                            <Tag color="green">Rejected</Tag>
+                                            <Tag color="red">Rejected</Tag>
                                         );
                                     } else if (text === 1) {
                                         return (
@@ -84,6 +84,9 @@ export default function Index({ auth, gatepasses }) {
                                         );
                                     } else if (text === 2) {
                                         return <Tag color="green">Pending</Tag>;
+                                    }
+                                    else {
+                                        return <Tag color="blue">Draft</Tag>;
                                     }
                                 },
                             },

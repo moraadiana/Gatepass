@@ -1,5 +1,7 @@
 <?php
 
+
+use Barryvdh\DomPDF\Facade\Pdf ;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -155,7 +157,9 @@ return [
     |
     */
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
+    'providers' =>
+     ServiceProvider::defaultProviders()->merge(
+        [
         /*
          * Package Service Providers...
          */
@@ -168,7 +172,20 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        
+
+        
+
     ])->toArray(),
+    // [
+    // App\Providers\AppServiceProvider::class,
+    // App\Providers\AuthServiceProvider::class,
+    // // App\Providers\BroadcastServiceProvider::class,
+    // App\Providers\EventServiceProvider::class,
+    // App\Providers\RouteServiceProvider::class,
+    // Barryvdh\DomPDF\ServiceProvider::class,
+    // ],
 
     /*
     |--------------------------------------------------------------------------
@@ -181,8 +198,17 @@ return [
     |
     */
 
-    'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
-    ])->toArray(),
+    // 'aliases' => 
+    // Facade::defaultAliases()->merge([
+    //     // 'Example' => App\Facades\Example::class,
+    //     'PDF' => Barryvdh\DomPDF\Facade::class,
+    // ])->toArray(),
+    'aliases' => [
+        // Other aliases...
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+    ],
+    
 
+
+   
 ];

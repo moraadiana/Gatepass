@@ -31,7 +31,7 @@ class Approval extends Model
     }
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'mgr_gtpapprovals_createdby');
+        return $this->belongsTo(User::class, 'mgr_gtpapprovals_approvedby');
     }
     public function department(): BelongsTo
     {

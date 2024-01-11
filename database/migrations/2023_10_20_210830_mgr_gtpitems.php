@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('mgr_gtpitems_description');
             $table->string('mgr_gtpitems_code');
             $table->string('mgr_gtpitems_quantity');
-            $table->string('mgr_gtpitems_createddate');
             $table->boolean('mgr_gtpgatepass_status')->default(1);
             $table->unsignedBigInteger('mgr_gtpitems_uom');
             $table->foreign('mgr_gtpitems_uom')->references('mgr_gtpuoms_id')->on('mgr_gtpuoms');
