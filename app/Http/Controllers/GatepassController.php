@@ -233,9 +233,10 @@ class GatepassController extends Controller
     //create function to print a gatepass when print button is clicked
     public function printGatepass(Gatepass $gatepass)
     {
-        //return view('gatepass.print', compact('gatepass'));
-
+    
         //return gatepass.print in pdf format 
+      //  $gatepass->load('user', 'uom', 'department', 'source_location', 'destination_location', 'company', 'items', 'approvals.approvalLevel.role', 'approvals.user');
+
 
         $pdf = PDF::loadView('gatepass.print', compact('gatepass'));
         return $pdf->stream('gatepass.pdf');

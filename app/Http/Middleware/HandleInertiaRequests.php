@@ -37,7 +37,7 @@ class HandleInertiaRequests extends Middleware
                 'error' => fn () => $request->session()->get('error'),
             ],
             'auth' => [
-                'user' => $request->user(),
+                'user' => fn () => $request->user() ? $request->user()->load('roles') : null
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

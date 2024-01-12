@@ -8,7 +8,13 @@ import {
     FileDoneOutlined,
 } from "@ant-design/icons";
 import { notification } from "antd";
-export default function Authenticated({ user, header, children , gatepass}) {
+export default function Authenticated({
+    user,
+    header,
+    children,
+    gatepass,
+    roles,
+}) {
     const { flash } = usePage().props;
     useEffect(() => {
         if (flash.success) {
@@ -27,6 +33,7 @@ export default function Authenticated({ user, header, children , gatepass}) {
             });
         }
     }, [flash]);
+
     return (
         <ProLayout
             layout="mix"
@@ -79,11 +86,15 @@ export default function Authenticated({ user, header, children , gatepass}) {
                             path: route("gatepass.create"),
                             name: "Create Gatepass",
                         },
-                       
-   
+                        // {
+                        //     path: route("gatepass.myApprovalHistory"),
+                        //     name: "My Approval History",
+                        // }
+                    
                     ],
                 },
-               
+                
+
                 {
                     path: "/approvals",
                     name: "Approval",
@@ -92,8 +103,14 @@ export default function Authenticated({ user, header, children , gatepass}) {
                             path: route("approval.index"),
                             name: "Gatepass Approval",
                         },
-                    
+                        // {
+                        //     path: route("gatepass.myApprovalHistory"),
+                        //     name: "My Approval History",
+                        // }
                     ],
+                    hideInMenu: user.roles.some(
+                        (role) => role.mgr_gtproles_id == 3
+                    ),
                 },
                 {
                     path: "/companies",
@@ -107,8 +124,10 @@ export default function Authenticated({ user, header, children , gatepass}) {
                         //     path: route("company.create"),
                         //     name: "Create Company",
                         // }
-
                     ],
+                    hideInMenu: !user.roles.some(
+                        (role) => role.mgr_gtproles_id == 4
+                    ),
                 },
                 {
                     path: "/departments",
@@ -118,7 +137,10 @@ export default function Authenticated({ user, header, children , gatepass}) {
                             path: route("department.index"),
                             name: "All Departments",
                         },
-                    ]
+                    ],
+                    hideInMenu: !user.roles.some(
+                        (role) => role.mgr_gtproles_id == 4
+                    ),
                 },
                 {
                     path: "/users",
@@ -131,9 +153,11 @@ export default function Authenticated({ user, header, children , gatepass}) {
                         {
                             path: route("user.create"),
                             name: "Create User",
-                        }
-
-                    ]
+                        },
+                    ],
+                    hideInMenu: !user.roles.some(
+                        (role) => role.mgr_gtproles_id == 4
+                    ),
                 },
                 {
                     path: "/roles",
@@ -143,15 +167,17 @@ export default function Authenticated({ user, header, children , gatepass}) {
                             path: route("role.index"),
                             name: "All Roles",
                         },
-                        
+
                         {
                             path: route("role.create"),
                             name: "Create Role",
-                        }
-
-                    ]
-                }
-                
+                        },
+                    ],
+                    //show only for users with role id 4
+                    hideInMenu: !user.roles.some(
+                        (role) => role.mgr_gtproles_id == 4
+                    ),
+                },
             ]}
             menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}
         >

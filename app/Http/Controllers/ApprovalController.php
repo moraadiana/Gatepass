@@ -82,6 +82,22 @@ class ApprovalController extends Controller
       //  dd($gatepass);
     }
 
+    public function approvalhistory()
+    {
+        $myApprovals = Approval::where('mgr_gtpapprovals_approvedby', auth()->user()->mgr_gtpusers_id)
+        ->with('user', 'gatepass')
+        ->get();
+      dd($myApprovals);
+       // return route to approval history page 
+       return Inertia::render(
+        'gatepass/my-approval-history',
+        [
+            'approvals' => $myApprovals
+        ]
+        );
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

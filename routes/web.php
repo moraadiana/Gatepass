@@ -44,12 +44,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/gatepass/my-approval-history', [ApprovalController::class, 'approvalHistory'])->name('gatepass.myApprovalHistory');
     Route::resource('gatepass', GatepassController::class);
     Route::post('/gatepass/{gatepass}/submit-for-approval', [GatepassController::class, 'submitForApproval'])->name('gatepass.submitForApproval');
     Route::post('/gatepass/{gatepass}/gatepassApproval', [GatepassController::class, 'gatepassApproval'])->name('gatepass.gatepassApproval');
     //create route for  printGatepass function
     Route::get('/gatepass/{gatepass}/print', [GatepassController::class, 'printGatepass'])->name('gatepass.print');
-
 
     Route::get('/approval', [ApprovalController::class, 'index'])->name('approval.index');
 
