@@ -4,23 +4,27 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
 import { Head, Link } from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
+//import auth
+//import { auth } from "@/Layouts/AuthenticatedLayout";
 
-export default function ApprovalHistory({approvals}) {
-    console.log(approvals);
+export default function ApprovalHistory({ auth, approvals,gatepass}) {
+    console.log('gatepass',gatepass);
+    //console.log('gatepass',approvals.gatepass);
 
     return (
       <>
-            <Head title="Gatepass History" />
+        <Head title="my approval history" />
             <Authenticated user={auth.user}>
                 <PageContainer
                     header={{
-                        title: "Gatepass History",
+                        title: "Gatepass approval history",
                         onBack: () => window.history.back(),
                     }}
                 >
-                    <ProTable
+                   
+                   <ProTable
                         headerTitle="Gatepass"
-                        dataSource={approvals}
+                        dataSource={gatepass}
                         columns={[
                             {
                                 title: "Name",
@@ -36,8 +40,9 @@ export default function ApprovalHistory({approvals}) {
                                 dataIndex: [
                                     "department",
                                     "mgr_gtpdepartments_name",
-                                ],
-                                hideInSearch: true,
+                                
+                                ]
+                                
                             },
 
                             {
@@ -93,40 +98,14 @@ export default function ApprovalHistory({approvals}) {
                                     }
                                 },
                             },
-                            {
-                                title: "Actions",
-                                render: (_, record) => (
-                                    <Link
-                                        href={route(
-                                            "gatepass.show",
-                                            record.mgr_gtpgatepass_id
-                                        )}
-                                    >
-                                        View Details
-                                    </Link>
-                                ),
-                            },
-                            {
-                                title: "Actions",
-                                render: (_, record) => (
-                                    <Link
-                                        href={route(
-                                            "gatepass.edit",
-                                            record.mgr_gtpgatepass_id
-                                        )}
-                                    >
-                                        Edit
-                                    </Link>
-                                ),
-                            },
-                            //create button to submit a gatepass request
+                    
                         ]}
-                        rowKey="mgr_gtpgatepass_id"
+                        rowKey={"mgr_gtpgatepass_id"}
                     />
-                </PageContainer>
-            </Authenticated>
-                       
-</>
+
+        </PageContainer>
+        </Authenticated>
+      </>
     );
 
 }

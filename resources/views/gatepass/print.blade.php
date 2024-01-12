@@ -20,28 +20,28 @@ th, td {
 h1 {
     font-family: "Arial Black", Gadget, sans-serif;
     font-size: 15px;
-    //margin start from same point as table
+   
     margin: 0 auto;
    
 }
+
 img {
+    
     max-width: 30%;
     height: auto;
-    padding: 30px;
-    margin: 0 auto; /* Correct centering for block-level elements */
-    display: block;
-
+    border-collapse: collapse
+    margin: 0 auto;
 }
 
 </style>';
 
-
 echo '<div class="gatepass-print">';
-echo '<img src="C:\laragon\www\gatepass\logo\bulkstream-logo-small.png"  >';
+echo '<img src="C:\laragon\www\gatepass\logo\bulkstream-logo-small.png"  alt="Bulkstream Logo"   >';
 //br 
 echo '<br>';
+echo '<br>';
 // return gatepass details in a table
-echo '<table >'; // Set width to 100% to occupy the entire width of the screen
+echo '<table class="gatepassdetails" >'; // Set width to 100% to occupy the entire width of the screen
 echo '<tr>';
 echo '<th>Gatepass Number</th>'; // Align to the right
 echo '<td>' . $gatepass->mgr_gtpgatepass_id . '</td>'; // Align to the right
@@ -128,19 +128,25 @@ echo '<td>' . $gatepass->created_at . '</td>';
 
 echo '</tr>';
 
-echo '<br>';
+foreach ($gatepass->approvals as $approval) {
+    echo '<tr>';
+    echo '<th>' . $approval->approvallevel->role->mgr_gtproles_name .  '</th>';
+    echo '<td>' . $approval->user->mgr_gtpusers_fname . ' ' . $approval->user->mgr_gtpusers_lname . '</td>';
+    echo '<th> Approved on </th>';
+    echo '<td>' . $approval->created_at. '</td>';
+    
+    echo '</tr>';
 
-echo '<tr>';
-echo '<th>Approved by</th>';
-//echo '<td>' . $gatepass->approvals->user->mgr_gtpusers_fname . ' ' . $gatepass->approvals->user->mgr_gtpusers_lname . '</td>';
+    //return approval date and time for the above approvals
+    
 
-echo '<th>Approved on</th>';
-//echo '<td>' . $gatepass->approvals->mgr_gtpapprovals_approveddate . '</td>';
-
-echo '</tr>';
+}
 
 
 
-echo '<th> Security Office</th>';
+echo '</table>';
+//close div 
+echo '</div>';
+?>
 
-echo '<th>Approved on</th>';
+

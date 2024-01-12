@@ -8,6 +8,7 @@ import {
     FileDoneOutlined,
 } from "@ant-design/icons";
 import { notification } from "antd";
+import logo from 'C:/laragon/www/gatepass/logo/bulkstream-logo-small.png';
 export default function Authenticated({
     user,
     header,
@@ -37,11 +38,20 @@ export default function Authenticated({
     return (
         <ProLayout
             layout="mix"
-            title="GBHL Gatepass Portal"
+            title=" Gatepass Portal"
+            //add logo here and  resize it
+            logo={
+                <img
+                    src={logo}
+                    alt="logo"
+
+                />}
+           
             avatarProps={{
                 src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
                 size: "small",
                 title: user?.mgr_gtpusers_fname,
+
                 render: (props, dom) => {
                     return (
                         <Dropdown
@@ -86,10 +96,10 @@ export default function Authenticated({
                             path: route("gatepass.create"),
                             name: "Create Gatepass",
                         },
-                        // {
-                        //     path: route("gatepass.myApprovalHistory"),
-                        //     name: "My Approval History",
-                        // }
+                        {
+                            path: route("gatepass.myApprovalHistory"),
+                            name: "My Approval History",
+                        }
                     
                     ],
                 },
