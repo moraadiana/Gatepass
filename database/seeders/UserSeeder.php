@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'mgr_gtpusers_sname' => 'M',
             'mgr_gtpusers_empno' => 'G1109',
             'mgr_gtpusers_department' => 2,
-            'mgr_gtpusers_email' => 'diana.moraa@grainbulk.com',
+            'mgr_gtpusers_email' => 'diana.moraa@bulkstream.co',
             'mgr_gtpusers_password' => bcrypt('password'),
 
         ]);
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
             'mgr_gtpusers_sname' => 'r',
             'mgr_gtpusers_empno' => 'G1119',
             'mgr_gtpusers_department' => 2,
-            'mgr_gtpusers_email' => 'gitau.manasse@grainbulk.com',
+            'mgr_gtpusers_email' => 'gitau.manasse@bulkstream.co',
             'mgr_gtpusers_password' => bcrypt('password'),
         ]);
 
@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
             'mgr_gtpusers_sname' => 'r',
             'mgr_gtpusers_empno' => 'G1120',
             'mgr_gtpusers_department' => 2,
-            'mgr_gtpusers_email' => 'amina.birgen@grainbulk.com',
+            'mgr_gtpusers_email' => 'amina.birgen@bulkstream.co',
             'mgr_gtpusers_password' => bcrypt('password'),
         ]);
     }

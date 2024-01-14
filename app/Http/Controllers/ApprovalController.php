@@ -90,6 +90,7 @@ class ApprovalController extends Controller
         ->take(10)
         ->get();
         $gatepassData = $myApprovals->pluck('gatepass');
+
       //dd($myApprovals);
        // return route to approval history page 
        return Inertia::render(

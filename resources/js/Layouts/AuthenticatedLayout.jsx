@@ -89,17 +89,22 @@ export default function Authenticated({
                     icon: <FileDoneOutlined />,
                     children: [
                         {
-                            path: route("gatepass.index"),
-                            name: "My Gatepasses",
-                        },
-                        {
                             path: route("gatepass.create"),
                             name: "Create Gatepass",
                         },
                         {
+                            path: route("gatepass.index"),
+                            name: "My Gatepasses",
+                        },
+                       
+                        {
                             path: route("gatepass.myApprovalHistory"),
                             name: "My Approval History",
+                            hideInMenu: user.roles.some(
+                                (role) => role.mgr_gtproles_id == 3
+                            ),
                         }
+
                     
                     ],
                 },
@@ -113,10 +118,7 @@ export default function Authenticated({
                             path: route("approval.index"),
                             name: "Gatepass Approval",
                         },
-                        // {
-                        //     path: route("gatepass.myApprovalHistory"),
-                        //     name: "My Approval History",
-                        // }
+                      
                     ],
                     hideInMenu: user.roles.some(
                         (role) => role.mgr_gtproles_id == 3

@@ -7,7 +7,7 @@ import { Space, Button, Tag } from "antd";
 //import auth
 //import { auth } from "@/Layouts/AuthenticatedLayout";
 
-export default function ApprovalHistory({ auth, approvals,gatepass}) {
+export default function ApprovalHistory({ auth, approvals,gatepass,location }) {
     console.log('gatepass',gatepass);
     //console.log('gatepass',approvals.gatepass);
 
@@ -54,22 +54,22 @@ export default function ApprovalHistory({ auth, approvals,gatepass}) {
                                 dataIndex: "mgr_gtpgatepass_purpose",
                                 hideInSearch: true,
                             },
-                            {
-                                title: "Source Location",
-                                dataIndex: [
-                                    "source_location",
-                                    "mgr_gtplocations_name",
-                                ],
-                                hideInSearch: true,
-                            },
-                            {
-                                title: "Destination Location",
-                                dataIndex: [
-                                    "destination_location",
-                                    "mgr_gtplocations_name",
-                                ],
-                                hideInSearch: true,
-                            },
+                             {
+                            title: "Source Location",
+                            dataIndex: [
+                                "source_location",
+                                "mgr_gtplocations_name",
+                                
+                            ]
+                        },
+                        {
+                            title: "Destination Location",
+                            dataIndex: [
+                            
+                                "destination_location",
+                                "mgr_gtplocations_name",
+                            ],
+                        },
 
                             {
                                 title: "Specific Destination",

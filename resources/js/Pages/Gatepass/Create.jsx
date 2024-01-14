@@ -40,6 +40,8 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     label="Name"
                                     placeholder="Name"
                                     rules={[{ required: true }]}
+                                    // auto toUppercase
+                                  
                                 />
                                 <ProFormText
                                     width="sm"
@@ -145,7 +147,20 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         name="mgr_gtpitems_quantity"
                                         label="Quantity"
                                         placeholder="Quantity"
-                                        rules={[{ required: true }]}
+                                        rules={[{ required: true },
+                                        {
+                                            pattern: /^[0-9]+$/,
+                                            message: 'Quantity must be a number',
+
+                                        }]
+                                    }
+                                    fieldProps={
+                                        {
+                                            type: 'number',
+                                        }
+                                    }
+                                        //should be number
+                                        type="number"
                                     />
                                     <ProFormSelect
                                         width="xs"

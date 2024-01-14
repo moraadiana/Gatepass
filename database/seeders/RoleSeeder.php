@@ -15,12 +15,22 @@ class RoleSeeder extends Seeder
     {
         //
         Role::create([
-            'mgr_gtproles_name' => 'GBHL-ICT Approver',
+            'mgr_gtproles_name' => 'Department Approver',
             'mgr_gtproles_status' => 1
         ]);
         Role::create([
-            'mgr_gtproles_name' => 'GBHL-HSE Approver',
+            'mgr_gtproles_name' => 'Security Approver',
+            'mgr_gtproles_status' => 1
+        ]);
+        Role::create([
+            'mgr_gtproles_name' => 'Requester',
+            'mgr_gtproles_status' => 1
+        ]);
+
+        Role::create([
+            'mgr_gtproles_name' => 'Administrator',
             'mgr_gtproles_status' => 1
         ]);
     }
 }
+
