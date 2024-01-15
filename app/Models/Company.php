@@ -28,4 +28,8 @@ class Company extends Model
     {
         return $this->hasMany(Location::class, 'mgr_gtplocations_company');
     }
+    public function approvalLevels(): HasMany
+    {
+        return $this->hasMany(ApprovalLevel::class, 'mgr_gtpapprovallevels_company');
+    }
 }

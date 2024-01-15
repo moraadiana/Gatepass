@@ -6,24 +6,23 @@ import { PageContainer,
     ProDescriptions,
     ModalForm,
     ProFormText,
-    ProFormTextArea,
-    ProFormSelect, 
+    ProFormTextArea, 
 } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
 
 
 import { Space, Button } from 'antd';
 
-export default function Create({ auth, departments, companies}) {
-
+export default function Create({ auth, companies }) {
+console.log(companies);
     return (
         <>
- <Head title="Create Department" />
+ <Head title="Edit Company" />
 
 <Authenticated user={auth.user}>
     <PageContainer
         header={{
-            title: "Create Department",
+            title: "Edit Company  ",
             onBack: () => window.history.back(),
 
         }}
@@ -32,11 +31,11 @@ export default function Create({ auth, departments, companies}) {
             <ProForm
             
                 onFinish={async (values) => {
-                    router.post(route("department.store"), {
+                    router.post(route("company.update"), {
                         ...values,
 
-
                     });
+                    initialValues={companies}
 
                 }}
             >
@@ -44,32 +43,12 @@ export default function Create({ auth, departments, companies}) {
                 <ProForm.Group>
                     <ProFormText
                         width="sm"
-                        name="mgr_gtpdepartments_name"
+                        name="mgr_gtpcompanies_name"
                         label="Name"
                         placeholder="Name"
                         rules={[{ required: true }]}
-                        normalize={(value) => value.toUpperCase()}
                     />  
                    
-                   
-                    <ProFormSelect
-                        width="sm"
-                        name="mgr_gtpdepartments_company"
-                        label="Company"
-                        placeholder="Company"
-                        rules={[{ required: true }]}
-
-                        options = {
-                            companies.map((company) => {
-                                return {
-                                    label: company.mgr_gtpcompanies_name,
-                                    value: company.mgr_gtpcompanies_id
-                                }
-                            })
-                        }
-                        />
-                   
-                    
                     </ProForm.Group>
                     </ProForm>
                     </ProCard>

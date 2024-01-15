@@ -12,7 +12,7 @@ import {
 import { Head, router } from "@inertiajs/react";
 
 export default function Create({ auth, departments, roles, user }) {
-    console.log(user.roles.mgr_gtproles_id);
+    
     return (
         <>
             <Head title="Edit User" />
@@ -40,9 +40,10 @@ export default function Create({ auth, departments, roles, user }) {
                                 <ProFormText
                                     width="sm"
                                     name="mgr_gtpusers_empno"
-                                    label="Employement ID"
-                                    placeholder="Employement ID"
+                                    label="Employement Number"
+                                    placeholder="Employement Number"
                                     rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
                                 <ProFormText
                                     width="sm"
@@ -50,6 +51,7 @@ export default function Create({ auth, departments, roles, user }) {
                                     label="First Name"
                                     placeholder="First Name"
                                     rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
                                 <ProFormText
                                     width="sm"
@@ -57,6 +59,7 @@ export default function Create({ auth, departments, roles, user }) {
                                     label="Last Name"
                                     placeholder="Last Name"
                                     rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
                                 <ProFormText
                                     width="sm"
@@ -64,7 +67,9 @@ export default function Create({ auth, departments, roles, user }) {
                                     label="Surname"
                                     placeholder="Surname"
                                     rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
+                               
 
                                 <ProFormText
                                     width="sm"
@@ -73,17 +78,30 @@ export default function Create({ auth, departments, roles, user }) {
                                     placeholder="Email"
                                     rules={[{ required: true }]}
                                 />
-                                {/* <ProFormSelect
+                                
+                                <ProFormSelect
+                                    width="sm"
+                                    name="mgr_gtpusers_department"
+                                    label="Department"
+                                    placeholder="Department"
+                                    rules={[{ required: true }]}
+                                    options={departments.map((department) => ({
+                                       
+                                            label: department.mgr_gtpdepartments_name,
+                                            value: department.mgr_gtpdepartments_id,
+                                        
+                                    }))}
+                                />
+                                <ProFormSelect
                                     width="sm"
                                     fieldProps={{
                                         mode: "multiple",
-                                        labelInValue: true,
-                                        options: roles.map((role) => {
-                                            return {
+                                        options: roles.map((role) => ({
+                                           
                                                 label: role.mgr_gtproles_name,
                                                 value: role.mgr_gtproles_id,
-                                            };
-                                        }),
+                                           
+                                        })),
                                     }}
                                     name="mgr_gtpuserroles_role"
                                     label="Role"
@@ -95,7 +113,7 @@ export default function Create({ auth, departments, roles, user }) {
                                         };
                                     })
                                     }
-                                /> */}
+                                />
 
                                 <ProFormText.Password
                                     width="sm"
@@ -104,20 +122,9 @@ export default function Create({ auth, departments, roles, user }) {
                                     placeholder="Password"
                                     //rules={[{ required: true }]}
                                 />
+                               
+                             
 
-                                <ProFormSelect
-                                    width="sm"
-                                    name="mgr_gtpusers_department"
-                                    label="Department"
-                                    placeholder="Department"
-                                    rules={[{ required: true }]}
-                                    options={departments.map((department) => {
-                                        return {
-                                            label: department.mgr_gtpdepartments_name,
-                                            value: department.mgr_gtpdepartments_id,
-                                        };
-                                    })}
-                                />
                                 <ProFormSwitch
                                     width="sm"
                                     name="mgr_gtpusers_status"

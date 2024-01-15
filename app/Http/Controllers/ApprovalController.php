@@ -85,19 +85,19 @@ class ApprovalController extends Controller
     public function approvalhistory()
     {
         $myApprovals = Approval::where('mgr_gtpapprovals_approvedby', auth()->user()->mgr_gtpusers_id)
-        ->with('user', 'gatepass')
+        ->with('user','gatepass','gatepass.department', 'gatepass.source_location', 'gatepass.destination_location')
         ->orderBy('created_at', 'desc')
-        ->take(10)
         ->get();
-        $gatepassData = $myApprovals->pluck('gatepass');
 
-      //dd($myApprovals);
+       
+
+     // dd($myApprovals);
        // return route to approval history page 
        return Inertia::render(
         'Gatepass/Approval-history',
         [
             'approvals' => $myApprovals,
-            'gatepass' => $gatepassData
+           
             
         ]
         );

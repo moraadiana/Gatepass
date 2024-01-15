@@ -15,7 +15,6 @@ class Approval extends Model
     protected $fillable = [
         'mgr_gtpapprovals_status',
         'mgr_gtpapprovals_approvedby',
-        'mgr_gtpapprovals_approveddate',
         'mgr_gtpapprovals_approvallevel',
         'mgr_gtpapprovals_gatepass',
         'mgr_gtpapprovals_comment',

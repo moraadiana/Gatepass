@@ -60,17 +60,27 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit( Company $company )
     {
-        //
+        
+        return Inertia::render('Company/Edit', [
+            'companies' => Company::all()
+        ]);
+
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Company $company)
     {
         //
+        
+        $company->update($request->all());
+        dd($company);
+
+        return redirect()->route('company.index')->with('success', 'Company updated successfully!');
     }
 
     /**

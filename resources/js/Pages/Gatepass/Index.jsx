@@ -4,7 +4,7 @@ import { Head, Link } from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
 
 export default function Index({ auth, gatepasses }) {
-    console.log(gatepasses);
+    //console.log(gatepasses);
     return (
         <>
             <Head title="All gatepasses" />

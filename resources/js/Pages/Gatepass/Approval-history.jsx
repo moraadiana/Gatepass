@@ -1,4 +1,4 @@
-//return values passed in gatepass.myApprovalHistory route method 
+//return values passed in gatepass.myApprovalHistory route method
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
@@ -7,13 +7,13 @@ import { Space, Button, Tag } from "antd";
 //import auth
 //import { auth } from "@/Layouts/AuthenticatedLayout";
 
-export default function ApprovalHistory({ auth, approvals,gatepass,location }) {
-    console.log('gatepass',gatepass);
+export default function ApprovalHistory({ auth, approvals }) {
+    console.log(approvals);
     //console.log('gatepass',approvals.gatepass);
 
     return (
-      <>
-        <Head title="my approval history" />
+        <>
+            <Head title="my approval history" />
             <Authenticated user={auth.user}>
                 <PageContainer
                     header={{
@@ -21,59 +21,58 @@ export default function ApprovalHistory({ auth, approvals,gatepass,location }) {
                         onBack: () => window.history.back(),
                     }}
                 >
-                   
-                   <ProTable
+                    <ProTable
                         headerTitle="Gatepass"
-                        dataSource={gatepass}
+                        dataSource={approvals}
+
+
                         columns={[
                             {
                                 title: "Name",
-                                dataIndex: "mgr_gtpgatepass_name",
+                                dataIndex:["gatepass",
+                                 "mgr_gtpgatepass_name"],
                             },
                             {
                                 title: "Vehicle Reg",
-                                dataIndex: "mgr_gtpgatepass_vehiclereg",
+                                dataIndex: ["gatepass",
+                                    "mgr_gtpgatepass_vehiclereg",]
                             },
 
                             {
                                 title: "Department",
                                 dataIndex: [
-                                    "department",
+                                    "gatepass","department",
                                     "mgr_gtpdepartments_name",
-                                
-                                ]
-                                
+                                ],
                             },
 
                             {
                                 title: "Auxilary Document",
-                                dataIndex: "mgr_gtpgatepass_auxilarydoc",
+                                dataIndex: ["gatepass","mgr_gtpgatepass_auxilarydoc"],
                             },
                             {
                                 title: "Purpose",
-                                dataIndex: "mgr_gtpgatepass_purpose",
+                                dataIndex:["gatepass","mgr_gtpgatepass_purpose"] ,
                                 hideInSearch: true,
                             },
-                             {
-                            title: "Source Location",
-                            dataIndex: [
-                                "source_location",
-                                "mgr_gtplocations_name",
-                                
-                            ]
-                        },
-                        {
-                            title: "Destination Location",
-                            dataIndex: [
-                            
-                                "destination_location",
-                                "mgr_gtplocations_name",
-                            ],
-                        },
+                            {
+                                title: "Source Location",
+                                dataIndex: [
+                                    "gatepass","source_location",
+                                    "mgr_gtplocations_name",
+                                ],
+                            },
+                            {
+                                title: "Destination Location",
+                                dataIndex: [
+                                    "gatepass","destination_location",
+                                    "mgr_gtplocations_name",
+                                ],
+                            },
 
                             {
                                 title: "Specific Destination",
-                                dataIndex: "mgr_gtpgatepass_destination",
+                                dataIndex: ["gatepass","mgr_gtpgatepass_destination"],
                                 hideInSearch: true,
                             },
                             {
@@ -83,30 +82,23 @@ export default function ApprovalHistory({ auth, approvals,gatepass,location }) {
                                 // if status is 0 show pending
                                 render: (text) => {
                                     if (text === 0) {
-                                        return (
-                                            <Tag color="red">Rejected</Tag>
-                                        );
+                                        return <Tag color="red">Rejected</Tag>;
                                     } else if (text === 1) {
                                         return (
                                             <Tag color="green">Approved</Tag>
                                         );
                                     } else if (text === 2) {
                                         return <Tag color="green">Pending</Tag>;
-                                    }
-                                    else {
+                                    } else {
                                         return <Tag color="blue">Draft</Tag>;
                                     }
                                 },
                             },
-                    
                         ]}
-                        rowKey={"mgr_gtpgatepass_id"}
+                        rowKey={"mgr_gtpapprovals_id"}
                     />
-
-        </PageContainer>
-        </Authenticated>
-      </>
+                </PageContainer>
+            </Authenticated>
+        </>
     );
-
 }
-

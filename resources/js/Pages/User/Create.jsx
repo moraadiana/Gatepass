@@ -31,12 +31,21 @@ export default function Create({ auth, departments,roles }) {
                             }}
                         >
                             <ProForm.Group>
+                            <ProFormText
+                                    width="sm"
+                                    name="mgr_gtpusers_empno"
+                                    label="Employement Number"
+                                    placeholder="Employement Number"
+                                    rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
+                                />
                                 <ProFormText
                                     width="sm"
                                     name="mgr_gtpusers_fname"
                                     label="First Name"
                                     placeholder="First Name"
                                     rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
                                 <ProFormText
                                     width="sm"
@@ -44,6 +53,7 @@ export default function Create({ auth, departments,roles }) {
                                     label="Last Name"
                                     placeholder="Last Name"
                                     rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
                                 <ProFormText
                                     width="sm"
@@ -51,14 +61,9 @@ export default function Create({ auth, departments,roles }) {
                                     label="Surname"
                                     placeholder="Surname"
                                     rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
-                                <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpusers_empno"
-                                    label="Employement Number"
-                                    placeholder="Employement Number"
-                                    rules={[{ required: true }]}
-                                />
+                                
                                 <ProFormText
                                     width="sm"
                                     name="mgr_gtpusers_email"

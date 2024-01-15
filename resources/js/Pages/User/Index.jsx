@@ -42,7 +42,7 @@ export default function Index({ auth, users }) {
                             dataSource={users}
                             columns={[
                                 {
-                                    title: "Employement ID",
+                                    title: "Emp No",
                                     dataIndex: "mgr_gtpusers_empno",
                                 },
                                 {
@@ -50,11 +50,11 @@ export default function Index({ auth, users }) {
                                     dataIndex: "mgr_gtpusers_fname",
                                 },
                                 {
-                                    title: "Last Name",
+                                    title: "LName",
                                     dataIndex: "mgr_gtpusers_lname",
                                 },
                                 {
-                                    title: "Surname",
+                                    title: "SName",
                                     dataIndex: "mgr_gtpusers_sname",
                                 },
                                 {
@@ -92,6 +92,7 @@ export default function Index({ auth, users }) {
                                     ),
                                 },
                             ]}
+                            rowKey="mgr_gtpusers_id"
                         />
                     </ProCard>
                 </PageContainer>

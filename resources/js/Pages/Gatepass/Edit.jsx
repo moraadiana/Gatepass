@@ -10,7 +10,7 @@ import {
 import { Head, router } from "@inertiajs/react";
 
 export default function Edit({ auth, gatepass, departments, locations, uoms }) {
-    console.log(gatepass.items);
+    //console.log(gatepass.items);
     return (
         <>
             <Head title="Edit Gatepass" />
@@ -23,9 +23,8 @@ export default function Edit({ auth, gatepass, departments, locations, uoms }) {
                                     "gatepass.update",
                                     gatepass.mgr_gtpgatepass_id
                                 ),
-                                {
-                                    values,
-                                }
+                              values,
+                              
                             );
                         }}
                         initialValues={gatepass}
@@ -37,6 +36,7 @@ export default function Edit({ auth, gatepass, departments, locations, uoms }) {
                                 label="Title"
                                 placeholder="Title"
                                 rules={[{ required: true }]}
+                                normalize={(value) => value.toUpperCase()}
                             />
                             <ProFormText
                                 width="sm"
@@ -44,8 +44,9 @@ export default function Edit({ auth, gatepass, departments, locations, uoms }) {
                                 label="Vehicle Reg"
                                 placeholder="Vehicle Reg"
                                 rules={[{ required: true }]}
+                                normalize={(value) => value.toUpperCase()}
                             />
-                            <ProFormSelect
+                            {/* <ProFormSelect
                                 width="sm"
                                 name="mgr_gtpgatepass_department"
                                 label="Department"
@@ -57,7 +58,7 @@ export default function Edit({ auth, gatepass, departments, locations, uoms }) {
                                         value: department.mgr_gtpdepartments_id,
                                     };
                                 })}
-                            />
+                            /> */}
                         </ProForm.Group>
                         <ProForm.Group>
                             <ProFormText
@@ -66,6 +67,7 @@ export default function Edit({ auth, gatepass, departments, locations, uoms }) {
                                 label="Auxilary Doc"
                                 placeholder="Auxilary Doc"
                                 rules={[{ required: true }]}
+                                normalize={(value) => value.toUpperCase()}
                             />
                             <ProFormText
                                 width="sm"
@@ -73,6 +75,7 @@ export default function Edit({ auth, gatepass, departments, locations, uoms }) {
                                 label="Purpose"
                                 placeholder="Purpose"
                                 rules={[{ required: true }]}
+                                normalize={(value) => value.toUpperCase()}
                             />
                         </ProForm.Group>
                         <ProForm.Group>
@@ -108,6 +111,7 @@ export default function Edit({ auth, gatepass, departments, locations, uoms }) {
                                 label="Destination"
                                 placeholder="Specific Destination"
                                 rules={[{ required: true }]}
+                                normalize={(value) => value.toUpperCase()}
                             />
                         </ProForm.Group>
 
@@ -124,12 +128,16 @@ export default function Edit({ auth, gatepass, departments, locations, uoms }) {
                                     name="mgr_gtpitems_description"
                                     label="Item Description"
                                     placeholder="Item Description"
+                                    rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
                                 <ProFormText
                                     width="sm"
                                     name="mgr_gtpitems_code"
                                     label="Item Code"
                                     placeholder="Item Code"
+                                    rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
                                 <ProFormText
                                     width="sm"
@@ -137,6 +145,7 @@ export default function Edit({ auth, gatepass, departments, locations, uoms }) {
                                     label="Quantity"
                                     placeholder="Quantity"
                                     rules={[{ required: true }]}
+                                    
                                 />
                                 <ProFormSelect
                                     width="xs"

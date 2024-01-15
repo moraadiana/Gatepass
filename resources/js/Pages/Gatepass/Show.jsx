@@ -27,7 +27,7 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
     const [rejectVisible, setRejectVisible] = useState(false);
     //get role of current user
     const userRole = currUser;
-    console.log(gatepass);
+    //console.log(gatepass);
 
     return (
         <>

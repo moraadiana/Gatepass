@@ -41,13 +41,14 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     placeholder="Name"
                                     rules={[{ required: true }]}
                                     // auto toUppercase
-                                  
+                                    normalize={(value) => value.toUpperCase()}
                                 />
                                 <ProFormText
                                     width="sm"
                                     name="mgr_gtpgatepass_vehiclereg"
                                     label="Vehicle Reg"
                                     placeholder="Vehicle Reg"
+                                    normalize={(value) => value.toUpperCase()}
                                     rules={[{ required: true }]}
                                 />
                                 {/* <ProFormText
@@ -102,6 +103,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     label="Specific Destination"
                                     placeholder="Specific Destination"
                                     rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
                             </ProForm.Group>
                             <ProForm.Group>
@@ -111,6 +113,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     label="Purpose"
                                     placeholder="Purpose"
                                     rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
 
                                 <ProFormText
@@ -119,6 +122,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     label="Auxilary Doc"
                                     placeholder="Auxilary Doc"
                                     rules={[{ required: true }]}
+                                    normalize={(value) => value.toUpperCase()}
                                 />
                             </ProForm.Group>
 
@@ -135,30 +139,31 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         name="mgr_gtpitems_description"
                                         label="Item Description"
                                         placeholder="Item Description"
+                                        normalize={(value) => value.toUpperCase()}
                                     />
                                     <ProFormText
                                         width="sm"
                                         name="mgr_gtpitems_code"
                                         label="Item Code"
                                         placeholder="Item Code"
+                                        normalize={(value) => value.toUpperCase()}
                                     />
                                     <ProFormText
                                         width="sm"
                                         name="mgr_gtpitems_quantity"
                                         label="Quantity"
                                         placeholder="Quantity"
-                                        rules={[{ required: true },
-                                        {
-                                            pattern: /^[0-9]+$/,
-                                            message: 'Quantity must be a number',
-
-                                        }]
-                                    }
-                                    fieldProps={
-                                        {
-                                            type: 'number',
-                                        }
-                                    }
+                                        rules={[
+                                            { required: true },
+                                            {
+                                                pattern: /^[0-9]+$/,
+                                                message:
+                                                    "Quantity must be a number",
+                                            },
+                                        ]}
+                                        fieldProps={{
+                                            type: "number",
+                                        }}
                                         //should be number
                                         type="number"
                                     />

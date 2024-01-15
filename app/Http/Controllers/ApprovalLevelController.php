@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Approval;
 use Illuminate\Http\Request;
 use App\Models\ApprovalLevel;
+use App\Models\Company;
 use App\Models\Gatepass;
+use App\Models\Role;
 use Inertia\Inertia;
 
 class ApprovalLevelController extends Controller
@@ -13,13 +15,23 @@ class ApprovalLevelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
         return Inertia::render(
             'ApprovalLevel/Index',
             [
-                'approvals' => ApprovalLevel::all()
+                'approvalLevels' =>  Inertia::lazy(fn () => Company::with(
+                    [
+                        'approvalLevels' => function ($query) {
+                            $query->orderBy('mgr_gtpapprovallevels_sequence', 'asc');
+                        },
+                        'approvalLevels.role',
+
+                    ]
+                )->paginate($request->pageSize)),
+                'companies' => Company::all(),
+                'roles' => Role::all()
+
             ]
         );
     }
@@ -37,8 +49,22 @@ class ApprovalLevelController extends Controller
      */
     public function store(Request $request)
     {
+      //store new approval level in database
+      //dd($request->all());
+    $validatedData = $request->validate([
+         'mgr_gtpapprovallevels_label' => ['required', 'string', 'max:255'],
+         'mgr_gtpapprovallevels_sequence' => ['required', 'integer'],
+         'mgr_gtpapprovallevels_approver' => ['required', 'integer'],
+         'mgr_gtpapprovallevels_company' => ['required', 'integer'],
+
+     ]);
+
+     ApprovalLevel ::create($validatedData);
+
+    
+      }
         //
-    }
+
 
     /**
      * Display the specified resource.
@@ -61,7 +87,9 @@ class ApprovalLevelController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Update the approval level in the database
+        $approvalLevel = ApprovalLevel::findOrFail($id);
+        $approvalLevel->update($request->all());
     }
 
     /**

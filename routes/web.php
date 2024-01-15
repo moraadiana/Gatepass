@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('gatepass.approval', ApprovalController::class);
 
-    Route::resource('approvallevel', ApprovalLevelController::class);
+    Route::resource('approvallevels', ApprovalLevelController::class);
 
     Route::resource('company', CompanyController::class);
 

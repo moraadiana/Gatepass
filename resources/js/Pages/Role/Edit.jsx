@@ -47,6 +47,7 @@ export default function Create({ auth, companies }) {
                         label="Name"
                         placeholder="Name"
                         rules={[{ required: true }]}
+                        normalize={(value) => value.toUpperCase()}
                     />  
                     <ProFormSwitch
                                     width="sm"

@@ -18,7 +18,6 @@ class ApprovalLevel extends Model
         'mgr_gtpapprovallevels_approver',
         'mgr_gtpapprovallevels_sequence',
         'mgr_gtpapprovallevels_status',
-        'mgr_gtpapprovallevels_createddate',
         'mgr_gtpapprovallevels_company'
     ];
 

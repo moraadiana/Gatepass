@@ -15,7 +15,7 @@ class DepartmentSeeder extends Seeder
     {
         Department::create(
             [
-                'mgr_gtpdepartments_name' => 'GBHL ICT',
+                'mgr_gtpdepartments_name' => 'BULKSTREAM ICT',
                 'mgr_gtpdepartments_company' => 1
             ],
         
@@ -23,7 +23,7 @@ class DepartmentSeeder extends Seeder
         Department::create(
            
             [
-                'mgr_gtpdepartments_name' => 'GBHL HSE',
+                'mgr_gtpdepartments_name' => 'BULKSTREAM HSE',
                 'mgr_gtpdepartments_company' => 1
             ]
         );

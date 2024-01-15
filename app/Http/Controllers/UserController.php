@@ -93,10 +93,15 @@ class UserController extends Controller
     public function update(Request $request, User $user, UserRole $userrole)
     {
         //update user in database
+        //dd($request->input('mgr_gtpuserroles_role'));
         $user->update($request->all());
 
-        //update inputted roles for user in userroles table 
-        $userrole->update($request->all());
+        ///remove all roles for user and update inputted roles for user in userroles table 
+      // Remove all roles for user
+      $user->roles()->detach();
+
+      // Update inputted roles for user in userroles table
+      $user->roles()->attach($request->input('mgr_gtpuserroles_role'));
 
         // check if password is dirty
         if ($user->isDirty('password')) {

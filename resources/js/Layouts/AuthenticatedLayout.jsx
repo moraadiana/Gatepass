@@ -113,6 +113,7 @@ export default function Authenticated({
                 {
                     path: "/approvals",
                     name: "Approval",
+                    icon: <FileDoneOutlined />,
                     children: [
                         {
                             path: route("approval.index"),
@@ -127,6 +128,7 @@ export default function Authenticated({
                 {
                     path: "/companies",
                     name: "Companies",
+                    icon: <FileDoneOutlined />,
                     children: [
                         {
                             path: route("company.index"),
@@ -190,6 +192,17 @@ export default function Authenticated({
                         (role) => role.mgr_gtproles_id == 4
                     ),
                 },
+
+                {
+                    path:route("approvallevels.index"),
+                    name:"Approval Levels",
+                    hideInMenu: !user.roles.some(
+                        (role) => role.mgr_gtproles_id == 4
+                    ),
+                    icon:<FileDoneOutlined/>
+                    
+
+                }
             ]}
             menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}
         >

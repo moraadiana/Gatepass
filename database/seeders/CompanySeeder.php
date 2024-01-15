@@ -15,10 +15,10 @@ class CompanySeeder extends Seeder
     {
         Company::create(
             [
-                'mgr_gtpcompanies_name' => 'GBHL'
+                'mgr_gtpcompanies_name' => 'Bulkstream'
             ],
             [
-                'mgr_gtpcompanies_name' => 'Gas Petro'
+                'mgr_gtpcompanies_name' => 'Bulkstream TC'
             ]
         );
     }

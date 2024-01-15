@@ -54,9 +54,19 @@ export default function Index({ auth, companies }) {
                                     }
                                 },
                             },
+                            //link to edit company
+                            {
+                                title: "Edit",
+                                render: (text, record) => (
+                                    <Link href={route("company.edit", { company: record.mgr_gtpcompanies_id })}>
+                                        Edit
+                                    </Link>
+                                ),
+                            },
                         ]}
                         rowKey="mgr_gtpcompanies_id"
                     />
+
                 </PageContainer>
             </Authenticated>
         </>
