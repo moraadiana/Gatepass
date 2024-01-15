@@ -20,9 +20,6 @@ class CompanyController extends Controller
         return Inertia::render('Company/Index', [
             'companies' => $company,
         ]);
-
-
-     
     }
 
     /**
@@ -32,7 +29,6 @@ class CompanyController extends Controller
     {
         //create a form for creating a new company
         return Inertia::render('Company/Create',);
-
     }
 
     /**
@@ -42,11 +38,6 @@ class CompanyController extends Controller
     {
         //store a new company
         Company::create($request->all());
-
-        //return to index with sucess message
-        return redirect()->route('company.index')
-            ->with('success', 'Company created successfully!');
-
     }
 
     /**
@@ -60,14 +51,12 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit( Company $company )
+    public function edit(Company $company)
     {
-        
+
         return Inertia::render('Company/Edit', [
             'companies' => Company::all()
         ]);
-
-
     }
 
     /**
@@ -76,11 +65,8 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         //
-        
-        $company->update($request->all());
-        dd($company);
 
-        return redirect()->route('company.index')->with('success', 'Company updated successfully!');
+        $company->update($request->all());
     }
 
     /**

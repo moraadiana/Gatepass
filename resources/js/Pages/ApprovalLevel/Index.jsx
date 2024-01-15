@@ -25,7 +25,7 @@ export default function ApprovalLevels({
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState(null);
 
-    console.log (approvalLevels);
+    //console.log (approvalLevels);
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Approval Levels" />

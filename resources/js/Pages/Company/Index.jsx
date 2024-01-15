@@ -7,12 +7,18 @@ import {
     ProDescriptions,
     ModalForm,
     ProFormTextArea,
+    ProFormText,
 } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
 
 import { Space, Button, Tag } from "antd";
+import { useRef, useState } from "react";
 
 export default function Index({ auth, companies }) {
+    const actionRef = useRef();
+    const formRef = useRef();
+    const [visible, setVisible] = useState(false);
+    const [data, setData] = useState(null);
     return (
         <>
             <Head title="Companies" />
@@ -22,18 +28,18 @@ export default function Index({ auth, companies }) {
                         title: "Companies",
                         onBack: () => window.history.back(),
                     }}
-                    extra={
-                        <Space>
-                            <Button
-                                type="primary"
-                                onClick={() =>
-                                    router.get(route("company.create"))
-                                }
-                            >
-                                Create
-                            </Button>
-                        </Space>
-                    }
+                    // extra={
+                    //     <Space>
+                    //         <Button
+                    //             type="primary"
+                    //             onClick={() =>
+                    //                 router.get(route("company.create"))
+                    //             }
+                    //         >
+                    //             Create
+                    //         </Button>
+                    //     </Space>
+                    // }
                 >
                     <ProTable
                         headerTitle="Companies"
@@ -58,15 +64,89 @@ export default function Index({ auth, companies }) {
                             {
                                 title: "Edit",
                                 render: (text, record) => (
-                                    <Link href={route("company.edit", { company: record.mgr_gtpcompanies_id })}>
+                                    <Button
+                                        type="link"
+                                       //icon={<EditOutlined />}
+                                        onClick={() => {
+                                            setData(record);
+                                            setVisible(true);
+                                        }}
+                                    >
                                         Edit
-                                    </Link>
+                                    </Button>
                                 ),
                             },
                         ]}
+                        pagination={{ defaultPageSize: 5, 
+                        total: companies?.total,}}
+                        toolBarRender={() => [
+                            <Button
+                                type="primary"
+                                onClick={() => {
+                                    setVisible(true);
+                                }}
+                            >
+                                Add Company
+                            </Button>,
+                        ]}
                         rowKey="mgr_gtpcompanies_id"
+                        search={false}
                     />
 
+                    <ModalForm 
+                    title= {data ? "Edit Company" : "Create Company"}
+                    open={visible}
+                    onOpenChange={setVisible}
+                    formRef={formRef}
+                    onFinish={async (values) => {
+                        ! data
+                        ? router.post(route("company.store"), 
+                            values,
+                            {
+                                onSuccess: () => {
+                                    formRef.current?.resetFields();
+                                    setVisible(false);
+                                    actionRef.current?.reload();
+                                    message.success("Company created successfully");
+                                },
+                                onError: () => {
+                                    message.error("Failed to create company");
+                                },
+
+                                
+                            }
+                        )
+                        : router.put(
+                            route(
+                                "company.update",
+                                data ?.mgr_gtpcompanies_id
+                            ),
+                            values,
+                            {
+                                onSuccess: () => {
+                                    formRef.current?.resetFields();
+                                    setVisible(false);
+                                    actionRef.current?.reload();
+                                    message.success("Company updated successfully");
+                                },
+                                onError: () => {
+                                    message.error("Failed to update company");
+                                },
+                            }
+                        );
+                    }}
+
+                    >
+                        <ProForm.Group>
+                            <ProFormText
+                                width="sm"
+                                name="mgr_gtpcompanies_name"
+                                label="Name"
+                                placeholder="Name"
+                                rules={[{ required: true }]}
+                            />
+                        </ProForm.Group>
+                    </ModalForm>
                 </PageContainer>
             </Authenticated>
         </>
