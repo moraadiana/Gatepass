@@ -6,9 +6,11 @@ import {
     LogoutOutlined,
     DashboardFilled,
     FileDoneOutlined,
+    CheckSquareOutlined,
+    DatabaseOutlined,
 } from "@ant-design/icons";
 import { notification } from "antd";
-import logo from 'C:/laragon/www/gatepass/logo/bulkstream-logo-small.png';
+import logo from "C:/laragon/www/gatepass/logo/bulkstream-logo-small.png";
 export default function Authenticated({
     user,
     header,
@@ -40,13 +42,7 @@ export default function Authenticated({
             layout="mix"
             title=" Gatepass Portal"
             //add logo here and  resize it
-            logo={
-                <img
-                    src={logo}
-                    alt="logo"
-
-                />}
-           
+            logo={<img src={logo} alt="logo" />}
             avatarProps={{
                 src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
                 size: "small",
@@ -96,113 +92,60 @@ export default function Authenticated({
                             path: route("gatepass.index"),
                             name: "My Gatepasses",
                         },
-                       
-                        {
-                            path: route("gatepass.myApprovalHistory"),
-                            name: "My Approval History",
-                            hideInMenu: user.roles.some(
-                                (role) => role.mgr_gtproles_id == 3
-                            ),
-                        }
-
-                    
                     ],
                 },
-                
 
                 {
                     path: "/approvals",
-                    name: "Approval",
-                    icon: <FileDoneOutlined />,
+                    name: " My Approvals",
+                    icon: <CheckSquareOutlined />,
                     children: [
                         {
                             path: route("approval.index"),
-                            name: "Gatepass Approval",
+                            name: "Pending ",
                         },
-                      
+                        {
+                            path: route("gatepass.myApprovalHistory"),
+                            name: "Approval History",
+                            hideInMenu: user.roles.some(
+                                (role) => role.mgr_gtproles_id == 3
+                            ),
+                        },
                     ],
                     hideInMenu: user.roles.some(
                         (role) => role.mgr_gtproles_id == 3
                     ),
                 },
                 {
-                    path: "/companies",
-                    name: "Companies",
-                    icon: <FileDoneOutlined />,
+                    path: "/admin",
+                    name: "Administration",
+                    icon: <DatabaseOutlined />,
+                    hideInMenu: !user.roles.some(
+                        (role) => role.mgr_gtproles_id == 4
+                    ),
                     children: [
                         {
                             path: route("company.index"),
-                            name: "All Companies",
+                            name: "Companies",
                         },
-                        // {
-                        //     path: route("company.create"),
-                        //     name: "Create Company",
-                        // }
-                    ],
-                    hideInMenu: !user.roles.some(
-                        (role) => role.mgr_gtproles_id == 4
-                    ),
-                },
-                {
-                    path: "/departments",
-                    name: "Departments",
-                    children: [
                         {
                             path: route("department.index"),
-                            name: "All Departments",
+                            name: "Departments",
                         },
-                    ],
-                    hideInMenu: !user.roles.some(
-                        (role) => role.mgr_gtproles_id == 4
-                    ),
-                },
-                {
-                    path: "/users",
-                    name: "Users",
-                    children: [
-                        {
-                            path: route("user.index"),
-                            name: "All Users",
-                        },
-                        {
-                            path: route("user.create"),
-                            name: "Create User",
-                        },
-                    ],
-                    hideInMenu: !user.roles.some(
-                        (role) => role.mgr_gtproles_id == 4
-                    ),
-                },
-                {
-                    path: "/roles",
-                    name: "Roles",
-                    children: [
                         {
                             path: route("role.index"),
-                            name: "All Roles",
+                            name: "Roles",
                         },
-
                         {
-                            path: route("role.create"),
-                            name: "Create Role",
+                            path: route("user.index"),
+                            name: "Users",
+                        },
+                        {
+                            path: route("approvallevels.index"),
+                            name: "Approval Levels",
                         },
                     ],
-                    //show only for users with role id 4
-                    hideInMenu: !user.roles.some(
-                        (role) => role.mgr_gtproles_id == 4
-                    ),
                 },
-
-                {
-                    path:route("approvallevels.index"),
-                    name:"Approval Levels",
-                    hideInMenu: !user.roles.some(
-                        (role) => role.mgr_gtproles_id == 4
-                    ),
-                    icon:<FileDoneOutlined/>
-                    
-
-                }
             ]}
             menuItemRender={(item, dom) => <Link href={item.path}>{dom}</Link>}
         >

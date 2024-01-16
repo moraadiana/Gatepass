@@ -123,16 +123,16 @@ echo '<tr>';
 echo '<th>Prepared by</th>';
 echo '<td>' . $gatepass->user->mgr_gtpusers_fname . ' ' . $gatepass->user->mgr_gtpusers_lname . '</td>';
 
-echo '<th> Prepared on</th>';
+echo '<th> On</th>';
 echo '<td>' . $gatepass->created_at . '</td>';
 
 echo '</tr>';
 
 foreach ($gatepass->approvals as $approval) {
     echo '<tr>';
-    echo '<th>' . $approval->approvallevel->role->mgr_gtproles_name .  '</th>';
+    echo '<th>' . $approval->approvallevel->mgr_gtpapprovallevels_label.  '</th>';
     echo '<td>' . $approval->user->mgr_gtpusers_fname . ' ' . $approval->user->mgr_gtpusers_lname . '</td>';
-    echo '<th> Approved on </th>';
+    echo '<th> On </th>';
     echo '<td>' . $approval->created_at. '</td>';
     
     echo '</tr>';

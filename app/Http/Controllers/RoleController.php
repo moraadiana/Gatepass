@@ -42,9 +42,6 @@ class RoleController extends Controller
         //
         Role::create($request->all());
 
-        return redirect()->route('role.index')
-            ->with('success', 'Role created successfully!');
-
     }
 
     /**
@@ -76,9 +73,7 @@ class RoleController extends Controller
     {
         //
         $role->update($request->all());
-
-        return redirect()->route('role.index')
-            ->with('success', 'Role updated successfully!');
+     
     }
 
     /**

@@ -30,6 +30,6 @@
         Please follow this link to view: 
         <a href="http://127.0.0.1:8000/login">Approved Gatepass </a>
     </p>
-    <p>Best regards,<br>Grainbulk Handlers Ltd.</p>
+    <p>Best regards,<br>Bulkstream Ltd.</p>
 </body>
 </html>

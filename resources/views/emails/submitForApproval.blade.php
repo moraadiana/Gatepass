@@ -31,6 +31,6 @@
         <a href="http://127.0.0.1:8000/approval">Gatepass Approval </a>
     </p>
     <p>Thank you for your prompt attention to this matter.</p>
-    <p>Best regards,<br>Grainbulk Handlers Ltd.</p>
+    <p>Best regards,<br>Bulkstream Ltd.</p>
 </body>
 </html>

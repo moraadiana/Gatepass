@@ -28,7 +28,18 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
     //get role of current user
     const userRole = currUser;
     //console.log(gatepass);
-
+    console.log(
+        "user roles",
+        gatepass.mgr_gtpgatepass_status === 2 &&
+            gatepass.mgr_gtpgatepass_createdby !== auth.user.mgr_gtpusers_id &&
+            userRole.roles.some(
+                (role) =>
+                    role.mgr_gtproles_id ===
+                    gatepass.approvals.filter(
+                        (approval) => approval.mgr_gtpapprovals_status === 2
+                    )[0]?.approval_level?.role?.mgr_gtproles_id
+            )
+    );
     return (
         <>
             <Head title="View Gatepass" />
@@ -81,11 +92,16 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                             {gatepass.mgr_gtpgatepass_status === 2 &&
                                 gatepass.mgr_gtpgatepass_createdby !==
                                     auth.user.mgr_gtpusers_id &&
-                                gatepass.approvals.filter(
-                                    (approval) =>
-                                        approval.mgr_gtpapprovals_status === 2
-                                )[0]?.approval_level?.role?.mgr_gtproles_id ===
-                                    userRole.roles[0]?.mgr_gtproles_id && (
+                                userRole.roles.some(
+                                    (role) =>
+                                        role.mgr_gtproles_id ===
+                                        gatepass.approvals.filter(
+                                            (approval) =>
+                                                approval.mgr_gtpapprovals_status ===
+                                                2
+                                        )[0]?.approval_level?.role
+                                            ?.mgr_gtproles_id
+                                ) && (
                                     <Space>
                                         <ModalForm
                                             title="Approve Gatepass"

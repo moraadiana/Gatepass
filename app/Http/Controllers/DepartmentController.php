@@ -20,7 +20,8 @@ class DepartmentController extends Controller
         return Inertia::render(
             'Department/Index',
             [
-                'departments' => $department
+                'departments' => $department,
+                'company' => Company::all()
             ]
             );
     }

@@ -22,7 +22,9 @@ class UserController extends Controller
         return Inertia::render(
             'User/Index',
             [
-                'users' => $user
+                'users' => $user,
+                'roles' => Role::all(),
+                'department' => Department::all()
             ]
         );
     }

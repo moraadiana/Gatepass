@@ -28,18 +28,7 @@ export default function Index({ auth, companies }) {
                         title: "Companies",
                         onBack: () => window.history.back(),
                     }}
-                    // extra={
-                    //     <Space>
-                    //         <Button
-                    //             type="primary"
-                    //             onClick={() =>
-                    //                 router.get(route("company.create"))
-                    //             }
-                    //         >
-                    //             Create
-                    //         </Button>
-                    //     </Space>
-                    // }
+                   
                 >
                     <ProTable
                         headerTitle="Companies"
@@ -135,6 +124,12 @@ export default function Index({ auth, companies }) {
                             }
                         );
                     }}
+                    modalProps={{
+                        onCancel: () => [setVisible(false), setData(null)],
+                        destroyOnClose: true,
+                    }}
+                    initialValues={data}
+                    width={600}
 
                     >
                         <ProForm.Group>
