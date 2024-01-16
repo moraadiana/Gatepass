@@ -144,6 +144,14 @@ export default function Authenticated({
                             path: route("approvallevels.index"),
                             name: "Approval Levels",
                         },
+                        {
+                            path: route("location.index"),
+                            name: "Locations",
+                        },
+                        {
+                            path: route("uom.index"),
+                            name: "Uoms",
+                        }
                     ],
                 },
             ]}

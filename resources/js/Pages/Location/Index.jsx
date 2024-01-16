@@ -13,42 +13,42 @@ import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import React, { useRef, useState } from "react";
 import { Head, router } from "@inertiajs/react";
  
-export default function ApprovalLevels({
+export default function Index({
     auth,
-    approvalLevels,
+    locations,
     users,
     companies,
-    roles,
+   
 }) {
     const actionRef = useRef();
     const formRef = useRef();
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState(null);
 
-    //console.log (approvalLevels);
-   // console.log("companies", companies);
+    console.log (locations);
+   
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Approval Levels" />
+            <Head title="Locations" />
             <PageContainer
                 header={{
-                    title: "Approval Levels",
+                    title: "Locations",
                     onBack: () => window.history.back(),
                 }}
             >
                 <ProTable
                     actionRef={actionRef}
-                    dataSource={approvalLevels?.data}
+                    dataSource={locations?.data}
                     request={async (params = {}, sort, filter) => {
                         params.page = params.current;
                         delete params.current;
                         router.reload({
-                            only: ["approvalLevels"],
+                            only: ["locations"],
                             data: params,
                         });
                         return {
-                            data: approvalLevels?.data,
-                            total: approvalLevels?.total,
+                            data: locations?.data,
+                            total: locations?.total,
                             success: true,
                         };
                     }}
@@ -59,27 +59,20 @@ export default function ApprovalLevels({
                         },
                     ]}
                     expandable={{
-                        //childrenColumnName: "approvalLevels",
+                        //childrenColumnName: "locations",
                         expandedRowRender: (record) => (
                             <ProTable
                                 columns={[
                                     {
-                                        title: "Level Name",
+                                        title: "Location Name",
                                         dataIndex:
-                                            "mgr_gtpapprovallevels_label",
+                                            "mgr_gtplocations_name",
                                     },
                                     {
-                                        title: "Role",
-                                        dataIndex: [
-                                            "role","mgr_gtproles_name"
-                                        ]
+                                        title: "status",
+                                        dataIndex: "mgr_gtplocations_status",
+                                    },
 
-                                    },
-                                    {
-                                        title: "Sequence",
-                                        dataIndex:
-                                            "mgr_gtpapprovallevels_sequence",                                            
-                                    },
                                   
                                     {
                                         title: "Actions",
@@ -97,8 +90,8 @@ export default function ApprovalLevels({
                                         ),
                                     },
                                 ]}
-                                dataSource={record.approval_levels}
-                                rowKey="mgr_gtpapprovallevels_id"
+                                dataSource={record.locations}
+                                rowKey="mgr_gtplocations_id"
                                 search={false}
                                 pagination={false}
                                 options={false}
@@ -108,7 +101,7 @@ export default function ApprovalLevels({
                     }}
                     pagination={{
                         pageSize: 5,
-                        total: approvalLevels?.total,
+                        total: locations?.total,
                     }}
                     toolBarRender={() => [
                         <Button
@@ -125,23 +118,21 @@ export default function ApprovalLevels({
                     search={false}
                 />
                 <ModalForm
-                    title={data ? "Edit Approval Level" : "Add Approval Level"}
+                    title={data ? "Edit Location" : "Add Location"}
                     open={visible}
                     onOpenChange={setVisible}
                     formRef={formRef}
                     onFinish={async (values) => {
-                        !data
-                            ? router.post(
-                                  route("approvallevels.store"),
-                                  values,
-                                  {
-                                      onSuccess: () => {
-                                          setVisible(false);
-                                          actionRef.current.reload();
-                                          message.success(
-                                              "Approval Level Added Successfully"
-                                          );
-                                      },
+                       ! data
+                        ? router.post(route("location.store"),
+                        values,
+                        {
+                            onSuccess: () => {
+                                formRef.current?.resetFields();
+                                setVisible(false);
+                                actionRef.current?.reload();
+                                message.success("Location created successfully");
+                            },
                                       onError: () => {
                                           message.error("Something went wrong");
                                       },
@@ -149,8 +140,8 @@ export default function ApprovalLevels({
                               )
                             : router.put(
                                   route(
-                                      "approvallevels.update",
-                                      data?.mgr_gtpapprovallevels_id
+                                      "location.update",
+                                      data?.mgr_gtplocations_id
                                   ),
                                   values,
                                   {
@@ -158,7 +149,7 @@ export default function ApprovalLevels({
                                           setVisible(false);
                                           actionRef.current.reload();
                                           message.success(
-                                              "Approval Level Updated Successfully"
+                                              "Location Updated Successfully"
                                           );
                                       },
                                       onError: () => {
@@ -177,15 +168,15 @@ export default function ApprovalLevels({
                     <ProForm.Group>
                         <ProFormText
                             width="sm"
-                            name="mgr_gtpapprovallevels_label"
-                            label="Level Name"
-                            placeholder="Level Name"
+                            name="mgr_gtplocations_name"
+                            label="Location Name"
+                            placeholder="Location Name"
                             rules={[{ required: true }]}
                         />
  
                         <ProFormSelect
                             width="sm"
-                            name="mgr_gtpapprovallevels_company"
+                            name="mgr_gtplocations_company"
                             label="Company"
                             placeholder="Company"
                             rules={[{ required: true }]}
@@ -195,35 +186,12 @@ export default function ApprovalLevels({
                             }))}
                         />
                     </ProForm.Group>
-                    <ProForm.Group>
-                        <ProFormText
-                            width="sm"
-                            name="mgr_gtpapprovallevels_sequence"
-                            label="Sequence"
-                            placeholder="Sequence"
-                            rules={[{ required: true }]}
-                            fieldProps={{
-                                type: "number",
-                            }}
-                            />
-                
-                        <ProFormSelect
-                            width="sm"
-                            name="mgr_gtpapprovallevels_approver"
-                            label="Role"
-                            placeholder="Role"
-                            rules={[{ required: true }]}
-                            options={roles?.map((role) => ({
-                                value: role.mgr_gtproles_id,
-                                label: role.mgr_gtproles_name,
-                            }))}
-                        />
-                    </ProForm.Group>
+                   
                     <ProForm.Group>
                         
                         <ProFormSelect
                             width="sm"
-                            name="mgr_gtpapprovallevels_status"
+                            name="mgr_gtplocations_status"
                             label="Status"
                             placeholder="Status"
                             rules={[{ required: true }]}

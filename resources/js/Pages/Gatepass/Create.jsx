@@ -140,12 +140,14 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         label="Item Description"
                                         placeholder="Item Description"
                                         normalize={(value) => value.toUpperCase()}
+                                        rules={[{ required: true }]}
                                     />
                                     <ProFormText
                                         width="sm"
                                         name="mgr_gtpitems_code"
                                         label="Item Code"
                                         placeholder="Item Code"
+                                        rules={[{ required: true }]}
                                         normalize={(value) => value.toUpperCase()}
                                     />
                                     <ProFormText

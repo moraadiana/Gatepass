@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Uom;
+use Inertia\Inertia;
 
 class UomController extends Controller
 {
@@ -13,7 +14,9 @@ class UomController extends Controller
     public function index()
     {
         //
-        return inertia::render('UOMs');
+        return Inertia::render('Uom/Index', [
+            'uoms' => Uom::all()
+        ]);
     }
 
     /**
@@ -22,6 +25,10 @@ class UomController extends Controller
     public function create()
     {
         //
+        return Inertia::render('Uom/Create', [
+            'roles' => Uom::all()
+        ]);
+
     }
 
     /**
@@ -30,6 +37,7 @@ class UomController extends Controller
     public function store(Request $request)
     {
         //
+        Uom::create($request->all());
     }
 
     /**
@@ -46,14 +54,19 @@ class UomController extends Controller
     public function edit(string $id)
     {
         //
+        return Inertia::render
+        ('Uom/Edit', [
+            'uoms' => Uom::find($id)
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Uom $uom)
     {
         //
+        $uom -> update($request->all());
     }
 
     /**

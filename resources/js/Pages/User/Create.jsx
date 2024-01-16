@@ -77,6 +77,8 @@ export default function Create({ auth, departments,roles }) {
                                     label="Password"
                                     placeholder="Password"
                                     rules={[{ required: true }]}
+                                    type="password"
+                                    
                                 />
                                 <ProFormSelect
                                     width="sm"

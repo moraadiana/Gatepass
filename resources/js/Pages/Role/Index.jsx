@@ -143,7 +143,7 @@ export default function Index({ auth, roles }) {
                                 label="Name"
                                 placeholder="Name"
                                 rules={[{ required: true }]}
-                                normalize={(value) => value.toUpperCase()}
+                                
                             />
                             
                              <ProFormSelect

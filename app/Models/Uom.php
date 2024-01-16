@@ -16,7 +16,6 @@ class Uom extends Model
     protected $fillable = [
         'mgr_gtpuoms_name',
         'mgr_gtpuoms_status',
-        'mgr_gtpuoms_createdby'
     ];
 
     //uoms has many gatepass

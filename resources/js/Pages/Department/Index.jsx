@@ -1,4 +1,4 @@
-import Authenticated from "@/Layouts/AuthenticatedLayout";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageContainer,
     ProCard,
     ProTable,
@@ -9,6 +9,11 @@ import { PageContainer,
     ProFormText,
     ProFormSelect, 
 } from "@ant-design/pro-components";
+import {
+    PlusCircleOutlined,
+    EditOutlined,
+} from "@ant-design/icons";
+
 import { Head, Link ,router} from "@inertiajs/react";
 
 import { Space, Button } from 'antd';
@@ -16,83 +21,108 @@ import { useRef, useState } from "react";
 
  
 
-export default function Index({ auth, departments,company,roles }) {
+export default function Index({ auth, departments,companies,roles }) {
 
     const actionRef = useRef();
     const formRef = useRef();
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState(null);
-    console.log (departments);
+     console.log ("companies",companies);
+    // console.log("departments",departments)
     
     return (
-        <>
-            <Head title="Departments" />
-            <Authenticated user={auth.user}>
-                <PageContainer
-                    header={{
-                        title: "Departments",
-                        onBack: () => window.history.back(),
+        <AuthenticatedLayout user={auth.user}>
+        <Head title="Departments" />
+        <PageContainer
+            header={{
+                title: "Departments",
+                onBack: () => window.history.back(),
+            }}
+        >
+            <ProTable
+                actionRef={actionRef}
+                dataSource={departments?.data}
+                request={async (params = {}, sort, filter) => {
+                    params.page = params.current;
+                    delete params.current;
+                    router.reload({
+                        only: ["departments"],
+                        data: params,
+                    });
+                    return {
+                        data: departments?.data,
+                        total: departments?.total,
+                        success: true,
+                    };
+                }}
+                columns={[
+                    {
+                        title: "Company",
+                        dataIndex: "mgr_gtpcompanies_name",
+                    },
+                ]}
+                    expandable={{
+                        //childrenColumnName: "departments",
+                        expandedRowRender: (record) => (
+                            <ProTable
+                                columns={[
+                                    {
+                                        title: "Department Name",
+                                        dataIndex:
+                                            "mgr_gtpdepartments_name",
+                                    },
+                                    {
+                                        title: "Status",
+                                        dataIndex:
+                                            "mgr_gtpdepartments_status",                                            
+                                    },
+                                  
+                                    {
+                                        title: "Actions",
+                                        render: (text, record) => (
+                                            <Button
+                                                type="link"
+                                                icon={<EditOutlined />}
+                                                onClick={() => {
+                                                    setData(record);
+                                                    setVisible(true);
+                                                }}
+                                            >
+                                                Edit
+                                            </Button>
+                                        ),
+                                    },
+                                ]}
+                                dataSource={record.departments}
+                                rowKey="mgr_gtpdepartments_id"
+                                search={false}
+                                pagination={false}
+                                options={false}
+                                bordered
+                            />
+                        ),
                     }}
-
-                    // extra={
-                    //     <Space>
-
-                    //     <Button type="primary" onClick={() => router.get(route("department.create"))}>
-                    //           Create
-                    //     </Button>
-
-                    //       </Space>  
-                    // }
-                >
-                    <ProTable
-                        headerTitle="Departments"
-                        dataSource={departments}
-                        columns={[
-                            {
-                                title: "Name",
-                                dataIndex: "mgr_gtpdepartments_name",
-                            },
-                            {
-                                title: "Status",
-                                dataIndex: "mgr_gtpdepartments_status",
-                            },
-                            {
-                                title: "Company",
-                                dataIndex:["company","mgr_gtpcompanies_name"],
-                            },
-                            {
-                                title: "Edit",
-                                render: (text, record) => (
-                                    <Button
-                                        type="link"
-                                       //icon={<EditOutlined />}
-                                        onClick={() => {
-                                            setData(record);
-                                            setVisible(true);
-                                        }}
-                                    >
-                                        Edit
-                                    </Button>
-                                ),
-                            },
-                        ]}
-                        pagination={{ defaultPageSize: 5, 
-                            total: departments?.total,}}
-                            toolBarRender={() => [
-                                <Button
-                                    type="primary"
-                                    onClick={() => {
-                                        setVisible(true);
-                                    }}
-                                >
-                                    Add Department
-                                </Button>,
-                            ]}
-                        rowKey="mgr_gtpdepartments_id"
-                        search={false}
-                    />
+                    pagination={{
+                        pageSize: 5,
+                        total: departments?.total,
+                    }}
+                    toolBarRender={() => [
+                        <Button
+                            type="primary"
+                            icon={<PlusCircleOutlined />}
+                            onClick={() => {
+                                setVisible(true);
+                            }}
+                        >
+                            Add New
+                        </Button>,
+                    ]}
+                    rowKey="mgr_gtpcompanies_id"
+                    search={false}
+                />
+        
                       <ModalForm 
-                    title= {data ? "Edit Department" : "Create Depatment"}
+                    title= {data ? "Edit Department" : "Create Department"}
                     open={visible}
                     onOpenChange={setVisible}
                     formRef={formRef}
@@ -171,10 +201,9 @@ export default function Index({ auth, departments,company,roles }) {
                                 width="sm"
                                 name="mgr_gtpdepartments_company"
                                 label="Company"
-                                options={company?.map((company) => ({
-                                        value: company.mgr_gtpcompanies_id,
-                                        label: company.mgr_gtpcompanies_name,
-
+                                options={companies?.map((company) => ({
+                                    value: company.mgr_gtpcompanies_id,
+                                    label: company.mgr_gtpcompanies_name,
                                     }))}
                                 rules={[{ required: true }]}
                             /> 
@@ -183,7 +212,6 @@ export default function Index({ auth, departments,company,roles }) {
                         </ProForm.Group>
                     </ModalForm>
                 </PageContainer>
-            </Authenticated>
-        </>
+                </AuthenticatedLayout>
     );
 }

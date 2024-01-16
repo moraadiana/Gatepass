@@ -12,7 +12,7 @@ class DepartmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //show department with its company
         $department = Department::with('company')->get();
@@ -20,10 +20,23 @@ class DepartmentController extends Controller
         return Inertia::render(
             'Department/Index',
             [
-                'departments' => $department,
-                'company' => Company::all()
+               
+                'departments' => Inertia::lazy(fn () => Company::with(
+                    [
+                        'departments' => function ($query) {
+                            $query->orderBy('mgr_gtpdepartments_id', 'asc');
+                        },
+                        //'departments.role',
+                    ]
+                )
+                ->paginate($request->pageSize)),
+                'companies' => Company::all(),
+                
+
             ]
             );
+
+
     }
         
     
@@ -52,7 +65,7 @@ class DepartmentController extends Controller
         Department::create($request->all());
 
         //return to index with success message
-        return redirect()->route('department.index')->with('success', 'Department created successfully!');
+     
 
     }
 
@@ -78,6 +91,8 @@ class DepartmentController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $department = Department::findOrFail($id);
+        $department->update($request->all());
     }
 
     /**

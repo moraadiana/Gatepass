@@ -103,12 +103,17 @@ class UserController extends Controller
       $user->roles()->detach();
 
       // Update inputted roles for user in userroles table
-      $user->roles()->attach($request->input('mgr_gtpuserroles_role'));
+      $user->roles()->attach($request->mgr_gtpuserroles_role);
+   
 
+      
+
+     
         // check if password is dirty
         if ($user->isDirty('password')) {
             $user->password = bcrypt($request->password);
             $user->save();
+            
         }
 
         return redirect()->route('user.index')->with('success', 'User details updated successfully!');
