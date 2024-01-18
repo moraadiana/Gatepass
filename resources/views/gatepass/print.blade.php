@@ -1,6 +1,10 @@
 <?php
 
+use Sabberworm\CSS\Property\Import;
+
 use function Laravel\Prompts\table;
+//import image from here "../assets/bulkstream-logo-small.png"  
+
 
 echo '<style>
 table {
@@ -36,8 +40,10 @@ img {
 </style>';
 
 echo '<div class="gatepass-print">';
-echo '<img src="C:\laragon\www\gatepass\logo\bulkstream-logo-small.png"  alt="Bulkstream Logo"   >';
-//br 
+
+
+$imageUrl = public_path('assets/bulkstream-logo-small.png');;
+echo "<img src='$imageUrl' alt='logo'>";
 echo '<br>';
 echo '<br>';
 // return gatepass details in a table
@@ -130,15 +136,15 @@ echo '</tr>';
 
 foreach ($gatepass->approvals as $approval) {
     echo '<tr>';
-    echo '<th>' . $approval->approvallevel->mgr_gtpapprovallevels_label.  '</th>';
+    echo '<th>' . $approval->approvallevel->mgr_gtpapprovallevels_label .  '</th>';
     echo '<td>' . $approval->user->mgr_gtpusers_fname . ' ' . $approval->user->mgr_gtpusers_lname . '</td>';
     echo '<th> On </th>';
-    echo '<td>' . $approval->created_at. '</td>';
-    
+    echo '<td>' . $approval->created_at . '</td>';
+
     echo '</tr>';
 
     //return approval date and time for the above approvals
-    
+
 
 }
 
@@ -147,6 +153,3 @@ foreach ($gatepass->approvals as $approval) {
 echo '</table>';
 //close div 
 echo '</div>';
-?>
-
-

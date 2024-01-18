@@ -1,7 +1,8 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
+import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 export default function Index({ auth, gatepasses }) {
     //console.log(gatepasses);
@@ -75,17 +76,14 @@ export default function Index({ auth, gatepasses }) {
                                 // if status is 0 show pending
                                 render: (text) => {
                                     if (text === 0) {
-                                        return (
-                                            <Tag color="red">Rejected</Tag>
-                                        );
+                                        return <Tag color="red">Rejected</Tag>;
                                     } else if (text === 1) {
                                         return (
                                             <Tag color="green">Approved</Tag>
                                         );
                                     } else if (text === 2) {
                                         return <Tag color="green">Pending</Tag>;
-                                    }
-                                    else {
+                                    } else {
                                         return <Tag color="blue">Draft</Tag>;
                                     }
                                 },
@@ -93,29 +91,42 @@ export default function Index({ auth, gatepasses }) {
                             {
                                 title: "Actions",
                                 render: (_, record) => (
-                                    <Link
-                                        href={route(
-                                            "gatepass.show",
-                                            record.mgr_gtpgatepass_id
+                                    <Space>
+                                        <Button
+                                            type="link"
+                                            icon={<EyeOutlined />}
+                                            onClick={() => {
+                                                router.get(
+                                                    route(
+                                                        "gatepass.show",
+                                                        record.mgr_gtpgatepass_id
+                                                    )
+                                                );
+                                            }}
+                                        >
+                                            View Details
+                                        </Button>
+                                        {record.mgr_gtpgatepass_status !==
+                                            3 && (
+                                            <Button
+                                                type="link"
+                                                icon={<EditOutlined />}
+                                                onClick={() => {
+                                                    router.get(
+                                                        route(
+                                                            "gatepass.edit",
+                                                            record.mgr_gtpgatepass_id
+                                                        )
+                                                    );
+                                                }}
+                                            >
+                                                Edit
+                                            </Button>
                                         )}
-                                    >
-                                        View Details
-                                    </Link>
+                                    </Space>
                                 ),
                             },
-                            {
-                                title: "Actions",
-                                render: (_, record) => (
-                                    <Link
-                                        href={route(
-                                            "gatepass.edit",
-                                            record.mgr_gtpgatepass_id
-                                        )}
-                                    >
-                                        Edit
-                                    </Link>
-                                ),
-                            },
+
                             //create button to submit a gatepass request
                         ]}
                         rowKey="mgr_gtpgatepass_id"
