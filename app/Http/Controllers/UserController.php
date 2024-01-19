@@ -14,7 +14,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = User::with('roles', 'department')->get();
         //dd($user);
@@ -22,7 +22,7 @@ class UserController extends Controller
         return Inertia::render(
             'User/Index',
             [
-                'users' => $user,
+                'users' => Inertia::lazy(fn () => User::with('roles', 'department')->paginate($request->pageSize)),
                 'roles' => Role::all(),
                 'department' => Department::all()
             ]
@@ -57,7 +57,7 @@ class UserController extends Controller
 
 
         $user->roles()->attach($request->mgr_gtpuserroles_role);
-        
+
 
         return redirect()->route('user.index')
             ->with('success', 'User created successfully!');
@@ -99,21 +99,20 @@ class UserController extends Controller
         $user->update($request->all());
 
         ///remove all roles for user and update inputted roles for user in userroles table 
-      // Remove all roles for user
-      $user->roles()->detach();
+        // Remove all roles for user
+        $user->roles()->detach();
 
-      // Update inputted roles for user in userroles table
-      $user->roles()->attach($request->mgr_gtpuserroles_role);
-   
+        // Update inputted roles for user in userroles table
+        $user->roles()->attach($request->mgr_gtpuserroles_role);
 
-      
 
-     
+
+
+
         // check if password is dirty
         if ($user->isDirty('password')) {
             $user->password = bcrypt($request->password);
             $user->save();
-            
         }
 
         return redirect()->route('user.index')->with('success', 'User details updated successfully!');

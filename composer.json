@@ -7,6 +7,8 @@
     "require": {
         "php": "^8.1",
         "barryvdh/laravel-dompdf": "^2.0",
+        "directorytree/ldaprecord": "^3.3",
+        "directorytree/ldaprecord-laravel": "^3.1",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.3",
         "laravel/breeze": "^1.25",

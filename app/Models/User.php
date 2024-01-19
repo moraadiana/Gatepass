@@ -12,10 +12,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
+use LdapRecord\Laravel\Auth\LdapAuthenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements LdapAuthenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, AuthenticatesWithLdap;
     //Table name
     protected $table = 'mgr_gtpusers';
 
@@ -34,13 +36,11 @@ class User extends Authenticatable
     protected $fillable = [
         'mgr_gtpusers_fname',
         'mgr_gtpusers_lname',
-        'mgr_gtpusers_sname',
         'mgr_gtpusers_empno',
         'mgr_gtpusers_email',
         'mgr_gtpusers_department',
         'mgr_gtpusers_password',
         'mgr_gtpusers_status',
-        'mgr_gtpusers_createdby',
     ];
 
     /**
@@ -105,7 +105,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserRole::class, 'mgr_gtpuserroles_user');
     }
- 
 
-    
+    //Assign default role to user before saving
+    public static function boot()
+    {
+        parent::boot();
+        static::created(function ($user) {
+            //If the user has no role, assign the default role
+            if ($user->roles()->count() == 0) {
+                $user->roles()->attach(3);
+            }
+        });
+    }
 }

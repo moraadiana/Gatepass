@@ -55,14 +55,7 @@ export default function Create({ auth, departments,roles }) {
                                     rules={[{ required: true }]}
                                     normalize={(value) => value.toUpperCase()}
                                 />
-                                <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpusers_sname"
-                                    label="Surname"
-                                    placeholder="Surname"
-                                    rules={[{ required: true }]}
-                                    normalize={(value) => value.toUpperCase()}
-                                />
+                               
                                 
                                 <ProFormText
                                     width="sm"

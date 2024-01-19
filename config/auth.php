@@ -60,15 +60,29 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
+        // ...
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'users' => [
+            'driver' => 'ldap',
+            'model' => LdapRecord\Models\ActiveDirectory\User::class,
+            'rules' => [],
+            'scopes' => [],
+            'database' => [
+                'model' => App\Models\User::class,
+                'sync_passwords' => true,
+                'sync_attributes' => [
+                    'mgr_gtpusers_fname' => 'givenname',
+                    'mgr_gtpusers_lname' => 'sn',
+                    'mgr_gtpusers_email' => 'userprincipalname',
+                ],
+                'sync_existing' => [
+                    'mgr_gtpusers_fname' => 'givenname',
+                    'mgr_gtpusers_lname' => 'sn',
+                    'mgr_gtpusers_email' => 'userprincipalname',
+                ],
+                'password_column' => 'mgr_gtpusers_password',
+            ],
+        ],
     ],
 
     /*

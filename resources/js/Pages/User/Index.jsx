@@ -27,9 +27,7 @@ export default function Index({ auth, users }) {
                         <Space>
                             <Button
                                 type="primary"
-                                onClick={() =>
-                                    router.get(route("user.create"))
-                                }
+                                onClick={() => router.get(route("user.create"))}
                             >
                                 Add User
                             </Button>
@@ -39,7 +37,20 @@ export default function Index({ auth, users }) {
                     <ProCard>
                         <ProTable
                             headerTitle="Users"
-                            dataSource={users}
+                            dataSource={users?.data}
+                            request={async (params) => {
+                                params.page = params.current;
+                                delete params?.current;
+                                router.reload({
+                                    only: ["users"],
+                                    data: params,
+                                });
+                                return {
+                                    data: users?.data,
+                                    success: true,
+                                    total: users?.total,
+                                };
+                            }}
                             columns={[
                                 {
                                     title: "Emp No",
@@ -53,45 +64,56 @@ export default function Index({ auth, users }) {
                                     title: "LName",
                                     dataIndex: "mgr_gtpusers_lname",
                                 },
-                                {
-                                    title: "SName",
-                                    dataIndex: "mgr_gtpusers_sname",
-                                },
+
                                 {
                                     title: "Email",
                                     dataIndex: "mgr_gtpusers_email",
                                 },
-                              
+
                                 {
                                     title: "Department",
                                     dataIndex: [
                                         "department",
-                                         "mgr_gtpdepartments_name",
-                                    ], 
+                                        "mgr_gtpdepartments_name",
+                                    ],
                                 },
                                 {
                                     title: "Status",
                                     dataIndex: "mgr_gtpusers_status",
 
-                                    render:(text) =>{
+                                    render: (text) => {
                                         if (text == 1) {
-                                            return <Tag color="green">Active</Tag>
+                                            return (
+                                                <Tag color="green">Active</Tag>
+                                            );
                                         } else {
-                                            return <Tag color="red">Inactive</Tag>
+                                            return (
+                                                <Tag color="red">Inactive</Tag>
+                                            );
                                         }
-                                    }
+                                    },
                                 },
-                                //link to edit user 
+                                //link to edit user
                                 {
                                     title: "Action",
                                     dataIndex: "mgr_gtpusers_id",
                                     render: (_, record) => (
-                                        <Link href={route("user.edit", record.mgr_gtpusers_id)}>
+                                        <Link
+                                            href={route(
+                                                "user.edit",
+                                                record?.mgr_gtpusers_id
+                                            )}
+                                        >
                                             Edit
                                         </Link>
                                     ),
                                 },
                             ]}
+                            pagination={{
+                                pageSize: 10,
+                                total: users?.total,
+                            }}
+                            search={false}
                             rowKey="mgr_gtpusers_id"
                         />
                     </ProCard>

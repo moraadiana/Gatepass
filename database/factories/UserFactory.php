@@ -20,7 +20,6 @@ class UserFactory extends Factory
         return [
             'mgr_gtpusers_fname' => fake()->name(),
             'mgr_gtpusers_lname' => fake()->name(),
-            'mgr_gtpusers_sname' => fake()->name(),
             'mgr_gtpusers_email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'mgr_gtpusers_password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
