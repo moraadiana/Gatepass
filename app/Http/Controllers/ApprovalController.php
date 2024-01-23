@@ -29,12 +29,13 @@ class ApprovalController extends Controller
         $approvals = Approval::all();
         //find role of current user 
         $approverRole = $currentUser->roles->first();
+       // dd($approverRole->approvallevel-> company->department-> mgr_gtpdepartments_id);
+
        
         //get gatepass where status is 2 and gatepass department is same as that of logged in user 
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
             ->where('mgr_gtpgatepass_status', 2) 
             ->orderBy('created_at', 'desc')
-            ->take(10)
             ->get();
     
    
@@ -82,12 +83,13 @@ class ApprovalController extends Controller
       //  dd($gatepass);
     }
 
-    public function approvalhistory()
+    public function approvalhistory(Request $request)
     {
         $myApprovals = Approval::where('mgr_gtpapprovals_approvedby', auth()->user()->mgr_gtpusers_id)
         ->with('user','gatepass','gatepass.department', 'gatepass.source_location', 'gatepass.destination_location')
         ->orderBy('created_at', 'desc')
         ->get();
+        //dd($myApprovals);
 
        
 
@@ -97,6 +99,7 @@ class ApprovalController extends Controller
         'Gatepass/Approval-history',
         [
             'approvals' => $myApprovals,
+            'gatepasses' => Gatepass::all()
            
             
         ]

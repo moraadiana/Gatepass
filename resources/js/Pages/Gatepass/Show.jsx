@@ -28,18 +28,8 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
     //get role of current user
     const userRole = currUser;
     //console.log(gatepass);
-    console.log(
-        "user roles",
-        gatepass.mgr_gtpgatepass_status === 2 &&
-            gatepass.mgr_gtpgatepass_createdby !== auth.user.mgr_gtpusers_id &&
-            userRole.roles.some(
-                (role) =>
-                    role.mgr_gtproles_id ===
-                    gatepass.approvals.filter(
-                        (approval) => approval.mgr_gtpapprovals_status === 2
-                    )[0]?.approval_level?.role?.mgr_gtproles_id
-            )
-    );
+    console.log( "approvals", gatepass?.approvals?.mgr_gtpapprovals_approvedby ===
+        auth.user.mgr_gtpusers_id);
     return (
         <>
             <Head title="View Gatepass" />
@@ -80,7 +70,8 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                                             await route(
                                                 "gatepass.submitForApproval",
                                                 gatepass.mgr_gtpgatepass_id
-                                            )
+                                            ),
+                                          
                                         );
                                     }}
                                 >
@@ -92,6 +83,7 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                             {gatepass.mgr_gtpgatepass_status === 2 &&
                                 gatepass.mgr_gtpgatepass_createdby !==
                                     auth.user.mgr_gtpusers_id &&
+                                   
                                 userRole.roles.some(
                                     (role) =>
                                         role.mgr_gtproles_id ===
@@ -101,7 +93,10 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                                                 2
                                         )[0]?.approval_level?.role
                                             ?.mgr_gtproles_id
-                                ) && (
+                                            
+                                ) &&
+                                //if user is not equal to mgr_gtpapprovals_approvedby show approve button and reject button for approver level
+                                (
                                     <Space>
                                         <ModalForm
                                             title="Approve Gatepass"
@@ -135,8 +130,10 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                                                             message.success(
                                                                 "Gatepass approved successfully"
                                                             );
+                                                            window.history.back();
+
                                                         },
-                                                        onError: (errors) => {
+                                                        onError: () => {
                                                             setLoading(false);
                                                             setApproveVisible(
                                                                 false
@@ -148,6 +145,7 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                                                     }
                                                 );
                                                 // close modal form
+
                                             }}
                                         >
                                             <ProFormTextArea

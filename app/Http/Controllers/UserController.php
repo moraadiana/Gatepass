@@ -59,6 +59,7 @@ class UserController extends Controller
         $user->roles()->attach($request->mgr_gtpuserroles_role);
 
 
+
         return redirect()->route('user.index')
             ->with('success', 'User created successfully!');
     }
@@ -95,7 +96,7 @@ class UserController extends Controller
     public function update(Request $request, User $user, UserRole $userrole)
     {
         //update user in database
-        //dd($request->input('mgr_gtpuserroles_role'));
+
         $user->update($request->all());
 
         ///remove all roles for user and update inputted roles for user in userroles table 
@@ -104,10 +105,6 @@ class UserController extends Controller
 
         // Update inputted roles for user in userroles table
         $user->roles()->attach($request->mgr_gtpuserroles_role);
-
-
-
-
 
         // check if password is dirty
         if ($user->isDirty('password')) {

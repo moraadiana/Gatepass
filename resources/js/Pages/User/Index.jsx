@@ -113,7 +113,10 @@ export default function Index({ auth, users }) {
                                 pageSize: 10,
                                 total: users?.total,
                             }}
-                            search={false}
+                            //search={true}
+
+                            //return what is being searched in the search bar
+
                             rowKey="mgr_gtpusers_id"
                         />
                     </ProCard>

@@ -16,7 +16,7 @@ import {
 
 import { Head, Link ,router} from "@inertiajs/react";
 
-import { Space, Button } from 'antd';
+import { Space, Button, Tag } from 'antd';
 import { useRef, useState } from "react";
 
  
@@ -74,7 +74,14 @@ export default function Index({ auth, departments,companies,roles }) {
                                     {
                                         title: "Status",
                                         dataIndex:
-                                            "mgr_gtpdepartments_status",                                            
+                                            "mgr_gtpdepartments_status", 
+                                            render: (text) => {
+                                                if (text === 0) {
+                                                    return <Tag color="red">Inactive</Tag>;
+                                                }  else {
+                                                    return <Tag color="green">Active</Tag>;
+                                                }
+                                            },                                      
                                     },
                                   
                                     {

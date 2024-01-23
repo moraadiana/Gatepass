@@ -5,7 +5,8 @@ import { Space, Button, Tag } from "antd";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 export default function Index({ auth, gatepasses }) {
-    //console.log(gatepasses);
+//console.log(gatepasses);
+
     return (
         <>
             <Head title="All gatepasses" />
@@ -20,6 +21,10 @@ export default function Index({ auth, gatepasses }) {
                         headerTitle="Gatepass"
                         dataSource={gatepasses.data}
                         columns={[
+                            {
+                                title: "ID",
+                                dataIndex: "mgr_gtpgatepass_id",
+                            },
                             {
                                 title: "Name",
                                 dataIndex: "mgr_gtpgatepass_name",
@@ -106,7 +111,7 @@ export default function Index({ auth, gatepasses }) {
                                         >
                                             View Details
                                         </Button>
-                                        {record.mgr_gtpgatepass_status !==
+                                        {record.mgr_gtpgatepass_status ==
                                             3 && (
                                             <Button
                                                 type="link"
@@ -129,6 +134,10 @@ export default function Index({ auth, gatepasses }) {
 
                             //create button to submit a gatepass request
                         ]}
+                        pagination={{
+                            pageSize: 10,
+                            total: gatepasses?.total,
+                        }}
                         rowKey="mgr_gtpgatepass_id"
                     />
                 </PageContainer>

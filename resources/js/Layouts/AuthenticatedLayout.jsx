@@ -111,9 +111,7 @@ export default function Authenticated({
                         {
                             path: route("gatepass.myApprovalHistory"),
                             name: "Approval History",
-                            hideInMenu: user.roles.some(
-                                (role) => role.mgr_gtproles_id == 3
-                            ),
+                           
                         },
                     ],
                     hideInMenu: user.roles.some(

@@ -2,12 +2,13 @@
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link ,router} from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
 //import auth
 //import { auth } from "@/Layouts/AuthenticatedLayout";
 
-export default function ApprovalHistory({ auth, approvals }) {
+export default function ApprovalHistory({ auth, approvals,gatepasses }) {
     console.log(approvals);
     //console.log('gatepass',approvals.gatepass);
 
@@ -27,6 +28,10 @@ export default function ApprovalHistory({ auth, approvals }) {
 
 
                         columns={[
+                            {
+                                title: "ID",
+                                dataIndex:["gatepass" ,  "mgr_gtpgatepass_id"],
+                            },
                             {
                                 title: "Name",
                                 dataIndex:["gatepass",
@@ -77,7 +82,7 @@ export default function ApprovalHistory({ auth, approvals }) {
                             },
                             {
                                 title: "Status",
-                                dataIndex: "mgr_gtpgatepass_status",
+                                dataIndex: ["gatepass" ,"mgr_gtpgatepass_status"],
 
                                 // if status is 0 show pending
                                 render: (text) => {
@@ -94,8 +99,31 @@ export default function ApprovalHistory({ auth, approvals }) {
                                     }
                                 },
                             },
+
+                            {
+                                title: "Actions",
+                                render: (_, record) => (
+                                    <Space>
+                                        <Button
+                                            type="link"
+                                            icon={<EyeOutlined />}
+                                            onClick={() => {
+                                                router.get(
+                                                    route(
+                                                        "gatepass.show",
+                                                         record.gatepass.mgr_gtpgatepass_id
+                                                    )
+                                                );
+                                            }}
+                                        >
+                                            View Details
+                                        </Button>
+                                      
+                                    </Space>
+                                ),
+                            },
                         ]}
-                        rowKey={"mgr_gtpapprovals_id"}
+                        rowKey="mgr_gtpgatepass_id"
                     />
                 </PageContainer>
             </Authenticated>

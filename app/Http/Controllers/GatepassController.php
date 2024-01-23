@@ -28,13 +28,13 @@ class GatepassController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $gatepass = Gatepass::with('user', 'uom', 'company', 'department', 'source_location', 'destination_location', 'items')
             ->where('mgr_gtpgatepass_createdby', auth()->user()->mgr_gtpusers_id)
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate($request->pageSize);
         return Inertia::render(
             'Gatepass/Index',
 
@@ -167,15 +167,17 @@ class GatepassController extends Controller
     public function submitForApproval(Gatepass $gatepass)
 
     {
+        
 
         $gatepassCompany = $gatepass->department->company;
         $firstApprovalLevel = ApprovalLevel::where('mgr_gtpapprovallevels_company', $gatepassCompany->mgr_gtpcompanies_id)
             ->orderBy('mgr_gtpapprovallevels_sequence', 'asc')->first();
+            //dd($firstApprovalLevel);
 
         $approverRole = $firstApprovalLevel->role->users
             ->where('mgr_gtpusers_department', $gatepass->department->mgr_gtpdepartments_id);
 
-       // dd($approverRole);
+       //dd($approverRole);
 
         // create approval record on submit
         $gatepass->approvals()->create([

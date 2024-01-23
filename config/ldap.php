@@ -33,7 +33,7 @@ return [
             'username' => env('LDAP_USERNAME', 'gitlab@bulkstream.co'),
             'password' => env('LDAP_PASSWORD', 'K3yH0le457'),
             'port' => env('LDAP_PORT', 389),
-            'base_dn' => env('LDAP_BASE_DN', 'ou=ICT,dc=bulkstream,dc=co'),
+            'base_dn' => env('LDAP_BASE_DN', 'dc=bulkstream,dc=co'),
             'timeout' => env('LDAP_TIMEOUT', 5),
             'use_ssl' => env('LDAP_SSL', false),
             'use_tls' => env('LDAP_TLS', false),

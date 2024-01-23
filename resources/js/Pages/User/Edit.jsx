@@ -31,9 +31,26 @@ export default function Create({ auth, departments, roles, user }) {
                                     route("user.update", user.mgr_gtpusers_id),
                                     {
                                         ...values,
-                                    }
+                                    },
+                                    // {
+                                    //     onSuccess: () => {
+                                    //         router.get(route("user.index"));
+                                    //         //return success message
+                                    //         message.success(
+                                    //             "User updated successfully"
+                                    //         );
+                                            
+                                    //     },
+                                    //     onError: () => {
+                                    //         //return error message
+                                    //         message.error(
+                                    //             "Error updating user"
+                                    //         );
+                                    //     }
+                                    // }
                                 );
-                            }}
+                            }
+                        }
                             initialValues={user}
                         >
                             <ProForm.Group>

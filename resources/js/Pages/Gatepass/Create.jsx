@@ -51,26 +51,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     normalize={(value) => value.toUpperCase()}
                                     rules={[{ required: true }]}
                                 />
-                                {/* <ProFormText
-                                    width="sm"
-                                    name="mgr_gtpgatepass_company"
-                                    label="Company"
-                                    placeholder="Company"
-                                    rules={[{ required: true }]}
-                                /> */}
-                                {/* <ProFormSelect
-                                    width="sm"
-                                    name="mgr_gtpgatepass_department"
-                                    label="Department"
-                                    placeholder="Department"
-                                    rules={[{ required: true }]}
-                                    options={departments.map((department) => {
-                                        return {
-                                            label: department.mgr_gtpdepartments_name,
-                                            value: department.mgr_gtpdepartments_id,
-                                        };
-                                    })}
-                                /> */}
+                             
                                 <ProFormSelect
                                     width="sm"
                                     name="mgr_gtpgatepass_sourcelocation"
@@ -151,7 +132,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         normalize={(value) => value.toUpperCase()}
                                     />
                                     <ProFormText
-                                        width="sm"
+                                        width="xs"
                                         name="mgr_gtpitems_quantity"
                                         label="Quantity"
                                         placeholder="Quantity"
