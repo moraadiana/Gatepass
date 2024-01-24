@@ -18,7 +18,7 @@ class submitForApproval extends Mailable
      */
    public function build()
     {
-        return $this->from ('diana.moraa@grainbulk.com')
+        return $this->from ('ictsupport@bulkstream.co')
         ->subject('Gatepass Approval Request')
         ->view('emails.submitForApproval');
          

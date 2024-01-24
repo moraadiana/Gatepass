@@ -15,7 +15,7 @@ class GatepassRejected extends Mailable
 
     public function build()
     {
-        return $this->from ('diana.moraa@grainbulk.com')
+        return $this->from ('ictsupport@bulkstream.co')
         ->subject('Gatepass Rejected')
         ->view('emails.GatepassRejected');
          
