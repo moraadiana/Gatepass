@@ -49,6 +49,7 @@ class GatepassController extends Controller
      */
     public function create()
     {
+
         return Inertia::render(
             'Gatepass/Create',
             [
@@ -142,15 +143,15 @@ class GatepassController extends Controller
     public function update(Request $request, Gatepass $gatepass, Item $item)
     {
         //Update the resource with new data from request*/
-   
+
         $gatepass->update($request->all());
 
-    
-    // Remove all items
-    $gatepass->items()->delete();
 
-    // Recreate items with new data from request
-    $gatepass->items()->createMany($request->input('items'));
+        // Remove all items
+        $gatepass->items()->delete();
+
+        // Recreate items with new data from request
+        $gatepass->items()->createMany($request->input('items'));
         //update the gatepass status to 1
 
         return redirect()->route('gatepass.index')->with('success', 'Gatepass updated successfully!');
@@ -167,17 +168,17 @@ class GatepassController extends Controller
     public function submitForApproval(Gatepass $gatepass)
 
     {
-        
+
 
         $gatepassCompany = $gatepass->department->company;
         $firstApprovalLevel = ApprovalLevel::where('mgr_gtpapprovallevels_company', $gatepassCompany->mgr_gtpcompanies_id)
             ->orderBy('mgr_gtpapprovallevels_sequence', 'asc')->first();
-            //dd($firstApprovalLevel);
+        //dd($firstApprovalLevel);
 
         $approverRole = $firstApprovalLevel->role->users
             ->where('mgr_gtpusers_department', $gatepass->department->mgr_gtpdepartments_id);
 
-       //dd($approverRole);
+        //dd($approverRole);
 
         // create approval record on submit
         $gatepass->approvals()->create([
@@ -243,9 +244,9 @@ class GatepassController extends Controller
     //create function to print a gatepass when print button is clicked
     public function printGatepass(Gatepass $gatepass)
     {
-    
+
         //return gatepass.print in pdf format 
-      //  $gatepass->load('user', 'uom', 'department', 'source_location', 'destination_location', 'company', 'items', 'approvals.approvalLevel.role', 'approvals.user');
+        //  $gatepass->load('user', 'uom', 'department', 'source_location', 'destination_location', 'company', 'items', 'approvals.approvalLevel.role', 'approvals.user');
 
 
         $pdf = PDF::loadView('gatepass.print', compact('gatepass'));

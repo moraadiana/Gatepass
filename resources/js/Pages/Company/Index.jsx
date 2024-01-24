@@ -66,8 +66,10 @@ export default function Index({ auth, companies }) {
                                 ),
                             },
                         ]}
-                        pagination={{ defaultPageSize: 5, 
-                        total: companies?.total,}}
+                        pagination={{ 
+                            pageSize: 10, 
+                        total: companies?.total,
+                    }}
                         toolBarRender={() => [
                             <Button
                                 type="primary"

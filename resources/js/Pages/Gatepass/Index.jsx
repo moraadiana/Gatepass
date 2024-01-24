@@ -13,12 +13,12 @@ export default function Index({ auth, gatepasses }) {
             <Authenticated user={auth.user}>
                 <PageContainer
                     header={{
-                        title: "Gatepass",
+                    title: "Gatepass",
                         onBack: () => window.history.back(),
                     }}
                 >
                     <ProTable
-                        headerTitle="Gatepass"
+                        //headerTitle="Gatepass"
                         dataSource={gatepasses.data}
                         columns={[
                             {

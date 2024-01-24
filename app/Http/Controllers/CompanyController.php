@@ -11,14 +11,14 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //  
         $company = Company::all();
 
         //dd($company);
         return Inertia::render('Company/Index', [
-            'companies' => $company,
+            'companies' =>Inertia::lazy(fn () => $company->paginate($request->pageSize)),
         ]);
     }
 

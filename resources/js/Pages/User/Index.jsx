@@ -14,6 +14,7 @@ import { Space, Button, Tag } from "antd";
 
 export default function Index({ auth, users }) {
     //console.log(users);
+  //  console.log ("search values", value)
     return (
         <>
             <Head title="Users" />
@@ -113,7 +114,7 @@ export default function Index({ auth, users }) {
                                 pageSize: 10,
                                 total: users?.total,
                             }}
-                            //search={true}
+                          
 
                             //return what is being searched in the search bar
 

@@ -16,8 +16,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $user = User::with('roles', 'department')->get();
+      //  $user = User::with('roles', 'department')->get();
         //dd($user);
+
+        //check if search parameter isz
 
         return Inertia::render(
             'User/Index',

@@ -18,7 +18,8 @@ class GatepassApproved extends Mailable
      */
     public function build()
     {
-        return $this->from ('diana.moraa@grainbulk.com')
+        return $this->from (
+            config('mail.from.address'),)
         ->subject('Gatepass Approved')
         ->view('emails.GatepassApproved');
          

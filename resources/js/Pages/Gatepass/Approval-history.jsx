@@ -23,7 +23,7 @@ export default function ApprovalHistory({ auth, approvals,gatepasses }) {
                     }}
                 >
                     <ProTable
-                        headerTitle="Gatepass"
+                       // headerTitle="Gatepass"
                         dataSource={approvals}
 
 
@@ -123,6 +123,8 @@ export default function ApprovalHistory({ auth, approvals,gatepasses }) {
                                 ),
                             },
                         ]}
+
+                       
                         rowKey="mgr_gtpgatepass_id"
                     />
                 </PageContainer>

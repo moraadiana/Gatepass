@@ -12,12 +12,12 @@ export default function Index({ auth, gatepasses, approvals }) {
             <Head title="Approvals" />
             <PageContainer
                 header={{
-                    title: "Approvals",
+                    title: "Gatepass Approvals",
                     onBack: () => window.history.back(),
                 }}
             >
                 <ProTable
-                    headerTitle="Submitted Gatepass"
+                    //headerTitle="Submitted Gatepass"
                     dataSource={gatepasses}
                     columns={[
                         {
@@ -142,7 +142,7 @@ export default function Index({ auth, gatepasses, approvals }) {
                        
                         //create a link to view created gatepass
                     ]}
-                    
+                   
                     rowKey="mgr_gtpgatepass_id"
                 />
             </PageContainer>

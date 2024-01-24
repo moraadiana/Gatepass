@@ -23,30 +23,29 @@ class ApprovalController extends Controller
      */
     public function index()
 
-     {
+    {
         //get current user
         $currentUser = Auth::user();
         $approvals = Approval::all();
         //find role of current user 
         $approverRole = $currentUser->roles->first();
-       // dd($approverRole->approvallevel-> company->department-> mgr_gtpdepartments_id);
+        // dd($approverRole->approvallevel-> company->department-> mgr_gtpdepartments_id);
 
-       
+
         //get gatepass where status is 2 and gatepass department is same as that of logged in user 
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
-            ->where('mgr_gtpgatepass_status', 2) 
+            ->where('mgr_gtpgatepass_status', 2)
             ->orderBy('created_at', 'desc')
             ->get();
-    
-   
+
+
         return Inertia::render(
             'Approval/Index',
             [
                 'gatepasses' => $gatepass,
                 'approvals' => $approvals
             ]
-            );
-  
+        );
     }
 
     /**
@@ -80,31 +79,30 @@ class ApprovalController extends Controller
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')->where('mgr_gtpapprovals_id', $approval->id)
             ->where('mgr_gtpapprovals_status', 1)
             ->get();
-      //  dd($gatepass);
+        //  dd($gatepass);
     }
 
     public function approvalhistory(Request $request)
     {
         $myApprovals = Approval::where('mgr_gtpapprovals_approvedby', auth()->user()->mgr_gtpusers_id)
-        ->with('user','gatepass','gatepass.department', 'gatepass.source_location', 'gatepass.destination_location')
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->with('user', 'gatepass', 'gatepass.department', 'gatepass.source_location', 'gatepass.destination_location')
+            ->orderBy('created_at', 'desc')
+            ->get();
         //dd($myApprovals);
 
-       
 
-     // dd($myApprovals);
-       // return route to approval history page 
-       return Inertia::render(
-        'Gatepass/Approval-history',
-        [
-            'approvals' => $myApprovals,
-            'gatepasses' => Gatepass::all()
-           
-            
-        ]
+
+        // dd($myApprovals);
+        // return route to approval history page 
+        return Inertia::render(
+            'Gatepass/Approval-history',
+            [
+                'approvals' => $myApprovals,
+                'gatepasses' => Gatepass::all()
+
+
+            ]
         );
-
     }
 
     /**
