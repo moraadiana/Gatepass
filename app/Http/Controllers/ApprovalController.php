@@ -33,7 +33,8 @@ class ApprovalController extends Controller
         $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
             ->where('mgr_gtpgatepass_status', 2)
             //where gatepass department is same as that of logged in user
-           // ->where('mgr_gtpgatepass_department', $currentUser->mgr_gtpusers_department)
+           //->where('mgr_gtpgatepass_department', $currentUser->mgr_gtpusers_department)
+
             ->orderBy('created_at', 'desc')
             ->get();
 
