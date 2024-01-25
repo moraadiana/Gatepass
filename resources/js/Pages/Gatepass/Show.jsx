@@ -82,7 +82,7 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                             )}
                             {gatepass.mgr_gtpgatepass_status === 2 &&
                                 gatepass.mgr_gtpgatepass_createdby !==
-                                    auth.user.mgr_gtpusers_id &&
+                                    auth.user.mgr_gtpusers_id  &&
                                    
                                 userRole.roles.some(
                                     (role) =>
