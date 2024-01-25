@@ -21,9 +21,9 @@ class ApprovalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-
+    public function index(Request $request)
     {
+<<<<<<< HEAD
         //get current user
         $currentUser = Auth::user();
         $approvals = Approval::all();
@@ -38,13 +38,46 @@ class ApprovalController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+=======
+        //If the user roles include security, show all gatepasses 
+        if (auth()->user()->roles->pluck('mgr_gtproles_id')->contains(2)) {
+            $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
+                ->where('mgr_gtpgatepass_status', 2)
+                ->whereHas('approvals', function ($query) {
+                    $query->where('mgr_gtpapprovals_status', 2)
+                        ->whereHas('approvallevel', function ($query) {
+                            $query->whereIn(
+                                'mgr_gtpapprovallevels_approver',
+                                auth()->user()->roles->pluck('mgr_gtproles_id')
+                            );
+                        });
+                })
+                ->paginate($request->pageSize);
+        } else {
+            $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
+                ->where('mgr_gtpgatepass_status', 2)
+                ->where('mgr_gtpgatepass_department', auth()->user()->mgr_gtpusers_department)
+                ->whereHas('approvals', function ($query) {
+                    $query->where('mgr_gtpapprovals_status', 2)
+                        ->whereHas('approvallevel', function ($query) {
+                            $query->whereIn(
+                                'mgr_gtpapprovallevels_approver',
+                                auth()->user()->roles->pluck('mgr_gtproles_id')
+                            );
+                        });
+                })
+                ->paginate($request->pageSize);
+        }
+>>>>>>> afd450d78f0ccb1b0ac91e37dbcbacd4b4bf6b1f
 
         return Inertia::render(
             'Approval/Index',
             [
-                'gatepasses' => $gatepass,
-                'approvals' => $approvals
+                'gatepasses' => Inertia::lazy(
+                    fn () => $gatepasses,
+                ),
             ]
+
         );
     }
 
@@ -87,20 +120,13 @@ class ApprovalController extends Controller
         $myApprovals = Approval::where('mgr_gtpapprovals_approvedby', auth()->user()->mgr_gtpusers_id)
             ->with('user', 'gatepass', 'gatepass.department', 'gatepass.source_location', 'gatepass.destination_location')
             ->orderBy('created_at', 'desc')
-            ->get();
-        //dd($myApprovals);
+            ->paginate($request->pageSize);
 
-
-
-        // dd($myApprovals);
-        // return route to approval history page 
         return Inertia::render(
             'Gatepass/Approval-history',
             [
-                'approvals' => $myApprovals,
+                'approvals' => Inertia::lazy(fn () => $myApprovals),
                 'gatepasses' => Gatepass::all()
-
-
             ]
         );
     }

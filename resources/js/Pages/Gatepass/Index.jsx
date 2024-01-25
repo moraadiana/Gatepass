@@ -5,7 +5,7 @@ import { Space, Button, Tag } from "antd";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 export default function Index({ auth, gatepasses }) {
-//console.log(gatepasses);
+    console.log(gatepasses);
 
     return (
         <>
@@ -13,17 +13,31 @@ export default function Index({ auth, gatepasses }) {
             <Authenticated user={auth.user}>
                 <PageContainer
                     header={{
-                    title: "Gatepass",
+                        title: "Gatepass",
                         onBack: () => window.history.back(),
                     }}
                 >
                     <ProTable
-                        //headerTitle="Gatepass"
-                        dataSource={gatepasses.data}
+                        size="small"
+                        dataSource={gatepasses?.data}
+                        request={async (params = {}) => {
+                            params.page = params.current;
+                            delete params.current;
+                            router.reload({
+                                only: ["gatepasses"],
+                                data: params,
+                            });
+                            return {
+                                data: gatepasses?.data,
+                                success: true,
+                                total: gatepasses?.total,
+                            };
+                        }}
                         columns={[
                             {
                                 title: "ID",
                                 dataIndex: "mgr_gtpgatepass_id",
+                                //hideInSearch: true,
                             },
                             {
                                 title: "Name",
@@ -77,7 +91,7 @@ export default function Index({ auth, gatepasses }) {
                             {
                                 title: "Status",
                                 dataIndex: "mgr_gtpgatepass_status",
-
+                                hideInSearch: true,
                                 // if status is 0 show pending
                                 render: (text) => {
                                     if (text === 0) {
@@ -95,6 +109,7 @@ export default function Index({ auth, gatepasses }) {
                             },
                             {
                                 title: "Actions",
+                                hideInSearch: true,
                                 render: (_, record) => (
                                     <Space>
                                         <Button
@@ -111,8 +126,7 @@ export default function Index({ auth, gatepasses }) {
                                         >
                                             View Details
                                         </Button>
-                                        {record.mgr_gtpgatepass_status ==
-                                            3 && (
+                                        {record.mgr_gtpgatepass_status == 3 && (
                                             <Button
                                                 type="link"
                                                 icon={<EditOutlined />}
@@ -134,8 +148,14 @@ export default function Index({ auth, gatepasses }) {
 
                             //create button to submit a gatepass request
                         ]}
+                        search={{
+                            collapsed: false,
+                            collapseRender: () => false,
+                            layout: "vertical",
+                        }}
                         pagination={{
-                            pageSize: 10,
+                            defaultPageSize: 20,
+                            pageSize: gatepasses?.per_page,
                             total: gatepasses?.total,
                         }}
                         rowKey="mgr_gtpgatepass_id"
