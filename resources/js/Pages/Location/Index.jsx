@@ -100,8 +100,9 @@ export default function Index({
                         ),
                     }}
                     pagination={{
-                        pageSize: 5,
+                        pageSize: locations?.per_page,
                         total: locations?.total,
+                        defaultPageSize: 10,
                     }}
                     toolBarRender={() => [
                         <Button

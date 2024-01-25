@@ -24,7 +24,8 @@ createInertiaApp({
                 locale={enUS}
                 theme={{
                     token: {
-                        fontFamily: "Inter, sans-serif",
+                        fontFamily: "Lato, sans-serif",
+                        colorPrimary: "#153037",
                     },
                 }}
             >

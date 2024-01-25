@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
- 
+
 import {
     ModalForm,
     PageContainer,
@@ -12,11 +12,10 @@ import { Button, message } from "antd";
 import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import React, { useRef, useState } from "react";
 import { Head, router } from "@inertiajs/react";
- 
+
 export default function ApprovalLevels({
     auth,
     approvalLevels,
-    users,
     companies,
     roles,
 }) {
@@ -24,9 +23,6 @@ export default function ApprovalLevels({
     const formRef = useRef();
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState(null);
-
-    //console.log (approvalLevels);
-   // console.log("companies", companies);
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Approval Levels" />
@@ -39,7 +35,7 @@ export default function ApprovalLevels({
                 <ProTable
                     actionRef={actionRef}
                     dataSource={approvalLevels?.data}
-                    request={async (params = {}, sort, filter) => {
+                    request={async (params = {}) => {
                         params.page = params.current;
                         delete params.current;
                         router.reload({
@@ -71,16 +67,16 @@ export default function ApprovalLevels({
                                     {
                                         title: "Role",
                                         dataIndex: [
-                                            "role","mgr_gtproles_name"
-                                        ]
-
+                                            "role",
+                                            "mgr_gtproles_name",
+                                        ],
                                     },
                                     {
                                         title: "Sequence",
                                         dataIndex:
-                                            "mgr_gtpapprovallevels_sequence",                                            
+                                            "mgr_gtpapprovallevels_sequence",
                                     },
-                                  
+
                                     {
                                         title: "Actions",
                                         render: (text, record) => (
@@ -98,6 +94,41 @@ export default function ApprovalLevels({
                                     },
                                 ]}
                                 dataSource={record.approval_levels}
+                                expandable={{
+                                    expandedRowRender: (record) => (
+                                        <ProTable
+                                            columns={[
+                                                {
+                                                    title: "Emp No",
+                                                    dataIndex:
+                                                        "mgr_gtpusers_empno",
+                                                },
+                                                {
+                                                    title: "First Name",
+                                                    dataIndex:
+                                                        "mgr_gtpusers_fname",
+                                                },
+                                                {
+                                                    title: "Last Name",
+                                                    dataIndex:
+                                                        "mgr_gtpusers_lname",
+                                                },
+
+                                                {
+                                                    title: "Email",
+                                                    dataIndex:
+                                                        "mgr_gtpusers_email",
+                                                },
+                                            ]}
+                                            dataSource={record?.role?.users}
+                                            rowKey="mgr_gtproles_id"
+                                            search={false}
+                                            pagination={false}
+                                            options={false}
+                                            bordered
+                                        />
+                                    ),
+                                }}
                                 rowKey="mgr_gtpapprovallevels_id"
                                 search={false}
                                 pagination={false}
@@ -107,8 +138,9 @@ export default function ApprovalLevels({
                         ),
                     }}
                     pagination={{
-                        pageSize: 5,
+                        pageSize: approvalLevels?.per_page,
                         total: approvalLevels?.total,
+                        defaultPageSize: 5,
                     }}
                     toolBarRender={() => [
                         <Button
@@ -182,7 +214,7 @@ export default function ApprovalLevels({
                             placeholder="Level Name"
                             rules={[{ required: true }]}
                         />
- 
+
                         <ProFormSelect
                             width="sm"
                             name="mgr_gtpapprovallevels_company"
@@ -205,8 +237,8 @@ export default function ApprovalLevels({
                             fieldProps={{
                                 type: "number",
                             }}
-                            />
-                
+                        />
+
                         <ProFormSelect
                             width="sm"
                             name="mgr_gtpapprovallevels_approver"
@@ -220,7 +252,6 @@ export default function ApprovalLevels({
                         />
                     </ProForm.Group>
                     <ProForm.Group>
-                        
                         <ProFormSelect
                             width="sm"
                             name="mgr_gtpapprovallevels_status"

@@ -25,7 +25,7 @@ class ApprovalLevelController extends Controller
                         'approvalLevels' => function ($query) {
                             $query->orderBy('mgr_gtpapprovallevels_sequence', 'asc');
                         },
-                        'approvalLevels.role',
+                        'approvalLevels.role.users',
 
                     ]
                 )->paginate($request->pageSize)),
@@ -49,21 +49,19 @@ class ApprovalLevelController extends Controller
      */
     public function store(Request $request)
     {
-      //store new approval level in database
-      //dd($request->all());
-    $validatedData = $request->validate([
-         'mgr_gtpapprovallevels_label' => ['required', 'string', 'max:255'],
-         'mgr_gtpapprovallevels_sequence' => ['required', 'integer'],
-         'mgr_gtpapprovallevels_approver' => ['required', 'integer'],
-         'mgr_gtpapprovallevels_company' => ['required', 'integer'],
+        //store new approval level in database
+        //dd($request->all());
+        $validatedData = $request->validate([
+            'mgr_gtpapprovallevels_label' => ['required', 'string', 'max:255'],
+            'mgr_gtpapprovallevels_sequence' => ['required', 'integer'],
+            'mgr_gtpapprovallevels_approver' => ['required', 'integer'],
+            'mgr_gtpapprovallevels_company' => ['required', 'integer'],
 
-     ]);
+        ]);
 
-     ApprovalLevel ::create($validatedData);
-
-    
-      }
-        //
+        ApprovalLevel::create($validatedData);
+    }
+    //
 
 
     /**

@@ -30,16 +30,29 @@ class GatepassController extends Controller
      */
     public function index(Request $request)
     {
-
-        $gatepass = Gatepass::with('user', 'uom', 'company', 'department', 'source_location', 'destination_location', 'items')
-            ->where('mgr_gtpgatepass_createdby', auth()->user()->mgr_gtpusers_id)
-            ->orderBy('created_at', 'desc')
-            ->paginate($request->pageSize);
+        $query = Gatepass::query();
+        if ($request->has('mgr_gtpgatepass_id')) {
+            $query->where('mgr_gtpgatepass_id', 'like', '%' . $request->mgr_gtpgatepass_id . '%');
+        }
+        if ($request->has('mgr_gtpgatepass_name')) {
+            $query->where('mgr_gtpgatepass_name', 'like', '%' . $request->mgr_gtpgatepass_name . '%');
+        }
+        if ($request->has('mgr_gtpgatepass_vehiclereg')) {
+            $query->where('mgr_gtpgatepass_vehiclereg', 'like', '%' . $request->mgr_gtpgatepass_vehiclereg . '%');
+        }
+        if ($request->has('mgr_gtpgatepass_purpose')) {
+            $query->where('mgr_gtpgatepass_purpose', 'like', '%' . $request->mgr_gtpgatepass_purpose . '%');
+        }
+        if ($request->has('mgr_gtpgatepass_auxilarydoc')) {
+            $query->where('mgr_gtpgatepass_auxilarydoc', 'like', '%' . $request->mgr_gtpgatepass_auxilarydoc . '%');
+        }
         return Inertia::render(
             'Gatepass/Index',
 
             [
-                'gatepasses' => $gatepass
+                'gatepasses' => Inertia::lazy(fn () => $query->with('user', 'uom', 'company', 'department', 'source_location', 'destination_location', 'items')->where('mgr_gtpgatepass_createdby', auth()->user()->mgr_gtpusers_id)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate($request->pageSize)),
             ]
         );
     }

@@ -16,15 +16,27 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-      //  $user = User::with('roles', 'department')->get();
-        //dd($user);
+        //Get all users and implement search functionality. The frontend is antd protable table
+        $query = User::query();
 
-        //check if search parameter isz
+        if ($request->has('mgr_gtpusers_empno')) {
+            $query->where('mgr_gtpusers_empno', 'like', '%' . $request->mgr_gtpusers_empno . '%');
+        }
+        if ($request->has('mgr_gtpusers_fname')) {
+            $query->where('mgr_gtpusers_fname', 'like', '%' . $request->mgr_gtpusers_fname . '%');
+        }
+        if ($request->has('mgr_gtpusers_lname')) {
+            $query->where('mgr_gtpusers_lname', 'like', '%' . $request->mgr_gtpusers_lname . '%');
+        }
+        if ($request->has('mgr_gtpusers_email')) {
+            $query->where('mgr_gtpusers_email', 'like', '%' . $request->mgr_gtpusers_email . '%');
+        }
+
 
         return Inertia::render(
             'User/Index',
             [
-                'users' => Inertia::lazy(fn () => User::with('roles', 'department')->paginate($request->pageSize)),
+                'users' => Inertia::lazy(fn () => $query->with('department')->paginate($request->pageSize)),
                 'roles' => Role::all(),
                 'department' => Department::all()
             ]

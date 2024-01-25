@@ -1,20 +1,9 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import {
-    PageContainer,
-    ProCard,
-    ProTable,
-    ProForm,
-    ProDescriptions,
-    ModalForm,
-    ProFormTextArea,
-} from "@ant-design/pro-components";
+import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
-
 import { Space, Button, Tag } from "antd";
 
 export default function Index({ auth, users }) {
-    //console.log(users);
-  //  console.log ("search values", value)
     return (
         <>
             <Head title="Users" />
@@ -77,11 +66,12 @@ export default function Index({ auth, users }) {
                                         "department",
                                         "mgr_gtpdepartments_name",
                                     ],
+                                    hideInSearch: true,
                                 },
                                 {
                                     title: "Status",
                                     dataIndex: "mgr_gtpusers_status",
-
+                                    hideInSearch: true,
                                     render: (text) => {
                                         if (text == 1) {
                                             return (
@@ -98,6 +88,7 @@ export default function Index({ auth, users }) {
                                 {
                                     title: "Action",
                                     dataIndex: "mgr_gtpusers_id",
+                                    hideInSearch: true,
                                     render: (_, record) => (
                                         <Link
                                             href={route(
@@ -111,13 +102,16 @@ export default function Index({ auth, users }) {
                                 },
                             ]}
                             pagination={{
-                                pageSize: 10,
+                                pageSize: users?.per_page,
                                 total: users?.total,
+                                defaultPageSize: 10,
                             }}
-                          
-
                             //return what is being searched in the search bar
-
+                            search={{
+                                collapsed: false,
+                                collapseRender: () => false,
+                                
+                            }}
                             rowKey="mgr_gtpusers_id"
                         />
                     </ProCard>

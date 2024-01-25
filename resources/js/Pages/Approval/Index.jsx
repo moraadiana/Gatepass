@@ -1,12 +1,11 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageContainer, ProTable } from "@ant-design/pro-components";
-import { Head, Link ,router} from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 //create a function to fetch all gatepasses
 
 export default function Index({ auth, gatepasses, approvals }) {
-
     return (
         <Authenticated user={auth.user}>
             <Head title="Approvals" />
@@ -18,7 +17,22 @@ export default function Index({ auth, gatepasses, approvals }) {
             >
                 <ProTable
                     //headerTitle="Submitted Gatepass"
-                    dataSource={gatepasses}
+                    size="small"
+                    dataSource={gatepasses?.data}
+                    request={async (params = {}) => {
+                        params.page = params.current;
+                        delete params.current;
+                        router.reload({
+                            only: ["gatepasses"],
+                            data: params,
+                        });
+                        return {
+                            data: gatepasses?.data,
+                            success: true,
+                            total: gatepasses?.total,
+                            
+                        };
+                    }}
                     columns={[
                         {
                             title: "ID",
@@ -41,13 +55,11 @@ export default function Index({ auth, gatepasses, approvals }) {
                         },
                         {
                             title: "Auxilary Document",
-                            dataIndex: 
-                                "mgr_gtpgatepass_auxilarydoc",
-                            
+                            dataIndex: "mgr_gtpgatepass_auxilarydoc",
                         },
                         {
                             title: "Purpose",
-                            dataIndex: [ "mgr_gtpgatepass_purpose"],
+                            dataIndex: ["mgr_gtpgatepass_purpose"],
                         },
                         {
                             title: "Source Location",
@@ -59,16 +71,13 @@ export default function Index({ auth, gatepasses, approvals }) {
                         {
                             title: "Destination Location",
                             dataIndex: [
-                            
                                 "destination_location",
                                 "mgr_gtplocations_name",
                             ],
                         },
                         {
                             title: "Destination",
-                            dataIndex: [
-                                "mgr_gtpgatepass_destination",
-                            ],
+                            dataIndex: ["mgr_gtpgatepass_destination"],
                         },
                         // {
                         //     title: "Actions",
@@ -92,9 +101,7 @@ export default function Index({ auth, gatepasses, approvals }) {
                                 if (text === 0) {
                                     return <Tag color="red">Rejected</Tag>;
                                 } else if (text === 1) {
-                                    return (
-                                        <Tag color="green">Approved</Tag>
-                                    );
+                                    return <Tag color="green">Approved</Tag>;
                                 } else if (text === 2) {
                                     return <Tag color="green">Pending</Tag>;
                                 } else {
@@ -108,7 +115,7 @@ export default function Index({ auth, gatepasses, approvals }) {
                                 <Space>
                                     <Button
                                         type="link"
-                                        icon={<EyeOutlined/>}
+                                        icon={<EyeOutlined />}
                                         onClick={() => {
                                             router.get(
                                                 route(
@@ -120,29 +127,32 @@ export default function Index({ auth, gatepasses, approvals }) {
                                     >
                                         View Details
                                     </Button>
-                                   
-                                        <Button
-                                            type="link"
-                                            icon={<EditOutlined/>}
-                                            onClick={() => {
-                                                router.get(
-                                                    route(
-                                                        "gatepass.edit",
-                                                        record.mgr_gtpgatepass_id
-                                                    )
-                                                );
-                                            }}
-                                        >
-                                            Edit
-                                        </Button>
-                                  
+
+                                    <Button
+                                        type="link"
+                                        icon={<EditOutlined />}
+                                        onClick={() => {
+                                            router.get(
+                                                route(
+                                                    "gatepass.edit",
+                                                    record.mgr_gtpgatepass_id
+                                                )
+                                            );
+                                        }}
+                                    >
+                                        Edit
+                                    </Button>
                                 </Space>
                             ),
                         },
-                       
+
                         //create a link to view created gatepass
                     ]}
-                   
+                    pagination={{
+                        total: gatepasses?.total,
+                        pageSize: gatepasses?.per_page,
+                        defaultPageSize: 20,
+                    }}
                     rowKey="mgr_gtpgatepass_id"
                 />
             </PageContainer>

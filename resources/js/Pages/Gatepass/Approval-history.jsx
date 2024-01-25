@@ -2,13 +2,13 @@
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageContainer, ProCard, ProTable } from "@ant-design/pro-components";
-import { Head, Link ,router} from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import { Space, Button, Tag } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 //import auth
 //import { auth } from "@/Layouts/AuthenticatedLayout";
 
-export default function ApprovalHistory({ auth, approvals,gatepasses }) {
+export default function ApprovalHistory({ auth, approvals, gatepasses }) {
     console.log(approvals);
     //console.log('gatepass',approvals.gatepass);
 
@@ -23,66 +23,93 @@ export default function ApprovalHistory({ auth, approvals,gatepasses }) {
                     }}
                 >
                     <ProTable
-                       // headerTitle="Gatepass"
-                        dataSource={approvals}
-
-
+                        // headerTitle="Gatepass"
+                        dataSource={approvals?.data}
+                        request={async (params = {}) => {
+                            params.page = params.current;
+                            delete params.current;
+                            router.reload({
+                                only: ["approvals"],
+                                data: params,
+                            });
+                            return {
+                                data: approvals?.data,
+                                success: true,
+                                total: approvals?.total,
+                            };
+                        }}
                         columns={[
                             {
                                 title: "ID",
-                                dataIndex:["gatepass" ,  "mgr_gtpgatepass_id"],
+                                dataIndex: ["gatepass", "mgr_gtpgatepass_id"],
                             },
                             {
                                 title: "Name",
-                                dataIndex:["gatepass",
-                                 "mgr_gtpgatepass_name"],
+                                dataIndex: ["gatepass", "mgr_gtpgatepass_name"],
                             },
                             {
                                 title: "Vehicle Reg",
-                                dataIndex: ["gatepass",
-                                    "mgr_gtpgatepass_vehiclereg",]
+                                dataIndex: [
+                                    "gatepass",
+                                    "mgr_gtpgatepass_vehiclereg",
+                                ],
                             },
 
                             {
                                 title: "Department",
                                 dataIndex: [
-                                    "gatepass","department",
+                                    "gatepass",
+                                    "department",
                                     "mgr_gtpdepartments_name",
                                 ],
                             },
 
                             {
                                 title: "Auxilary Document",
-                                dataIndex: ["gatepass","mgr_gtpgatepass_auxilarydoc"],
+                                dataIndex: [
+                                    "gatepass",
+                                    "mgr_gtpgatepass_auxilarydoc",
+                                ],
                             },
                             {
                                 title: "Purpose",
-                                dataIndex:["gatepass","mgr_gtpgatepass_purpose"] ,
+                                dataIndex: [
+                                    "gatepass",
+                                    "mgr_gtpgatepass_purpose",
+                                ],
                                 hideInSearch: true,
                             },
                             {
                                 title: "Source Location",
                                 dataIndex: [
-                                    "gatepass","source_location",
+                                    "gatepass",
+                                    "source_location",
                                     "mgr_gtplocations_name",
                                 ],
                             },
                             {
                                 title: "Destination Location",
                                 dataIndex: [
-                                    "gatepass","destination_location",
+                                    "gatepass",
+                                    "destination_location",
                                     "mgr_gtplocations_name",
                                 ],
                             },
 
                             {
                                 title: "Specific Destination",
-                                dataIndex: ["gatepass","mgr_gtpgatepass_destination"],
+                                dataIndex: [
+                                    "gatepass",
+                                    "mgr_gtpgatepass_destination",
+                                ],
                                 hideInSearch: true,
                             },
                             {
                                 title: "Status",
-                                dataIndex: ["gatepass" ,"mgr_gtpgatepass_status"],
+                                dataIndex: [
+                                    "gatepass",
+                                    "mgr_gtpgatepass_status",
+                                ],
 
                                 // if status is 0 show pending
                                 render: (text) => {
@@ -111,20 +138,23 @@ export default function ApprovalHistory({ auth, approvals,gatepasses }) {
                                                 router.get(
                                                     route(
                                                         "gatepass.show",
-                                                         record.gatepass.mgr_gtpgatepass_id
+                                                        record.gatepass
+                                                            .mgr_gtpgatepass_id
                                                     )
                                                 );
                                             }}
                                         >
                                             View Details
                                         </Button>
-                                      
                                     </Space>
                                 ),
                             },
                         ]}
-
-                       
+                        pagination={{
+                            pageSize: approvals?.per_page,
+                            total: approvals?.total,
+                            defaultPageSize: 20,
+                        }}
                         rowKey="mgr_gtpgatepass_id"
                     />
                 </PageContainer>
