@@ -71,13 +71,23 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     label="Destination Location"
                                     placeholder="Destination Location"
                                     rules={[{ required: true }]}
+
+                                    // return all active loctaions only
                                     options={locations.map((location) => {
                                         return {
                                             label: location.mgr_gtplocations_name,
                                             value: location.mgr_gtplocations_id,
                                         };
-                                    })}
+
+                                    })
+                                }
+
+                                    
+
+
                                 />
+
+                                
                                 <ProFormText
                                     width="sm"
                                     name="mgr_gtpgatepass_destination"

@@ -23,22 +23,6 @@ class ApprovalController extends Controller
      */
     public function index(Request $request)
     {
-<<<<<<< HEAD
-        //get current user
-        $currentUser = Auth::user();
-        $approvals = Approval::all();
-        $approverRole = $currentUser->roles->first();
-
-        //get gatepass where status is 2 and gatepass department is same as that of logged in user 
-        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
-            ->where('mgr_gtpgatepass_status', 2)
-            //where gatepass department is same as that of logged in user
-           //->where('mgr_gtpgatepass_department', $currentUser->mgr_gtpusers_department)
-
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-=======
         //If the user roles include security, show all gatepasses 
         if (auth()->user()->roles->pluck('mgr_gtproles_id')->contains(2)) {
             $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
@@ -52,6 +36,7 @@ class ApprovalController extends Controller
                             );
                         });
                 })
+                ->orderBy('created_at', 'desc')
                 ->paginate($request->pageSize);
         } else {
             $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
@@ -66,9 +51,9 @@ class ApprovalController extends Controller
                             );
                         });
                 })
+                ->orderBy('created_at', 'desc')
                 ->paginate($request->pageSize);
         }
->>>>>>> afd450d78f0ccb1b0ac91e37dbcbacd4b4bf6b1f
 
         return Inertia::render(
             'Approval/Index',

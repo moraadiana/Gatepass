@@ -167,7 +167,7 @@ class GatepassController extends Controller
         $gatepass->items()->createMany($request->input('items'));
         //update the gatepass status to 1
 
-        return redirect()->route('gatepass.index')->with('success', 'Gatepass updated successfully!');
+        return redirect()->route('gatepass.show', $gatepass )->with('success', 'Gatepass updated successfully!');
     }
 
     /**

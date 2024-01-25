@@ -14,7 +14,7 @@ import { Button, Popconfirm, Space, message, Tag, Timeline } from "antd";
 import { router } from "@inertiajs/react";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import { faPrint, faEdit } from "@fortawesome/free-solid-svg-icons";
 import {
     CloseCircleOutlined,
     CheckCircleOutlined,
@@ -28,8 +28,11 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
     //get role of current user
     const userRole = currUser;
     //console.log(gatepass);
-    console.log( "approvals", gatepass?.approvals?.mgr_gtpapprovals_approvedby ===
-        auth.user.mgr_gtpusers_id);
+    console.log(
+        "approvals",
+        gatepass?.approvals?.mgr_gtpapprovals_approvedby ===
+            auth.user.mgr_gtpusers_id
+    );
     return (
         <>
             <Head title="View Gatepass" />
@@ -62,6 +65,24 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                         //if user is requester show submit for approval button
 
                         <Space>
+                            {
+                                // button for editting the gatepass
+                                gatepass.mgr_gtpgatepass_status === 3 && (
+                                    <Button
+                                        type="primary"
+                                        onClick={() => {
+                                            router.get(
+                                                route(
+                                                    "gatepass.edit",
+                                                    gatepass.mgr_gtpgatepass_id
+                                                )
+                                            );
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faEdit} /> Edit
+                                    </Button>
+                                )
+                            }
                             {gatepass.mgr_gtpgatepass_status === 3 && (
                                 <Popconfirm
                                     title="Are you sure you want to submit this Gatepass?"
@@ -70,8 +91,7 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                                             await route(
                                                 "gatepass.submitForApproval",
                                                 gatepass.mgr_gtpgatepass_id
-                                            ),
-                                          
+                                            )
                                         );
                                     }}
                                 >
@@ -82,24 +102,19 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                             )}
                             {gatepass.mgr_gtpgatepass_status === 2 &&
                                 gatepass.mgr_gtpgatepass_createdby !==
-                                    auth.user.mgr_gtpusers_id  && 
-                
-                                    
-                                   
-                                userRole.roles.some(
-                                    (role) =>
-                                        {
-                                            return role.mgr_gtproles_id ===
-                                                gatepass.approvals.filter(
-                                                    (approval) => approval.mgr_gtpapprovals_status ===
-                                                        2
-                                                )[0]?.approval_level?.role
-                                                    ?.mgr_gtproles_id;
-                                        }
-                                            
-                                ) &&
-                                //if user is not equal to mgr_gtpapprovals_approvedby show approve button and reject button for approver level
-                                (
+                                    auth.user.mgr_gtpusers_id &&
+                                userRole.roles.some((role) => {
+                                    return (
+                                        role.mgr_gtproles_id ===
+                                        gatepass.approvals.filter(
+                                            (approval) =>
+                                                approval.mgr_gtpapprovals_status ===
+                                                2
+                                        )[0]?.approval_level?.role
+                                            ?.mgr_gtproles_id
+                                    );
+                                }) && (
+                                    //if user is not equal to mgr_gtpapprovals_approvedby show approve button and reject button for approver level
                                     <Space>
                                         <ModalForm
                                             title="Approve Gatepass"
@@ -134,7 +149,6 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                                                                 "Gatepass approved successfully"
                                                             );
                                                             window.history.back();
-
                                                         },
                                                         onError: () => {
                                                             setLoading(false);
@@ -148,7 +162,6 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                                                     }
                                                 );
                                                 // close modal form
-
                                             }}
                                         >
                                             <ProFormTextArea

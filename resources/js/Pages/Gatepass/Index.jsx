@@ -126,7 +126,7 @@ export default function Index({ auth, gatepasses }) {
                                         >
                                             View Details
                                         </Button>
-                                        {record.mgr_gtpgatepass_status == 3 && (
+                                        {/* {record.mgr_gtpgatepass_status == 3 && (
                                             <Button
                                                 type="link"
                                                 icon={<EditOutlined />}
@@ -141,7 +141,7 @@ export default function Index({ auth, gatepasses }) {
                                             >
                                                 Edit
                                             </Button>
-                                        )}
+                                        )} */}
                                     </Space>
                                 ),
                             },
