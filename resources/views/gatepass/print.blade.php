@@ -25,7 +25,7 @@ th {
     padding: 8px;
     text-align: left;
     font-size: 12px;
-    font-family: "Arial Black", Gadget, sans-serif;
+    font-family: "Lato", sans-serif;
     border: 1px solid #ddd;
 
  
@@ -34,17 +34,18 @@ td {
     
     padding: 8px;
     text-align: left;
-    font-size: 12px;
-    font-family: "Arial Black", Gadget, sans-serif;
+    font-size: 13px;
+    font-family: "Lato", sans-serif;
     border: 1px solid #ddd;
     
 
 }
 
 h1 {
-    font-family: "Arial Black", Gadget, sans-serif;
-    font-size: 10px;
+    font-family: "Lato", sans-serif;
+    font-size: 14px;
     margin: 0 auto;
+    text-align: center;
 
    
 }
@@ -69,6 +70,7 @@ echo "<img src='$imageUrl' alt='logo'>";
 echo '<br>';
 echo '<br>';
 // return gatepass details in a table
+echo '<h1 "> GATEPASS DETAILS  </h1>';
 echo '<table class="gatepassdetails" >'; // Set width to 100% to occupy the entire width of the screen
 echo '<tr>';
 echo '<th>GATEPASS NO.</th>'; // Align to the right
@@ -135,7 +137,7 @@ echo '</table>';
 echo '<br>';
 
 //return items in gatepass table as a table
-echo '<h1> ITEMS: </h1>';
+echo '<h1 "> ITEM DETAILS  </h1>';
 //echo '<br>';
 echo '<table class="items">';
 
