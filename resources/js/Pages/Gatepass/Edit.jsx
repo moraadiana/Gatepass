@@ -10,7 +10,6 @@ import {
 import { Head, router } from "@inertiajs/react";
 
 export default function Edit({ auth, gatepass, departments, locations, uoms }) {
-    //console.log(gatepass.items);
     return (
         <>
             <Head title="Edit Gatepass" />

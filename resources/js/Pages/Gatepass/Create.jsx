@@ -11,7 +11,6 @@ import {
 import { Head, router } from "@inertiajs/react";
 
 export default function Create({ auth, departments, locations, uoms }) {
-    //console.log(gatepass);
     return (
         <>
             <Head title="Create Gatepass" />

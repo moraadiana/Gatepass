@@ -6,6 +6,7 @@ use App\Models\Approval;
 use Illuminate\Http\Request;
 use App\Models\ApprovalLevel;
 use App\Models\Company;
+use App\Models\Department;
 use App\Models\Gatepass;
 use App\Models\Role;
 use Inertia\Inertia;
@@ -22,15 +23,21 @@ class ApprovalLevelController extends Controller
             [
                 'approvalLevels' =>  Inertia::lazy(fn () => Company::with(
                     [
-                        'approvalLevels' => function ($query) {
+                        'departments.approvalLevels' => function ($query) {
                             $query->orderBy('mgr_gtpapprovallevels_sequence', 'asc');
                         },
-                        'approvalLevels.role.users',
+                        'departments.approvalLevels.role',
+                        'departments.approvalLevels.department.users' => function ($query) {
+                            //get users for each department that have the role 
+                        }
 
                     ]
-                )->paginate($request->pageSize)),
-                'companies' => Company::all(),
-                'roles' => Role::all()
+                )
+
+                    ->paginate($request->pageSize)),
+                'companies' => Company::with('departments')->where('mgr_gtpcompanies_status', 1)->get(),
+                'roles' => Role::all(),
+                'departments' => Department::all()
 
             ]
         );
@@ -56,6 +63,8 @@ class ApprovalLevelController extends Controller
             'mgr_gtpapprovallevels_sequence' => ['required', 'integer'],
             'mgr_gtpapprovallevels_approver' => ['required', 'integer'],
             'mgr_gtpapprovallevels_company' => ['required', 'integer'],
+            'mgr_gtpapprovallevels_department' => ['required', 'integer'],
+
 
         ]);
 

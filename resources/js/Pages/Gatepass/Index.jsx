@@ -5,7 +5,6 @@ import { Space, Button, Tag } from "antd";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 export default function Index({ auth, gatepasses }) {
-    console.log(gatepasses);
 
     return (
         <>

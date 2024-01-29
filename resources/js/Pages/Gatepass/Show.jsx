@@ -21,18 +21,13 @@ import {
     ClockCircleOutlined,
 } from "@ant-design/icons";
 
-export default function Show({ auth, gatepass, currUser, approvals }) {
+export default function Show({ auth, gatepass, currUser, approvals, uom }) {
     const [loading, setLoading] = useState(false);
     const [approveVisible, setApproveVisible] = useState(false);
     const [rejectVisible, setRejectVisible] = useState(false);
     //get role of current user
     const userRole = currUser;
-    //console.log(gatepass);
-    console.log(
-        "approvals",
-        gatepass?.approvals?.mgr_gtpapprovals_approvedby ===
-            auth.user.mgr_gtpusers_id
-    );
+ 
     return (
         <>
             <Head title="View Gatepass" />
@@ -103,6 +98,13 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                             {gatepass.mgr_gtpgatepass_status === 2 &&
                                 gatepass.mgr_gtpgatepass_createdby !==
                                     auth.user.mgr_gtpusers_id &&
+                                !gatepass.approvals.some(
+                                    (approval) =>
+                                        approval.mgr_gtpapprovals_approvedby ==
+                                        auth.user.mgr_gtpusers_id
+                                ) &&
+                                //The current user cannot approve twice. Hide the buttons if an approval record exists that is not pending
+
                                 userRole.roles.some((role) => {
                                     return (
                                         role.mgr_gtproles_id ===
@@ -345,8 +347,8 @@ export default function Show({ auth, gatepass, currUser, approvals }) {
                                     },
                                     {
                                         title: "UOM",
-                                        dataIndex: "mgr_gtpitems_uom",
-                                        key: "mgr_gtpitems_uom",
+                                        //return uom name
+                                        dataIndex: ["uom", "mgr_gtpuoms_name"],
                                     },
                                 ]}
                                 search={false}
