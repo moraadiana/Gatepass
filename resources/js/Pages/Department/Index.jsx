@@ -27,8 +27,7 @@ export default function Index({ auth, departments,companies,roles }) {
     const formRef = useRef();
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState(null);
-     console.log ("companies",companies);
-    // console.log("departments",departments)
+  
     
     return (
         <AuthenticatedLayout user={auth.user}>

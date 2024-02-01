@@ -18,7 +18,8 @@ class ApprovalLevel extends Model
         'mgr_gtpapprovallevels_approver',
         'mgr_gtpapprovallevels_sequence',
         'mgr_gtpapprovallevels_status',
-        'mgr_gtpapprovallevels_company'
+        'mgr_gtpapprovallevels_company',
+        'mgr_gtpapprovallevels_department',
     ];
 
     // has many approvals,items
@@ -29,5 +30,11 @@ class ApprovalLevel extends Model
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'mgr_gtpapprovallevels_approver');
+    }
+
+    public function department(): BelongsTo
+    {
+
+        return $this->belongsTo(Department::class, 'mgr_gtpapprovallevels_department');
     }
 }

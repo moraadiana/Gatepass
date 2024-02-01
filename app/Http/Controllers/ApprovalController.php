@@ -36,6 +36,7 @@ class ApprovalController extends Controller
                             );
                         });
                 })
+                ->orderBy('created_at', 'desc')
                 ->paginate($request->pageSize);
         } else {
             $gatepasses = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location')
@@ -50,6 +51,7 @@ class ApprovalController extends Controller
                             );
                         });
                 })
+                ->orderBy('created_at', 'desc')
                 ->paginate($request->pageSize);
         }
 

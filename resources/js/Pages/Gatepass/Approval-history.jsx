@@ -9,8 +9,7 @@ import { EyeOutlined } from "@ant-design/icons";
 //import { auth } from "@/Layouts/AuthenticatedLayout";
 
 export default function ApprovalHistory({ auth, approvals, gatepasses }) {
-    console.log(approvals);
-    //console.log('gatepass',approvals.gatepass);
+    
 
     return (
         <>

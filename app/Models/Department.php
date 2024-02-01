@@ -37,5 +37,10 @@ class Department extends Model
         return $this->hasMany(Approval::class,'mgr_gtpapprovals_department');
     }
    
+    //approval level
+    public function approvallevels():Hasmany
+    {
+        return $this->hasMany(ApprovalLevel::class,'mgr_gtpapprovallevels_department');
+    }
    
 }

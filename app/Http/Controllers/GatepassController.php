@@ -66,9 +66,9 @@ class GatepassController extends Controller
         return Inertia::render(
             'Gatepass/Create',
             [
-                'departments' => Department::all(),
-                'uoms' => Uom::all(),
-                'locations' => Location::all(),
+                'departments' => Department::where('mgr_gtpdepartments_status', 1)->get(),
+                'uoms' => Uom::where('mgr_gtpuoms_status', 1)->get(),
+                'locations' => Location::where('mgr_gtplocations_status', 1)->get(),
                 'items' => Item::all(),
             ]
 
@@ -118,12 +118,8 @@ class GatepassController extends Controller
         $currentUser = auth()->user();
 
 
-        $gatepass = Gatepass::with('user', 'uom', 'department', 'source_location', 'destination_location', 'company', 'items', 'approvals.approvalLevel.role', 'approvals.user')
+        $gatepass = Gatepass::with('user', 'department', 'source_location', 'destination_location', 'company', 'items.uom', 'approvals.approvalLevel.role', 'approvals.user')
             ->find($id);
-
-
-
-
 
         return Inertia::render(
             'Gatepass/Show',
@@ -167,7 +163,7 @@ class GatepassController extends Controller
         $gatepass->items()->createMany($request->input('items'));
         //update the gatepass status to 1
 
-        return redirect()->route('gatepass.index')->with('success', 'Gatepass updated successfully!');
+        return redirect()->route('gatepass.show', $gatepass)->with('success', 'Gatepass updated successfully!');
     }
 
     /**
@@ -183,13 +179,16 @@ class GatepassController extends Controller
     {
 
 
-        $gatepassCompany = $gatepass->department->company;
-        $firstApprovalLevel = ApprovalLevel::where('mgr_gtpapprovallevels_company', $gatepassCompany->mgr_gtpcompanies_id)
+        //  $gatepassCompany = $gatepass->department->company;
+        $gatepassDepartment = $gatepass->department;
+
+
+        $firstApprovalLevel = ApprovalLevel::where('mgr_gtpapprovallevels_department', $gatepassDepartment->mgr_gtpdepartments_id)
             ->orderBy('mgr_gtpapprovallevels_sequence', 'asc')->first();
         //dd($firstApprovalLevel);
 
         $approverRole = $firstApprovalLevel->role->users
-            ->where('mgr_gtpusers_department', $gatepass->department->mgr_gtpdepartments_id);
+            ->where('mgr_gtpusers_department', $gatepassDepartment->mgr_gtpdepartments_id);
 
         //dd($approverRole);
 
@@ -213,6 +212,7 @@ class GatepassController extends Controller
     public function gatepassApproval(Request $request, Gatepass $gatepass)
     {
         $previousApproval = $gatepass->approvals()->where('mgr_gtpapprovals_status', 2)->first();
+        //dd($previousApproval);
 
         $previousApproval->update([
             'mgr_gtpapprovals_status' => $request->input('status'),
@@ -222,10 +222,11 @@ class GatepassController extends Controller
         ]);
 
         if ($request->input('status') == 1) {
-            $nextApprovalLevel = ApprovalLevel::where('mgr_gtpapprovallevels_company', $gatepass->department->company->mgr_gtpcompanies_id)
+            $nextApprovalLevel = ApprovalLevel::where('mgr_gtpapprovallevels_department', $gatepass->department->mgr_gtpdepartments_id)
                 ->where('mgr_gtpapprovallevels_sequence', '>', $previousApproval->approvallevel->mgr_gtpapprovallevels_sequence)
                 ->orderBy('mgr_gtpapprovallevels_sequence', 'asc')
                 ->first();
+            // dd($nextApprovalLevel);
 
             if ($nextApprovalLevel) {
                 $gatepass->approvals()->create([
