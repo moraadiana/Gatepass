@@ -11,52 +11,51 @@ use Illuminate\Queue\SerializesModels;
 
 class submitForApproval extends Mailable
 {
-    use Queueable, SerializesModels;
+  use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-   public function build()
-    {
-        return $this->from ('ictsupport@bulkstream.co')
-        ->subject('Gatepass Approval Request')
-        ->view('emails.submitForApproval');
-         
-    }
-    // public function __construct()
-    // {
-    //     //
-    // }
+  /**
+   * Create a new message instance.
+   */
+  public function build()
+  {
+    return $this->from('ictsupport@bulkstream.com')
+      ->subject('Gatepass Approval Request')
+      ->view('emails.submitForApproval');
+  }
+  // public function __construct()
+  // {
+  //     //
+  // }
 
-    /**
-     * Get the message envelope.
-      */
-    // public function envelope(): Envelope
-    // {
-    //     return new Envelope(
-    //         subject: 'Submit For Approval',
-    //     );
-    // }
+  /**
+   * Get the message envelope.
+   */
+  // public function envelope(): Envelope
+  // {
+  //     return new Envelope(
+  //         subject: 'Submit For Approval',
+  //     );
+  // }
 
-    // /**
-    //  * Get the message content definition.
-    //  */
-    // public function content()
-    // //Content
-    // {
-    //     // return new Content(
-    //     //     view: 'emails.submitForApproval',
-    //     // );
-    //     return $this->view('emails.submitForApproval');
-    // }
+  // /**
+  //  * Get the message content definition.
+  //  */
+  // public function content()
+  // //Content
+  // {
+  //     // return new Content(
+  //     //     view: 'emails.submitForApproval',
+  //     // );
+  //     return $this->view('emails.submitForApproval');
+  // }
 
-    // /**
-    //  * Get the attachments for the message.
-    //  *
-    //  * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-    //  */
-    // public function attachments(): array
-    // {
-    //     return [];
-    // }
+  // /**
+  //  * Get the attachments for the message.
+  //  *
+  //  * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+  //  */
+  // public function attachments(): array
+  // {
+  //     return [];
+  // }
 }
