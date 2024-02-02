@@ -12,6 +12,7 @@ use App\Http\Controllers\UomController;
 use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SsoLoginController;
 use App\Http\Controllers\UserController;
 use App\Models\Gatepass;
 use Illuminate\Foundation\Application;
@@ -29,6 +30,9 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/ssologin/{token}', [SsoLoginController::class, 'login'])->name('sso.login');
+
+
 Route::get('/', function () {
     //return dashboard route
     return redirect(
@@ -39,6 +43,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
