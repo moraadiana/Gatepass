@@ -13,6 +13,13 @@ class submitForApproval extends Mailable
 {
   use Queueable, SerializesModels;
 
+  protected $gatepass;
+
+  public function __construct($gatepass)
+  {
+    $this->gatepass = $gatepass;
+  }
+
   /**
    * Create a new message instance.
    */
@@ -20,7 +27,7 @@ class submitForApproval extends Mailable
   {
     return $this->from('ictsupport@bulkstream.com')
       ->subject('Gatepass Approval Request')
-      ->view('emails.submitForApproval');
+      ->view('emails.submitForApproval', ['gatepass' => $this->gatepass]);
   }
   // public function __construct()
   // {

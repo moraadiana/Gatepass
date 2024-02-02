@@ -13,10 +13,22 @@ class GatepassRejected extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $gatepass;
+
+    /**
+     * Create a new message instance.
+     */
+
+    public function __construct($gatepass)
+    {
+        $this->gatepass = $gatepass;
+    }
+
+
     public function build()
     {
         return $this->from('ictsupport@bulkstream.com')
             ->subject('Gatepass Rejected')
-            ->view('emails.GatepassRejected');
+            ->view('emails.GatepassRejected', ['gatepass' => $this->gatepass]);
     }
 }

@@ -13,6 +13,13 @@ class GatepassApproved extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $gatepass;
+
+    public function __construct($gatepass)
+    {
+        $this->gatepass = $gatepass;
+    }
+
     /**
      * Create a new message instance.
      */
@@ -20,6 +27,6 @@ class GatepassApproved extends Mailable
     {
         return $this->from('ictsupport@bulkstream.com')
             ->subject('Gatepass Approved')
-            ->view('emails.GatepassApproved');
+            ->view('emails.GatepassApproved', ['gatepass' => $this->gatepass]);
     }
 }
