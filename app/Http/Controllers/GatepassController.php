@@ -190,7 +190,6 @@ class GatepassController extends Controller
         $approverRole = $firstApprovalLevel->role->users
             ->where('mgr_gtpusers_department', $gatepassDepartment->mgr_gtpdepartments_id);
 
-        //dd($approverRole);
 
         // create approval record on submit
         $gatepass->approvals()->create([
@@ -227,6 +226,7 @@ class GatepassController extends Controller
                 ->orderBy('mgr_gtpapprovallevels_sequence', 'asc')
                 ->first();
             // dd($nextApprovalLevel);
+           
 
             if ($nextApprovalLevel) {
                 $gatepass->approvals()->create([
@@ -235,7 +235,7 @@ class GatepassController extends Controller
                     'mgr_gtpapprovals_approvallevel' => $nextApprovalLevel->mgr_gtpapprovallevels_id,
                 ]);
 
-                foreach ($nextApprovalLevel->role->users as $approver) {
+                foreach ($nextApprovalLevel->role->users ->where('mgr_gtpusers_department', $gatepass->department->mgr_gtpdepartments_id) as $approver) {
                     Mail::to($approver->mgr_gtpusers_email)->send(new submitForApproval($gatepass));
                 }
             } else {
