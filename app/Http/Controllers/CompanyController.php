@@ -14,11 +14,11 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
         //  
-        $company = Company::all();
+       
 
         //dd($company);
         return Inertia::render('Company/Index', [
-            'companies' =>Inertia::lazy(fn () => $company->paginate($request->pageSize)),
+            'companies' => Company::all()
         ]);
     }
 

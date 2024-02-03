@@ -8,6 +8,7 @@ import {
     ModalForm,
     ProFormTextArea,
     ProFormText,
+    ProFormSwitch,
 } from "@ant-design/pro-components";
 import { Head, Link, router } from "@inertiajs/react";
 
@@ -143,6 +144,10 @@ export default function Index({ auth, companies }) {
                                 label="Name"
                                 placeholder="Name"
                                 rules={[{ required: true }]}
+                            />
+                            <ProFormSwitch
+                                name="mgr_gtpcompanies_status"
+                                label="Status"
                             />
                         </ProForm.Group>
                     </ModalForm>
