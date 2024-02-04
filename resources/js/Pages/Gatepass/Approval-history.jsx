@@ -39,7 +39,7 @@ export default function ApprovalHistory({ auth, approvals, gatepasses }) {
                         }}
                         columns={[
                             {
-                                title: "ID",
+                                title: "Gatepass No.",
                                 dataIndex: ["gatepass", "mgr_gtpgatepass_id"],
                             },
                             {

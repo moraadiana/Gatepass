@@ -35,7 +35,7 @@ export default function Index({ auth, gatepasses, approvals }) {
                     }}
                     columns={[
                         {
-                            title: "ID",
+                            title: "Gatepass No. ",
                             dataIndex: "mgr_gtpgatepass_id",
                         },
                         {

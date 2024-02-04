@@ -34,7 +34,7 @@ export default function Index({ auth, gatepasses }) {
                         }}
                         columns={[
                             {
-                                title: "ID",
+                                title: "Gatepass No.",
                                 dataIndex: "mgr_gtpgatepass_id",
                                 //hideInSearch: true,
                             },
