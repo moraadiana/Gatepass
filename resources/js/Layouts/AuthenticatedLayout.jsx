@@ -9,7 +9,7 @@ import {
     CheckSquareOutlined,
     DatabaseOutlined,
 } from "@ant-design/icons";
-import { notification } from "antd";
+import { notification, message } from "antd";
 //import logo from "C:/laragon/www/gatepass/logo/bulkstream-logo-small.png";
 
 import bulkstreamlogo from "../assets/bulkstream-logo-small.png";
@@ -21,32 +21,21 @@ export default function Authenticated({
     roles,
 }) {
     const { flash } = usePage().props;
-    useEffect(() => {
-        if (flash.success) {
-            notification.success({
-                message: "Success",
-                description: flash.success,
-                duration: 5,
-                placement: "top",
-            });
-        }
-        if (flash.error) {
-            notification.error({
-                message: "Error",
-                description: flash.error,
-                duration: 5,
-            });
-        }
-    }, [flash]);
+    {
+        flash.success
+            ? message.success(flash.success)
+            : flash.error
+            ? message.error(flash.error)
+            : null;
+    }
 
     return (
         <ProLayout
             layout="mix"
             title=" Gatepass Portal"
             //add logo here and  resize it
-          //  logo={<img src={logo} alt="logo" />}
-          logo={bulkstreamlogo}
-
+            //  logo={<img src={logo} alt="logo" />}
+            logo={bulkstreamlogo}
             avatarProps={{
                 src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
                 size: "small",
@@ -111,7 +100,6 @@ export default function Authenticated({
                         {
                             path: route("gatepass.myApprovalHistory"),
                             name: "Approval History",
-                           
                         },
                     ],
                     hideInMenu: user.roles.some(
@@ -153,7 +141,7 @@ export default function Authenticated({
                         {
                             path: route("uom.index"),
                             name: "Uoms",
-                        }
+                        },
                     ],
                 },
             ]}

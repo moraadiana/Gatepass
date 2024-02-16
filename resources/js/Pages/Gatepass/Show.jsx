@@ -1,5 +1,5 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 //import gatepass from /Gatepass/Index;
 import {
     PageContainer,
@@ -27,7 +27,9 @@ export default function Show({ auth, gatepass, currUser, approvals, uom }) {
     const [rejectVisible, setRejectVisible] = useState(false);
     //get role of current user
     const userRole = currUser;
- 
+
+    const { errors } = usePage().props;
+
     return (
         <>
             <Head title="View Gatepass" />
@@ -83,10 +85,18 @@ export default function Show({ auth, gatepass, currUser, approvals, uom }) {
                                     title="Are you sure you want to submit this Gatepass?"
                                     onConfirm={async () => {
                                         router.post(
-                                            await route(
+                                            route(
                                                 "gatepass.submitForApproval",
                                                 gatepass.mgr_gtpgatepass_id
-                                            )
+                                            ),
+                                            {},
+                                            {
+                                                onSuccess: () => {
+                                                    message.success(
+                                                        "Gatepass submitted for approval successfully"
+                                                    );
+                                                },
+                                            }
                                         );
                                     }}
                                 >
@@ -158,7 +168,7 @@ export default function Show({ auth, gatepass, currUser, approvals, uom }) {
                                                                 false
                                                             );
                                                             message.error(
-                                                                "Error approving gatepass"
+                                                                "You are not authorized to approve at this level"
                                                             );
                                                         },
                                                     }
@@ -209,7 +219,7 @@ export default function Show({ auth, gatepass, currUser, approvals, uom }) {
                                                                 false
                                                             );
                                                             message.error(
-                                                                "Error rejecting gatepass"
+                                                                "You are not authorized to reject at this level"
                                                             );
                                                         },
                                                     }

@@ -9,6 +9,7 @@ import {
     ProList,
 } from "@ant-design/pro-components";
 import { Head, router } from "@inertiajs/react";
+import { message } from "antd";
 
 export default function Create({ auth, departments, locations, uoms }) {
     return (
@@ -25,11 +26,21 @@ export default function Create({ auth, departments, locations, uoms }) {
                     <ProCard>
                         <ProForm
                             onFinish={async (values) => {
-                                router.post(route("gatepass.store"), {
-                                    ...values,
-                                    mgr_gtpgatepass_createdby:
-                                        auth.user.mgr_gtpusers_id,
-                                });
+                                router.post(
+                                    route("gatepass.store"),
+                                    {
+                                        ...values,
+                                        mgr_gtpgatepass_createdby:
+                                            auth.user.mgr_gtpusers_id,
+                                    },
+                                    {
+                                        onSuccess: () => {
+                                            message.success(
+                                                "Gatepass created successfully"
+                                            );
+                                        },
+                                    }
+                                );
                             }}
                         >
                             <ProForm.Group>
@@ -50,7 +61,7 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     normalize={(value) => value.toUpperCase()}
                                     rules={[{ required: true }]}
                                 />
-                             
+
                                 <ProFormSelect
                                     width="sm"
                                     name="mgr_gtpgatepass_sourcelocation"
@@ -70,23 +81,15 @@ export default function Create({ auth, departments, locations, uoms }) {
                                     label="Destination Location"
                                     placeholder="Destination Location"
                                     rules={[{ required: true }]}
-
                                     // return all active loctaions only
                                     options={locations.map((location) => {
                                         return {
                                             label: location.mgr_gtplocations_name,
                                             value: location.mgr_gtplocations_id,
                                         };
-
-                                    })
-                                }
-
-                                    
-
-
+                                    })}
                                 />
 
-                                
                                 <ProFormText
                                     width="sm"
                                     name="mgr_gtpgatepass_destination"
@@ -129,7 +132,9 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         name="mgr_gtpitems_description"
                                         label="Item Description"
                                         placeholder="Item Description"
-                                        normalize={(value) => value.toUpperCase()}
+                                        normalize={(value) =>
+                                            value.toUpperCase()
+                                        }
                                         rules={[{ required: true }]}
                                     />
                                     <ProFormText
@@ -138,7 +143,9 @@ export default function Create({ auth, departments, locations, uoms }) {
                                         label="Item Code"
                                         placeholder="Item Code"
                                         rules={[{ required: true }]}
-                                        normalize={(value) => value.toUpperCase()}
+                                        normalize={(value) =>
+                                            value.toUpperCase()
+                                        }
                                     />
                                     <ProFormText
                                         width="xs"

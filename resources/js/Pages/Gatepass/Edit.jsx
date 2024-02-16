@@ -8,6 +8,7 @@ import {
     ProFormText,
 } from "@ant-design/pro-components";
 import { Head, router } from "@inertiajs/react";
+import { message } from "antd";
 
 export default function Edit({ auth, gatepass, departments, locations, uoms }) {
     return (
@@ -22,8 +23,14 @@ export default function Edit({ auth, gatepass, departments, locations, uoms }) {
                                     "gatepass.update",
                                     gatepass.mgr_gtpgatepass_id
                                 ),
-                              values,
-                              
+                                values,
+                                {
+                                    onSuccess: () => {
+                                        message.success(
+                                            "Gatepass updated successfully"
+                                        );
+                                    },
+                                }
                             );
                         }}
                         initialValues={gatepass}
@@ -144,7 +151,6 @@ export default function Edit({ auth, gatepass, departments, locations, uoms }) {
                                     label="Quantity"
                                     placeholder="Quantity"
                                     rules={[{ required: true }]}
-                                    
                                 />
                                 <ProFormSelect
                                     width="xs"
