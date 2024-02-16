@@ -20,6 +20,7 @@ import {
     CheckCircleOutlined,
     ClockCircleOutlined,
 } from "@ant-design/icons";
+import moment from "moment";
 
 export default function Show({ auth, gatepass, currUser, approvals, uom }) {
     const [loading, setLoading] = useState(false);
@@ -430,7 +431,9 @@ export default function Show({ auth, gatepass, currUser, approvals, uom }) {
                                         ) : (
                                             <ClockCircleOutlined />
                                         ),
-                                    label: approval.updated_at,
+                                    label: moment(approval.updated_at).format(
+                                        "DD-MMM-YYYY hh:mm A"
+                                    ),
                                 }))}
                             />
                         </ProCard.TabPane>
