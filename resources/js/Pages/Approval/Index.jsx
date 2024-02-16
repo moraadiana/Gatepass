@@ -19,6 +19,9 @@ export default function Index({ auth, gatepasses, approvals }) {
                     //headerTitle="Submitted Gatepass"
                     size="small"
                     dataSource={gatepasses?.data}
+                    scroll={{
+                        x: true,
+                    }}
                     request={async (params = {}) => {
                         params.page = params.current;
                         delete params.current;

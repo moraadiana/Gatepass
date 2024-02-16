@@ -9,8 +9,6 @@ import { EyeOutlined } from "@ant-design/icons";
 //import { auth } from "@/Layouts/AuthenticatedLayout";
 
 export default function ApprovalHistory({ auth, approvals, gatepasses }) {
-    
-
     return (
         <>
             <Head title="my approval history" />
@@ -36,6 +34,9 @@ export default function ApprovalHistory({ auth, approvals, gatepasses }) {
                                 success: true,
                                 total: approvals?.total,
                             };
+                        }}
+                        scroll={{
+                            x: true,
                         }}
                         columns={[
                             {

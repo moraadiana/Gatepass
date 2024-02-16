@@ -5,7 +5,6 @@ import { Space, Button, Tag } from "antd";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 export default function Index({ auth, gatepasses }) {
-
     return (
         <>
             <Head title="All gatepasses" />
@@ -18,6 +17,9 @@ export default function Index({ auth, gatepasses }) {
                 >
                     <ProTable
                         size="small"
+                        scroll={{
+                            x: true,
+                        }}
                         dataSource={gatepasses?.data}
                         request={async (params = {}) => {
                             params.page = params.current;
@@ -36,7 +38,6 @@ export default function Index({ auth, gatepasses }) {
                             {
                                 title: "Gatepass No.",
                                 dataIndex: "mgr_gtpgatepass_id",
-                                //hideInSearch: true,
                             },
                             {
                                 title: "Name",
