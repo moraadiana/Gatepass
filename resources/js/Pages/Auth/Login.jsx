@@ -1,42 +1,33 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import GuestLayout from "@/Layouts/GuestLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
 import { LoginForm } from "@ant-design/pro-components";
 import { UserOutlined } from "@ant-design/icons";
 import { ProFormText } from "@ant-design/pro-form";
 
-export default function Login() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        mgr_gtpusers_email: null,
-        mgr_gtpusers_password: "",
-        remember: false,
-    });
-
-    useEffect(() => {
-        return () => {
-            reset("password");
-        };
-    }, []);
-    useEffect(() => {
-        if (data.mgr_gtpusers_email) {
-            submit();
-        }
-    }, [data]);
-
-    const submit = (e) => {
-        // e.preventDefault();
-        post(route("login"));
-    };
-
+const Login = ({}) => {
+    const { errors } = usePage().props;
+    const [loading, setLoading] = useState(false);
     return (
-        <GuestLayout>
+        <>
             <Head title="Login" />
             <LoginForm
-                title="Sign in to your account"
-                subTitle="Please enter your credentials to proceed"
+                logo="../../assets/bulkstream-logo-small.png"
+                subTitle="Sign in to your account"
                 onFinish={async (values) => {
-                    setData(values);
+                    router.post(route("login"), values, {
+                        onStart: () => {
+                            setLoading(true);
+                        },
+                        onSuccess: () => {
+                            setLoading(false);
+                        },
+                        onError: () => {
+                            setLoading(false);
+                        },
+                    });
                 }}
+                loading={loading}
             >
                 <ProFormText
                     name="mgr_gtpusers_email"
@@ -55,6 +46,7 @@ export default function Login() {
                             message: "Please enter a valid email!",
                         },
                     ]}
+                    hasFeedback
                     validateStatus={errors.mgr_gtpusers_email && "error"}
                     help={errors.mgr_gtpusers_email}
                 />
@@ -73,6 +65,9 @@ export default function Login() {
                     ]}
                 />
             </LoginForm>
-        </GuestLayout>
+        </>
     );
-}
+};
+
+Login.layout = (page) => <GuestLayout children={page} />;
+export default Login;

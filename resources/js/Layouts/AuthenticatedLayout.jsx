@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link, usePage } from "@inertiajs/react";
 import { ProLayout } from "@ant-design/pro-components";
 import { Dropdown } from "antd";
@@ -9,18 +8,11 @@ import {
     CheckSquareOutlined,
     DatabaseOutlined,
 } from "@ant-design/icons";
-import { notification, message } from "antd";
-//import logo from "C:/laragon/www/gatepass/logo/bulkstream-logo-small.png";
+import { message } from "antd";
 
 import bulkstreamlogo from "../assets/bulkstream-logo-small.png";
-export default function Authenticated({
-    user,
-    header,
-    children,
-    gatepass,
-    roles,
-}) {
-    const { flash } = usePage().props;
+export default function Authenticated({ children }) {
+    const { flash, auth } = usePage().props;
     {
         flash.success
             ? message.success(flash.success)
@@ -28,7 +20,7 @@ export default function Authenticated({
             ? message.error(flash.error)
             : null;
     }
-
+    const user = auth.user;
     return (
         <ProLayout
             layout="mix"

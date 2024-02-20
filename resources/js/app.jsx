@@ -1,21 +1,23 @@
 import "./bootstrap";
-//  import '../css/app.css';
-
+import "../css/app.css";
 import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
-import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ConfigProvider } from "antd";
-import enUS from "antd/es/locale/en_US";
+import enUS from "antd/lib/locale/en_US";
+import AuthenticatedLayout from "./Layouts/AuthenticatedLayout";
 
 const appName = import.meta.env.VITE_APP_NAME || "GBHL Gatepass Portal";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) =>
-        resolvePageComponent(
-            `./Pages/${name}.jsx`,
-            import.meta.glob("./Pages/**/*.jsx")
-        ),
+    resolve: (name) => {
+        const pages = import.meta.glob("./Pages/**/*.jsx", { eager: true });
+        let page = pages[`./Pages/${name}.jsx`];
+        page.default.layout =
+            page.default.layout ||
+            ((page) => <AuthenticatedLayout children={page} />);
+        return page;
+    },
     setup({ el, App, props }) {
         const root = createRoot(el);
 
@@ -34,6 +36,6 @@ createInertiaApp({
         );
     },
     progress: {
-        color: "#4B5563",
+        color: "#153037",
     },
 });
