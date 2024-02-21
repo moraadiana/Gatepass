@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\ApprovalLevelController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\GatepassController;
 use App\Http\Controllers\ItemController;
@@ -32,25 +33,14 @@ use Inertia\Inertia;
 
 Route::get('/ssologin/{token}', [SsoLoginController::class, 'login'])->name('sso.login');
 
-
-Route::get('/', function () {
-    //return dashboard route
-    return redirect(
-        route('dashboard')
-    );
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-
 Route::middleware('auth')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/gatepass/my-approval-history', [ApprovalController::class, 'approvalHistory'])->name('gatepass.myApprovalHistory');
+    Route::get('/gatepass/deparment-gatepass', [GatepassController::class, 'departmentGatepass'])->name('gatepass.departmentGatepass');
     Route::resource('gatepass', GatepassController::class);
     Route::post('/gatepass/{gatepass}/submit-for-approval', [GatepassController::class, 'submitForApproval'])->name('gatepass.submitForApproval');
     Route::post('/gatepass/{gatepass}/gatepassApproval', [GatepassController::class, 'gatepassApproval'])->name('gatepass.gatepassApproval');

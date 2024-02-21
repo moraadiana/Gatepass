@@ -46,6 +46,9 @@ class GatepassController extends Controller
         if ($request->has('mgr_gtpgatepass_auxilarydoc')) {
             $query->where('mgr_gtpgatepass_auxilarydoc', 'like', '%' . $request->mgr_gtpgatepass_auxilarydoc . '%');
         }
+        if ($request->has('mgr_gtpgatepass_status')) {
+            $query->where('mgr_gtpgatepass_status', '=', $request->mgr_gtpgatepass_status);
+        }
         return Inertia::render(
             'Gatepass/Index',
 
@@ -168,7 +171,6 @@ class GatepassController extends Controller
     }
 
     public function submitForApproval(Gatepass $gatepass)
-
     {
 
 
@@ -266,8 +268,33 @@ class GatepassController extends Controller
         return $pdf->stream('gatepass.pdf');
     }
 
+    public function departmentGatepass(Request $request)
+    {
+        $query = Gatepass::query();
+        if ($request->has('mgr_gtpgatepass_id')) {
+            $query->where('mgr_gtpgatepass_id', 'like', '%' . $request->mgr_gtpgatepass_id . '%');
+        }
+        if ($request->has('mgr_gtpgatepass_name')) {
+            $query->where('mgr_gtpgatepass_name', 'like', '%' . $request->mgr_gtpgatepass_name . '%');
+        }
+        if ($request->has('mgr_gtpgatepass_vehiclereg')) {
+            $query->where('mgr_gtpgatepass_vehiclereg', 'like', '%' . $request->mgr_gtpgatepass_vehiclereg . '%');
+        }
+        if ($request->has('mgr_gtpgatepass_purpose')) {
+            $query->where('mgr_gtpgatepass_purpose', 'like', '%' . $request->mgr_gtpgatepass_purpose . '%');
+        }
+        if ($request->has('mgr_gtpgatepass_auxilarydoc')) {
+            $query->where('mgr_gtpgatepass_auxilarydoc', 'like', '%' . $request->mgr_gtpgatepass_auxilarydoc . '%');
+        }
+        if ($request->has('mgr_gtpgatepass_status')) {
+            $query->where('mgr_gtpgatepass_status', 'like', '%' . $request->mgr_gtpgatepass_status . '%');
+        }
 
-    // show all approved gatepasses
+        //Get all gatepasses for the department of the logged in user
+        $gatepasses = Inertia::lazy(fn () => $query->with('user', 'source_location', 'destination_location')->where('mgr_gtpgatepass_department', auth()->user()->mgr_gtpusers_department)
 
-
+            ->orderBy('created_at', 'desc')
+            ->paginate($request->pageSize));
+        return Inertia::render('Gatepass/Departmental', ['gatepasses' => $gatepasses]);
+    }
 }

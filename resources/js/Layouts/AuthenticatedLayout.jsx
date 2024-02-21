@@ -25,8 +25,6 @@ export default function Authenticated({ children }) {
         <ProLayout
             layout="mix"
             title=" Gatepass Portal"
-            //add logo here and  resize it
-            //  logo={<img src={logo} alt="logo" />}
             logo={bulkstreamlogo}
             avatarProps={{
                 src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
@@ -77,6 +75,10 @@ export default function Authenticated({ children }) {
                             path: route("gatepass.index"),
                             name: "My Gatepasses",
                         },
+                        {
+                            path: route("gatepass.departmentGatepass"),
+                            name: "Departmental Gatepass",
+                        }
                     ],
                 },
 
