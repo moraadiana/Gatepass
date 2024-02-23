@@ -78,7 +78,7 @@ export default function Authenticated({ children }) {
                         {
                             path: route("gatepass.departmentGatepass"),
                             name: "Departmental Gatepass",
-                        }
+                        },
                     ],
                 },
 

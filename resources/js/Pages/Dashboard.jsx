@@ -18,7 +18,7 @@ export default function Dashboard({
         <>
             <Head title="Dashboard" />
             <ProCard
-                title={`Hello ${auth.user.mgr_gtpusers_fname}!👋 Here's your activity in numbers. (Your requests)`}
+                title={`Hello ${auth.user.mgr_gtpusers_fname}!👋 Here's your activity in numbers. (Your Gatepasses)`}
                 headerBordered
                 style={{
                     width: "100%",
@@ -165,7 +165,7 @@ export default function Dashboard({
                                         </Button>,
                                     ]}
                                     scroll={{
-                                        x:true
+                                        x: true,
                                     }}
                                     ghost
                                     options={false}
@@ -277,8 +277,7 @@ export default function Dashboard({
                                         </Button>,
                                     ]}
                                     scroll={{
-                                        x:true
-                                    
+                                        x: true,
                                     }}
                                     ghost
                                     options={false}
@@ -393,7 +392,7 @@ export default function Dashboard({
                                         </Button>,
                                     ]}
                                     scroll={{
-                                        x:true
+                                        x: true,
                                     }}
                                     ghost
                                     options={false}
@@ -505,7 +504,7 @@ export default function Dashboard({
                                         </Button>,
                                     ]}
                                     scroll={{
-                                        x:true
+                                        x: true,
                                     }}
                                     ghost
                                     options={false}
